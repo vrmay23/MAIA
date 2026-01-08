@@ -1,0 +1,12 @@
+idf_component_register(
+    SRCS
+        "src/maia_board.c"
+        "src/maia_i2c.c"
+        "src/maia_gpio.c"
+        "src/maia_pwm.c"
+        "src/maia_onewire.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        driver
+)
