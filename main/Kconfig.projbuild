@@ -1,0 +1,7 @@
+menu "MAIA_BOARD"
+    config MAIA_TEST_BLINK
+        bool "Enable blink test (disable Maia App)"
+        default n
+        help
+            Simple LED blink for hardware testing.
+endmenu
