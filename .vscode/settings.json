@@ -5,7 +5,7 @@
   "idf.openOcdConfigs": [
     "board/esp32s3-builtin.cfg"
   ],
-  "idf.port": "detect",
+  "idf.port": "/dev/ttyACM0",
   "idf.toolsPath": "/home/vinicius/.espressif",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32s3"
@@ -15,5 +15,6 @@
     "--background-index",
     "--query-driver=**",
     "--compile-commands-dir=/home/vinicius/embedded_sys/esp32space/maiamute/build"
-  ]
+  ],
+  "idf.flashType": "UART"
 }
