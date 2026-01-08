@@ -1,0 +1,13 @@
+idf_component_register(
+    SRCS
+        "src/app.c"
+        "src/task_sensing.c"
+        "src/task_haptic.c"
+        "src/task_display.c"
+        "src/task_monitor.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        maia_board
+        freertos
+)
