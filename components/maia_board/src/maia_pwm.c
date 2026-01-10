@@ -33,7 +33,7 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define TAG "maia_pwm"
+#define TAG "[MAIA_PWM]"
 
 /****************************************************************************
  * Public Functions
@@ -44,7 +44,8 @@
  *
  * Description:
  *   Initialize LEDC PWM for motor control.
- *   - Timer: 1kHz, 8-bit resolution (0-255 duty)
+ *   - Timer Left:  Motor Left frequency, 8-bit resolution (0-255 duty)
+ *   - Timer Right: Motor Right frequency, 8-bit resolution (0-255 duty)
  *   - Channel 0: Motor Left (GPIO7)
  *   - Channel 1: Motor Right (GPIO8)
  *
@@ -61,22 +62,40 @@ esp_err_t maia_pwm_init(void)
   esp_err_t ret;
 
   ESP_LOGI(TAG, "Initializing PWM (freq=%dHz, res=%d-bit)",
-           MAIA_PWM_FREQ_HZ, MAIA_PWM_RESOLUTION);
+           MAIA_PWM_FREQ_MOTOR_LEFT, MAIA_PWM_RESOLUTION);
 
-  /* Configure LEDC timer */
+  /* Configure LEDC timer for Motor Left */
 
-  ledc_timer_config_t timer_conf = {
+  ledc_timer_config_t timer_left = {
       .speed_mode = MAIA_PWM_MODE,
       .duty_resolution = MAIA_PWM_RESOLUTION,
-      .timer_num = MAIA_PWM_TIMER,
-      .freq_hz = MAIA_PWM_FREQ_HZ,
+      .timer_num = MAIA_PWM_TIMER_LEFT,
+      .freq_hz = MAIA_PWM_FREQ_MOTOR_LEFT,
       .clk_cfg = LEDC_AUTO_CLK,
   };
 
-  ret = ledc_timer_config(&timer_conf);
+  ret = ledc_timer_config(&timer_left);
   if (ret != ESP_OK)
     {
-      ESP_LOGE(TAG, "Failed to configure LEDC timer: %s",
+      ESP_LOGE(TAG, "Failed to configure LEDC timer left: %s",
+               esp_err_to_name(ret));
+      return ret;
+    }
+
+  /* Configure LEDC timer for Motor Right */
+
+  ledc_timer_config_t timer_right = {
+      .speed_mode = MAIA_PWM_MODE,
+      .duty_resolution = MAIA_PWM_RESOLUTION,
+      .timer_num = MAIA_PWM_TIMER_RIGHT,
+      .freq_hz = MAIA_PWM_FREQ_MOTOR_RIGHT,
+      .clk_cfg = LEDC_AUTO_CLK,
+  };
+
+  ret = ledc_timer_config(&timer_right);
+  if (ret != ESP_OK)
+    {
+      ESP_LOGE(TAG, "Failed to configure LEDC timer right: %s",
                esp_err_to_name(ret));
       return ret;
     }
@@ -87,7 +106,7 @@ esp_err_t maia_pwm_init(void)
       .gpio_num = MAIA_GPIO_MOTOR_LEFT,
       .speed_mode = MAIA_PWM_MODE,
       .channel = MAIA_PWM_CH_MOTOR_LEFT,
-      .timer_sel = MAIA_PWM_TIMER,
+      .timer_sel = MAIA_PWM_TIMER_LEFT,
       .duty = 0,
       .hpoint = 0,
   };
@@ -106,7 +125,7 @@ esp_err_t maia_pwm_init(void)
       .gpio_num = MAIA_GPIO_MOTOR_RIGHT,
       .speed_mode = MAIA_PWM_MODE,
       .channel = MAIA_PWM_CH_MOTOR_RIGHT,
-      .timer_sel = MAIA_PWM_TIMER,
+      .timer_sel = MAIA_PWM_TIMER_RIGHT,
       .duty = 0,
       .hpoint = 0,
   };

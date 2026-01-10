@@ -34,6 +34,8 @@
 #endif
 
 #include "app.h"
+#include "maia_board.h"  
+
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -75,6 +77,7 @@ void app_main(void)
       vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 #else
+  maia_board_init();
   app_init();
 #endif
 }

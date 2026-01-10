@@ -61,6 +61,10 @@ esp_err_t maia_board_init(void)
 
   ESP_LOGI(TAG, "============ Initializing MAIA board ============");
 
+#ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
+  maia_config_log();
+#endif
+
   /* Initialize GPIO pins */
 
   ret = maia_gpio_init();
@@ -79,7 +83,7 @@ esp_err_t maia_board_init(void)
       return ret;
     }
 
-    /* Initialize PWM for motors */
+  /* Initialize PWM for motors */
 
   ret = maia_pwm_init();
   if (ret != ESP_OK)
@@ -90,12 +94,14 @@ esp_err_t maia_board_init(void)
 
   /* Initialize OneWire for DS18B20 */
 
+#ifdef CONFIG_MAIA_DS18B20_ENABLE
   ret = maia_onewire_init();
   if (ret != ESP_OK)
     {
       ESP_LOGE(TAG, "Failed to initialize OneWire");
       return ret;
     }
+#endif
 
   ESP_LOGI(TAG, "MAIA board initialized successfully");
 
