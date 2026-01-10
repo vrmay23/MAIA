@@ -58,10 +58,11 @@
 
 /* ToF Sensor Pins */
 
-#define MAIA_GPIO_TOF1_LPN          1
-#define MAIA_GPIO_TOF2_LPN          2
-#define MAIA_GPIO_TOF1_INT          43
-#define MAIA_GPIO_TOF2_INT          44
+#define MAIA_GPIO_TOF1_LPN          1            /* low_power_enable - lidar 1*/
+#define MAIA_GPIO_TOF1_INT          43           /* interrupt_pin    - lidar 1*/
+
+#define MAIA_GPIO_TOF2_LPN          2            /* low_power_enable - lidar 2*/
+#define MAIA_GPIO_TOF2_INT          44           /* interrupt_pin    - lidar 2*/
 
 /* Temperature Sensor (1-Wire) */
 
@@ -73,15 +74,17 @@
 
 /* I2C Bus */
 
-#define MAIA_I2C_FREQ_HZ            400000
+#define MAIA_I2C_FREQ_HZ            CONFIG_MAIA_I2C_FREQ_HZ
 #define MAIA_GPIO_I2C_SDA           5
 #define MAIA_GPIO_I2C_SCL           6
 
 #define MAIA_I2C_PORT               I2C_NUM_0
 
-/* PWM Motors */
+/* PWM Motors (ERM Left and Right) */
 
-#define MAIA_PWM_FREQ_HZ            1000
+#define MAIA_PWM_FREQ_MOTOR_LEFT    CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT
+#define MAIA_PWM_FREQ_MOTOR_RIGHT   CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT
+
 #define MAIA_GPIO_MOTOR_LEFT        7
 #define MAIA_GPIO_MOTOR_RIGHT       8
 
@@ -89,19 +92,24 @@
 #define MAIA_PWM_RESOLUTION         LEDC_TIMER_8_BIT
 #define MAIA_PWM_CH_MOTOR_LEFT      LEDC_CHANNEL_0
 #define MAIA_PWM_CH_MOTOR_RIGHT     LEDC_CHANNEL_1
-#define MAIA_PWM_TIMER              LEDC_TIMER_0
+#define MAIA_PWM_TIMER_LEFT         LEDC_TIMER_0
+#define MAIA_PWM_TIMER_RIGHT        LEDC_TIMER_1
 
 /* Button */
 
 #define MAIA_GPIO_BUTTON            9
 
+/* Status LED */
+
+#define MAIA_GPIO_LED_STATUS        CONFIG_MAIA_LED_STATUS_PIN
+
 /* I2C Device Addresses */
 
-#define MAIA_I2C_ADDR_SSD1306       0x3C
-#define MAIA_I2C_ADDR_TOF1          0x54
-#define MAIA_I2C_ADDR_TOF2          0x52
-#define MAIA_I2C_ADDR_DRV2605L      0x5A
-#define MAIA_I2C_ADDR_MPU6050       0x68
+#define MAIA_I2C_ADDR_SSD1306       CONFIG_MAIA_SSD1306_I2C_ADDR
+#define MAIA_I2C_ADDR_TOF1          CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR
+#define MAIA_I2C_ADDR_TOF2          CONFIG_MAIA_VL53L5CX_RIGHT_I2C_ADDR
+#define MAIA_I2C_ADDR_DRV2605L      CONFIG_MAIA_DRV2605L_I2C_ADDR
+#define MAIA_I2C_ADDR_MPU6050       CONFIG_MAIA_MPU6050_I2C_ADDR
 
 /****************************************************************************
  * Public Function Prototypes
@@ -123,6 +131,24 @@
  ****************************************************************************/
 
 esp_err_t maia_board_init(void);
+
+/****************************************************************************
+ * Name: maia_config_log
+ *
+ * Description:
+ *   Log all general configuration parameters at startup.
+ *
+ * Input Parameters:
+ *   None
+ *
+ * Returned Value:
+ *   None
+ *
+ ****************************************************************************/
+
+#ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
+void maia_config_log(void);
+#endif
 
 /****************************************************************************
  * Name: maia_i2c_init
@@ -220,5 +246,53 @@ esp_err_t maia_pwm_set_duty(ledc_channel_t channel, uint8_t duty);
  ****************************************************************************/
 
 esp_err_t maia_onewire_init(void);
+
+/****************************************************************************
+ * Name: maia_led_init
+ *
+ * Description:
+ *   Initialize status LED GPIO.
+ *
+ * Input Parameters:
+ *   None
+ *
+ * Returned Value:
+ *   ESP_OK on success; ESP_FAIL on failure.
+ *
+ ****************************************************************************/
+
+esp_err_t maia_led_init(void);
+
+/****************************************************************************
+ * Name: maia_led_set
+ *
+ * Description:
+ *   Set status LED on or off.
+ *
+ * Input Parameters:
+ *   state - true for ON, false for OFF
+ *
+ * Returned Value:
+ *   ESP_OK on success; ESP_FAIL on failure.
+ *
+ ****************************************************************************/
+
+esp_err_t maia_led_set(bool state);
+
+/****************************************************************************
+ * Name: maia_led_toggle
+ *
+ * Description:
+ *   Toggle status LED state.
+ *
+ * Input Parameters:
+ *   None
+ *
+ * Returned Value:
+ *   ESP_OK on success; ESP_FAIL on failure.
+ *
+ ****************************************************************************/
+
+esp_err_t maia_led_toggle(void);
 
 #endif /* __COMPONENTS_MAIA_BOARD_INCLUDE_MAIA_BOARD_H */

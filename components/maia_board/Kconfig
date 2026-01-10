@@ -1,0 +1,391 @@
+menu "MAIA Board Configuration"
+
+    config MAIA_TEST_BLINK
+        bool "Enable blink test (disable MAIA App)"
+        default n
+        help
+            Simple LED blink for hardware testing.
+
+    menu "General Configuration"
+
+        config MAIA_LOG_GENERAL_CONFIG
+            bool "Log general configuration at startup"
+            default y
+            help
+                Print all general configuration info during initialization.
+
+        menu "Timeouts"
+
+            config MAIA_TIMEOUT_SYNC_DATA_MIN
+                int "Sync data to server timeout (minutes)"
+                default 10
+                range 1 1440
+                help
+                    Time interval to sync data with server.
+
+            config MAIA_TIMEOUT_DISPLAY_OFF_SEC
+                int "Display turn off timeout (seconds)"
+                default 30
+                range 5 300
+                help
+                    Inactivity time before turning off display.
+
+            config MAIA_TIMEOUT_DISPLAY_SCREEN_SEC
+                int "Display screen change timeout (seconds)"
+                default 5
+                range 1 60
+                help
+                    Time to auto-change display screen.
+
+        endmenu
+
+        menu "Miscellaneous"
+
+            menu "Software Version"
+                config MAIA_SW_VERSION_MAJOR
+                    int "Major version"
+                    default 1
+                    range 0 99
+
+                config MAIA_SW_VERSION_MINOR
+                    int "Minor version"
+                    default 0
+                    range 0 99
+
+                config MAIA_SW_VERSION_PATCH
+                    int "Patch version"
+                    default 0
+                    range 0 99
+            endmenu
+
+            menu "Animal Information"
+                config MAIA_ANIMAL_SPECIES
+                    string "Species"
+                    default "Dog"
+
+                config MAIA_ANIMAL_BREED
+                    string "Breed"
+                    default "Unknown"
+
+                config MAIA_ANIMAL_NAME
+                    string "Name"
+                    default "MAIA"
+
+                config MAIA_ANIMAL_AGE
+                    int "Age (years)"
+                    default 0
+                    range 0 30
+
+                config MAIA_ANIMAL_WEIGHT
+                    int "Weight (kg)"
+                    default 0
+                    range 0 200
+
+                config MAIA_ANIMAL_BLOOD_TYPE
+                    string "Blood type"
+                    default "Unknown"
+
+                config MAIA_ANIMAL_COMORBIDITY
+                    string "Comorbidity"
+                    default "None"
+
+                config MAIA_ANIMAL_ALLERGY
+                    string "Allergy"
+                    default "None"
+            endmenu
+
+            menu "Tutor Information"
+                config MAIA_TUTOR_NAME
+                    string "First name"
+                    default ""
+
+                config MAIA_TUTOR_SURNAME
+                    string "Surname"
+                    default ""
+
+                config MAIA_TUTOR_PHONE
+                    string "Phone"
+                    default ""
+
+                config MAIA_TUTOR_EMAIL
+                    string "Email"
+                    default ""
+
+                config MAIA_TUTOR_SOCIAL_MEDIA
+                    string "Social media"
+                    default ""
+
+                config MAIA_TUTOR_COUNTRY
+                    string "Country"
+                    default ""
+
+                config MAIA_TUTOR_STATE
+                    string "State"
+                    default ""
+
+                config MAIA_TUTOR_CITY
+                    string "City"
+                    default ""
+
+                config MAIA_TUTOR_STREET
+                    string "Street"
+                    default ""
+            endmenu
+
+        endmenu
+
+    endmenu
+
+    menu "Radio Configuration"
+
+        menu "Bluetooth Configuration"
+            # TODO: Add BLE configs when needed
+        endmenu
+
+        menu "WiFi Configuration"
+
+            menu "Self (Access Point Mode)"
+                config MAIA_WIFI_AP_SSID
+                    string "AP SSID"
+                    default "MAIA-Setup"
+                    help
+                        SSID for the Access Point created by MAIA device.
+
+                config MAIA_WIFI_AP_PASSWORD
+                    string "AP Password"
+                    default "maiamute2026"
+                    help
+                        Password for the Access Point (min 8 chars).
+            endmenu
+
+            menu "Server (Station Mode)"
+                config MAIA_WIFI_STA_SSID
+                    string "Server WiFi SSID"
+                    default ""
+                    help
+                        SSID of the WiFi network to connect for data sync.
+                        Configured via web interface and saved to NVS.
+
+                config MAIA_WIFI_STA_PASSWORD
+                    string "Server WiFi Password"
+                    default ""
+                    help
+                        Password of the WiFi network to connect.
+                        Configured via web interface and saved to NVS.
+
+                config MAIA_WIFI_SYNC_INTERVAL_MIN
+                    int "Data sync interval (minutes)"
+                    default 10
+                    range 1 1440
+                    help
+                        How often to connect and sync data with server.
+            endmenu
+
+            menu "Button Triggers"
+                config MAIA_BUTTON_AP_MODE_HOLD_MS
+                    int "Button hold time to enter AP mode (ms)"
+                    default 30000
+                    range 1000 60000
+                    help
+                        Hold button for this duration to start Access Point mode.
+
+                config MAIA_LED_BLINK_FREQ_AP_HZ
+                    int "LED blink frequency in AP mode (Hz)"
+                    default 10
+                    range 1 100
+                    help
+                        LED blink frequency when device is in AP mode.
+
+                config MAIA_BUTTON_STA_MODE_HOLD_MS
+                    int "Button hold time to enter Station mode (ms)"
+                    default 10000
+                    range 1000 60000
+                    help
+                        Hold button again for this duration to connect to 
+                        configured WiFi network (after web configuration).
+
+                config MAIA_LED_BLINK_FREQ_STA_HZ
+                    int "LED blink frequency in Station mode (Hz)"
+                    default 10
+                    range 1 100
+                    help
+                        LED blink frequency when device is in Station mode.
+            endmenu
+
+        endmenu
+
+    endmenu
+
+    menu "GPIO Configuration"
+
+        menu "Haptic Motors (ERM)"
+
+            menu "Haptic Motor Right"
+                config MAIA_PWM_FREQ_MOTOR_RIGHT
+                    int "PWM frequency (Hz)"
+                    default 1000
+                    range 100 10000
+                    help
+                        PWM frequency for right haptic motor control.
+            endmenu
+
+            menu "Haptic Motor Left"
+                config MAIA_PWM_FREQ_MOTOR_LEFT
+                    int "PWM frequency (Hz)"
+                    default 1000
+                    range 100 10000
+                    help
+                        PWM frequency for left haptic motor control.
+            endmenu
+
+        endmenu
+
+        menu "Button Configuration"
+            config MAIA_BUTTON_DEBOUNCE_MS
+                int "Debounce time (ms)"
+                default 50
+                range 10 500
+                help
+                    Button debounce delay in milliseconds.
+
+            config MAIA_BUTTON_LONG_PRESS_MS
+                int "Long press threshold (ms)"
+                default 2000
+                range 500 10000
+                help
+                    Time to trigger long press event.
+        endmenu
+
+        menu "LEDs Configuration"
+            choice MAIA_LED_STATUS_GPIO
+                prompt "Status LED GPIO"
+                default MAIA_LED_GPIO_21
+                help
+                    Select which GPIO to use for status LED.
+
+                config MAIA_LED_GPIO_21
+                    bool "GPIO21 (Onboard RGB LED)"
+                    help
+                        Use onboard RGB LED (not accessible externally).
+
+                config MAIA_LED_GPIO_39
+                    bool "GPIO39 (MTCK - External)"
+                    help
+                        Use GPIO39 for external LED (requires soldering).
+            endchoice
+
+            config MAIA_LED_STATUS_PIN
+                int
+                default 21 if MAIA_LED_GPIO_21
+                default 39 if MAIA_LED_GPIO_39
+        endmenu
+
+    endmenu
+
+    menu "Bus Configuration"
+
+        config MAIA_I2C_FREQ_HZ
+            int "I2C bus frequency (Hz)"
+            default 400000
+            range 100000 1000000
+            help
+                I2C SCL clock frequency (standard: 100kHz, fast: 400kHz).
+
+        menu "I2C Devices"
+
+            menu "Motor Driver (DRV2605L)"
+                config MAIA_DRV2605L_ENABLE
+                    bool "Enable DRV2605L driver"
+                    default y
+                    help
+                        Enable haptic motor driver (center motor).
+
+                config MAIA_DRV2605L_I2C_ADDR
+                    hex "I2C address"
+                    default 0x5A
+                    depends on MAIA_DRV2605L_ENABLE
+            endmenu
+
+            menu "Display (SSD1306)"
+                config MAIA_SSD1306_ENABLE
+                    bool "Enable SSD1306 OLED"
+                    default y
+                    help
+                        Enable OLED display driver.
+
+                config MAIA_SSD1306_I2C_ADDR
+                    hex "I2C address"
+                    default 0x3C
+                    depends on MAIA_SSD1306_ENABLE
+
+                config MAIA_SSD1306_CONTRAST
+                    int "Display contrast (%)"
+                    default 100
+                    range 0 100
+                    depends on MAIA_SSD1306_ENABLE
+                    help
+                        OLED display contrast level (0-100%).
+            endmenu
+
+            menu "IMU (MPU6050)"
+                config MAIA_MPU6050_ENABLE
+                    bool "Enable MPU6050 IMU"
+                    default y
+                    help
+                        Enable IMU (accelerometer + gyroscope).
+
+                config MAIA_MPU6050_I2C_ADDR
+                    hex "I2C address"
+                    default 0x68
+                    depends on MAIA_MPU6050_ENABLE
+            endmenu
+
+            menu "LiDAR (VL53L5CX)"
+                config MAIA_VL53L5CX_ENABLE
+                    bool "Enable VL53L5CX ToF sensors"
+                    default y
+                    help
+                        Enable Time-of-Flight sensors for obstacle detection.
+
+                config MAIA_VL53L5CX_LEFT_I2C_ADDR
+                    hex "Left sensor I2C address"
+                    default 0x54
+                    depends on MAIA_VL53L5CX_ENABLE
+
+                config MAIA_VL53L5CX_RIGHT_I2C_ADDR
+                    hex "Right sensor I2C address"
+                    default 0x52
+                    depends on MAIA_VL53L5CX_ENABLE
+
+                config MAIA_VL53L5CX_FILTER_STATUS_5
+                    bool "Filter target status 5 (Threshold fail)"
+                    default y
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Filter false positives in bright sunlight.
+
+                config MAIA_VL53L5CX_FILTER_STATUS_6
+                    bool "Filter target status 6 (Signal fail)"
+                    default y
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Filter invalid readings with no return signal.
+            endmenu
+
+        endmenu
+
+        menu "OneWire Devices"
+
+            menu "Temperature Sensor (DS18B20)"
+                config MAIA_DS18B20_ENABLE
+                    bool "Enable DS18B20 sensor"
+                    default y
+                    help
+                        Enable temperature monitoring.
+            endmenu
+
+        endmenu
+
+    endmenu
+
+endmenu

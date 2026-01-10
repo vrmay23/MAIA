@@ -15,10 +15,10 @@
  */
 
 /****************************************************************************
- * components/maia_board/src/maia_onewire.c
+ * components/maia_board/src/maia_led.c
  *
  * MAIA - Motion Assistance for Impaired Animals
- * OneWire bus initialization for DS18B20 temperature sensor
+ * Status LED control
  *
  ****************************************************************************/
 
@@ -27,24 +27,36 @@
  ****************************************************************************/
 
 #include "maia_board.h"
-#include <esp_log.h>
-
-/****************************************************************************
- * Pre-processor Definitions
- ****************************************************************************/
-
-#define TAG "[MAIA_ONEWIRE]"
+#include <driver/gpio.h>
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: maia_onewire_init
+ * Name: maia_led_set
  *
  * Description:
- *   Initialize OneWire bus on GPIO3 for DS18B20 temperature sensor.
- *   External 4.7k pull-up resistor required.
+ *   Set status LED on or off.
+ *
+ * Input Parameters:
+ *   state - true for ON, false for OFF
+ *
+ * Returned Value:
+ *   ESP_OK on success; ESP_FAIL on failure.
+ *
+ ****************************************************************************/
+
+esp_err_t maia_led_set(bool state)
+{
+  return gpio_set_level(MAIA_GPIO_LED_STATUS, state ? 1 : 0);
+}
+
+/****************************************************************************
+ * Name: maia_led_toggle
+ *
+ * Description:
+ *   Toggle status LED state.
  *
  * Input Parameters:
  *   None
@@ -54,22 +66,8 @@
  *
  ****************************************************************************/
 
-#ifdef CONFIG_MAIA_DS18B20_ENABLE
-esp_err_t maia_onewire_init(void)
+esp_err_t maia_led_toggle(void)
 {
-  ESP_LOGI(TAG, "Initializing OneWire bus (GPIO%d)", MAIA_GPIO_ONEWIRE);
-
-  /* TODO: Initialize OneWire driver
-   * Options:
-   * 1. Use ESP-IDF RMT peripheral for precise timing
-   * 2. Use bit-banging with GPIO
-   * 3. Use external library (e.g., esp-idf-ds18b20)
-   *
-   * For now, just reserve the GPIO. Driver init in ds18b20 component.
-   */
-
-  ESP_LOGI(TAG, "OneWire bus configured (driver init in ds18b20)");
-
-  return ESP_OK;
+  int level = gpio_get_level(MAIA_GPIO_LED_STATUS);
+  return gpio_set_level(MAIA_GPIO_LED_STATUS, !level);
 }
-#endif
