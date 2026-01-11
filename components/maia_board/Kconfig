@@ -1,10 +1,38 @@
 menu "MAIA Board Configuration"
 
-    config MAIA_TEST_BLINK
-        bool "Enable blink test (disable MAIA App)"
-        default n
-        help
-            Simple LED blink for hardware testing.
+    menu "Tests Configuration"
+        
+        config MAIA_TEST_ENABLE
+            bool "Enable test mode (disable MAIA App)"
+            default n
+            help
+                Enable one of the available hardware tests below.
+                When enabled, the selected test runs instead of the main app.
+
+        choice MAIA_TEST_SELECT
+            prompt "Select test to run"
+            depends on MAIA_TEST_ENABLE
+            default MAIA_TEST_BLINK
+            help
+                Choose which test to run when test mode is enabled.
+
+            config MAIA_TEST_BLINK
+                bool "LED Blink Test"
+                help
+                    Simple LED blink test for hardware validation.
+
+            config MAIA_TEST_BUTTON
+                bool "Button Driver Test"
+                help
+                    Test button driver with all events:
+                    - PRESSED/RELEASED
+                    - SINGLE_CLICK/DOUBLE_CLICK
+                    - LONG_PRESS
+                    - EXTRA_LONG_PRESS_1/2
+
+        endchoice
+
+    endmenu
 
     menu "General Configuration"
 
@@ -156,6 +184,13 @@ menu "MAIA Board Configuration"
                     default "maiamute2026"
                     help
                         Password for the Access Point (min 8 chars).
+
+                config MAIA_LED_BLINK_FREQ_AP_HZ
+                    int "LED blink frequency in AP mode (Hz)"
+                    default 10
+                    range 1 100
+                    help
+                        LED blink frequency when device is in AP mode.
             endmenu
 
             menu "Server (Station Mode)"
@@ -179,30 +214,6 @@ menu "MAIA Board Configuration"
                     range 1 1440
                     help
                         How often to connect and sync data with server.
-            endmenu
-
-            menu "Button Triggers"
-                config MAIA_BUTTON_AP_MODE_HOLD_MS
-                    int "Button hold time to enter AP mode (ms)"
-                    default 30000
-                    range 1000 60000
-                    help
-                        Hold button for this duration to start Access Point mode.
-
-                config MAIA_LED_BLINK_FREQ_AP_HZ
-                    int "LED blink frequency in AP mode (Hz)"
-                    default 10
-                    range 1 100
-                    help
-                        LED blink frequency when device is in AP mode.
-
-                config MAIA_BUTTON_STA_MODE_HOLD_MS
-                    int "Button hold time to enter Station mode (ms)"
-                    default 10000
-                    range 1000 60000
-                    help
-                        Hold button again for this duration to connect to 
-                        configured WiFi network (after web configuration).
 
                 config MAIA_LED_BLINK_FREQ_STA_HZ
                     int "LED blink frequency in Station mode (Hz)"
@@ -246,14 +257,39 @@ menu "MAIA Board Configuration"
                 default 50
                 range 10 500
                 help
-                    Button debounce delay in milliseconds.
+                    Hardware debounce time to filter electrical noise.
+
+            config MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS
+                int "Double click window (ms)"
+                default 500
+                range 100 1000
+                help
+                    Maximum time between two clicks to detect double-click.
 
             config MAIA_BUTTON_LONG_PRESS_MS
-                int "Long press threshold (ms)"
+                int "Long press duration (ms)"
                 default 2000
                 range 500 10000
                 help
-                    Time to trigger long press event.
+                    Hold button for this duration to trigger long press event.
+
+            config MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS
+                int "Extra long press 1 duration (ms)"
+                default 7000
+                range 3000 60000
+                help
+                    Hold button for this duration to trigger extra long press 1.
+                    Typically used for WiFi Client/Station mode activation.
+                    Must be greater than Long press duration.
+
+            config MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS
+                int "Extra long press 2 duration (ms)"
+                default 12000
+                range 5000 60000
+                help
+                    Hold button for this duration to trigger extra long press 2.
+                    Typically used for WiFi AP mode activation.
+                    Must be greater than Extra long press 1 duration.
         endmenu
 
         menu "LEDs Configuration"
@@ -282,7 +318,7 @@ menu "MAIA Board Configuration"
 
     endmenu
 
-    menu "Bus Configuration"
+    menu "Devices Configuration"
 
         config MAIA_I2C_FREQ_HZ
             int "I2C bus frequency (Hz)"

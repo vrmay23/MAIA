@@ -1,9 +1,127 @@
+================================================================================
+MAIA PROJECT - RELEASE NOTES
+================================================================================
+
+Date: 2026-01-11
+Author: Vinicius May
+Component: Button Driver
+Version: v0.1.0
+branch: branch: 2026_01_10__driver_button
+
+SUMMARY:
+Implemented a robust button driver with state machine, debouncing, and 
+comprehensive event detection including single/double clicks, long press, and 
+extra long press events for WiFi mode triggers.
+
+TECHNICAL DETAILS:
+- State machine with 5 states (IDLE, DEBOUNCING_PRESS, PRESSED, 
+  DEBOUNCING_RELEASE, WAIT_DOUBLE_CLICK)
+- Hardware debouncing (configurable, default 50ms)
+- Three cascading ESP timers for event detection
+- ISR-based GPIO interrupt handling with ANY_EDGE detection
+- Active-low button configuration (GPIO9) with external pull-up
+
+EVENT DETECTION:
+- PRESSED/RELEASED: Immediate physical state changes
+- SINGLE_CLICK: Short press (< 2s) with no second click within 500ms
+- DOUBLE_CLICK: Two presses within configurable window (default 500ms)
+- LONG_PRESS: Hold for 2s (configurable)
+- EXTRA_LONG_PRESS_1: Hold for 7s (configurable, intended for WiFi Client mode)
+- EXTRA_LONG_PRESS_2: Hold for 12s (configurable, intended for WiFi AP mode)
+
+CONFIGURATION:
+All timing parameters configurable via Kconfig:
+- MAIA_BUTTON_DEBOUNCE_MS (10-500ms, default 50ms)
+- MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS (100-1000ms, default 500ms)
+- MAIA_BUTTON_LONG_PRESS_MS (500-10000ms, default 2000ms)
+- MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS (3000-60000ms, default 7000ms)
+- MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS (5000-60000ms, default 12000ms)
+
+ARCHITECTURE:
+- Driver: components/drivers/button/ (generic, hardware-agnostic)
+- BSP: components/maia_board/src/maia_gpio.c (GPIO ISR service installation)
+- Test: main/tests/test_button.c (comprehensive validation)
+- Integration: Callback-based event notification system
+
+FILES MODIFIED:
+- components/maia_board/Kconfig (added Button Configuration menu)
+- components/maia_board/src/maia_gpio.c (added gpio_install_isr_service)
+- components/drivers/CMakeLists.txt (wrapper component for drivers)
+- main/CMakeLists.txt (conditional test compilation)
+- main/main.c (test mode selection)
+
+FILES CREATED:
+- components/drivers/button/include/button.h (public API)
+- components/drivers/button/src/button.c (~450 lines, state machine)
+- main/tests/test_button.c (driver validation)
+- main/tests/test_blink.c (LED hardware test)
+- main/tests/tests.h (test suite interface)
+
+DEPENDENCIES:
+- ESP-IDF driver component (GPIO, esp_timer)
+- maia_board component (hardware abstraction)
+- FreeRTOS (task delay in tests)
+
+VALIDATION:
+✓ All 7 events tested and working correctly
+✓ Debouncing eliminates electrical noise
+✓ Cascading timer efficiently handles multiple thresholds
+✓ LED feedback on PRESSED/RELEASED events
+✓ No false triggers or missed events
+✓ Configurable via menuconfig without recompilation
+
+FUTURE ENHANCEMENTS:
+- WiFi manager service to consume EXTRA_LONG_PRESS events
+- Visual feedback patterns for different events (LED blink patterns)
+- NVS storage for dynamic timing configuration
+- Multi-button support (if hardware expansion needed)
+
+TESTING NOTES:
+Hardware setup: GPIO9 (D10) connected to momentary push button with pull-up
+Test scenarios validated:
+- Single press/release
+- Double click (< 500ms between presses)  
+- Long press (2s hold)
+- Extra long press 1 (7s hold)
+- Extra long press 2 (12s hold)
+- Button bouncing filtered correctly
+
+KNOWN LIMITATIONS:
+- Single button only (GPIO9 hardcoded in BSP)
+- External pull-up required (10kΩ recommended)
+- ISR service must be installed before button_init()
+- Callback cannot be NULL (checked at init)
+
+COMMIT MESSAGE:
+feat(button): implement complete button driver with state machine
+
+- Add button driver with debouncing and event detection
+- Support 7 event types: PRESSED, RELEASED, SINGLE_CLICK, DOUBLE_CLICK,
+  LONG_PRESS, EXTRA_LONG_PRESS_1, EXTRA_LONG_PRESS_2
+- Implement cascading ESP timers for efficient threshold detection
+- Add Kconfig menu for all timing parameters
+- Create test framework with LED feedback
+- Install GPIO ISR service in maia_gpio.c
+- Use wrapper component architecture for drivers
+
+Closes: MAIA-001
+Tested-by: Vinicius May
+Hardware: XIAO ESP32S3 Plus
+
+================================================================================
+
+
 ==============================================================================
 branch: 2026_01_10__Menuconfig_refinements
 changes:
 
-Mudanças Detalhadas do Projeto MAIA
-1. Estrutura do Menuconfig - MAIA Board Configuration
+================================================================================
+MAIA PROJECT - DETAILED CHANGES
+================================================================================
+
+1. Menuconfig Structure - MAIA Board Configuration
+================================================================================
+
 MAIA Board Configuration
 │
 ├── [x] Enable blink test (disable MAIA App)
@@ -119,237 +237,317 @@ MAIA Board Configuration
         └── Temperature Sensor (DS18B20) ───>
             └── [x] Enable DS18B20 sensor
 
-2. Arquivos Criados
-2.1. components/maia_board/Kconfig
-Arquivo completo novo com toda estrutura do menuconfig acima.
-Principais símbolos criados:
+================================================================================
+2. Files Created
+================================================================================
 
-CONFIG_MAIA_LOG_GENERAL_CONFIG
-CONFIG_MAIA_TIMEOUT_SYNC_DATA_MIN
-CONFIG_MAIA_TIMEOUT_DISPLAY_OFF_SEC
-CONFIG_MAIA_TIMEOUT_DISPLAY_SCREEN_SEC
-CONFIG_MAIA_SW_VERSION_MAJOR/MINOR/PATCH
-CONFIG_MAIA_ANIMAL_* (8 símbolos)
-CONFIG_MAIA_TUTOR_* (9 símbolos)
-CONFIG_MAIA_WIFI_AP_SSID/PASSWORD
-CONFIG_MAIA_WIFI_STA_SSID/PASSWORD
-CONFIG_MAIA_WIFI_SYNC_INTERVAL_MIN
-CONFIG_MAIA_BUTTON_AP_MODE_HOLD_MS
-CONFIG_MAIA_LED_BLINK_FREQ_AP_HZ
-CONFIG_MAIA_BUTTON_STA_MODE_HOLD_MS
-CONFIG_MAIA_LED_BLINK_FREQ_STA_HZ
-CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT/RIGHT
-CONFIG_MAIA_BUTTON_DEBOUNCE_MS
-CONFIG_MAIA_BUTTON_LONG_PRESS_MS
-CONFIG_MAIA_LED_GPIO_21 ou CONFIG_MAIA_LED_GPIO_39
-CONFIG_MAIA_LED_STATUS_PIN
-CONFIG_MAIA_I2C_FREQ_HZ
-CONFIG_MAIA_*_ENABLE (5 dispositivos)
-CONFIG_MAIA_*_I2C_ADDR (6 endereços)
-CONFIG_MAIA_SSD1306_CONTRAST
-CONFIG_MAIA_VL53L5CX_FILTER_STATUS_5/6
+2.1. components/maia_board/Kconfig
+───────────────────────────────────
+Brand new complete file with all menuconfig structure above.
+
+Main symbols created:
+- CONFIG_MAIA_LOG_GENERAL_CONFIG
+- CONFIG_MAIA_TIMEOUT_SYNC_DATA_MIN
+- CONFIG_MAIA_TIMEOUT_DISPLAY_OFF_SEC
+- CONFIG_MAIA_TIMEOUT_DISPLAY_SCREEN_SEC
+- CONFIG_MAIA_SW_VERSION_MAJOR/MINOR/PATCH
+- CONFIG_MAIA_ANIMAL_* (8 symbols)
+- CONFIG_MAIA_TUTOR_* (9 symbols)
+- CONFIG_MAIA_WIFI_AP_SSID/PASSWORD
+- CONFIG_MAIA_WIFI_STA_SSID/PASSWORD
+- CONFIG_MAIA_WIFI_SYNC_INTERVAL_MIN
+- CONFIG_MAIA_BUTTON_AP_MODE_HOLD_MS
+- CONFIG_MAIA_LED_BLINK_FREQ_AP_HZ
+- CONFIG_MAIA_BUTTON_STA_MODE_HOLD_MS
+- CONFIG_MAIA_LED_BLINK_FREQ_STA_HZ
+- CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT/RIGHT
+- CONFIG_MAIA_BUTTON_DEBOUNCE_MS
+- CONFIG_MAIA_BUTTON_LONG_PRESS_MS
+- CONFIG_MAIA_LED_GPIO_21 or CONFIG_MAIA_LED_GPIO_39
+- CONFIG_MAIA_LED_STATUS_PIN
+- CONFIG_MAIA_I2C_FREQ_HZ
+- CONFIG_MAIA_*_ENABLE (5 devices)
+- CONFIG_MAIA_*_I2C_ADDR (6 addresses)
+- CONFIG_MAIA_SSD1306_CONTRAST
+- CONFIG_MAIA_VL53L5CX_FILTER_STATUS_5/6
 
 2.2. components/maia_board/src/maia_config.c
-Arquivo novo - 119 linhas
-Propósito: Logar todas configurações gerais no startup
-Estrutura:
-c- Header Apache 2.0
+─────────────────────────────────────────────
+New file - 119 lines
+
+Purpose: Log all general configurations at startup
+
+Structure:
+- Apache 2.0 header
 - Includes: maia_board.h, esp_log.h
 - TAG: "[MAIA_CONFIG]"
-- Função: maia_config_log()
-  └── Protegida por #ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
-  └── Loga:
+- Function: maia_config_log()
+  └── Protected by #ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
+  └── Logs:
       - Software version (v{major}.{minor}.{patch})
-      - Timeouts (3 valores)
-      - Animal info (8 campos)
-      - Tutor info (9 campos)
-Dependências:
+      - Timeouts (3 values)
+      - Animal info (8 fields)
+      - Tutor info (9 fields)
 
-Chamada em maia_board.c
-Protótipo em maia_board.h
+Dependencies:
+- Called in maia_board.c
+- Prototype in maia_board.h
 
 2.3. components/maia_board/src/maia_led.c
-Arquivo novo - 75 linhas
-Propósito: Controle do LED de status (set/toggle)
-Estrutura:
-c- Header Apache 2.0
+──────────────────────────────────────────
+New file - 75 lines
+
+Purpose: Status LED control (set/toggle)
+
+Structure:
+- Apache 2.0 header
 - Includes: maia_board.h, driver/gpio.h
-- Funções:
+- Functions:
   1. maia_led_set(bool state)
-     └── Liga/desliga LED via gpio_set_level()
+     └── Turn LED on/off via gpio_set_level()
   
   2. maia_led_toggle(void)
-     └── Inverte estado do LED via gpio_get_level() + gpio_set_level()
-IMPORTANTE: A inicialização do GPIO do LED foi movida para maia_gpio.c
+     └── Toggle LED state via gpio_get_level() + gpio_set_level()
 
-3. Arquivos Modificados
+IMPORTANT: LED GPIO initialization was moved to maia_gpio.c
+
+================================================================================
+3. Files Modified
+================================================================================
+
 3.1. main/Kconfig.projbuild
-Mudança: Adicionada linha para incluir Kconfig do maia_board
-Antes:
-kconfigmenu "MAIA_BOARD"
+────────────────────────────
+Change: Added line to include maia_board Kconfig
+
+BEFORE:
+```kconfig
+menu "MAIA_BOARD"
     config MAIA_TEST_BLINK
         bool "Enable blink test (disable Maia App)"
         default n
 endmenu
-Depois:
-kconfigmenu "MAIA_BOARD"
+```
+
+AFTER:
+```kconfig
+menu "MAIA_BOARD"
     config MAIA_TEST_BLINK
         bool "Enable blink test (disable Maia App)"
         default n
 endmenu
 
 rsource "../components/maia_board/Kconfig"
+```
+
 3.2. components/maia_board/include/maia_board.h
-Mudanças detalhadas:
-A) Seção de defines - Novos símbolos do Kconfig:
+────────────────────────────────────────────────
+Detailed changes:
+
+A) Defines section - New Kconfig symbols:
+
 I2C Bus:
-c// ANTES:
+```c
+// BEFORE:
 #define MAIA_I2C_FREQ_HZ            400000
 
-// DEPOIS:
+// AFTER:
 #define MAIA_I2C_FREQ_HZ            CONFIG_MAIA_I2C_FREQ_HZ
+```
+
 PWM Motors:
-c// ANTES:
+```c
+// BEFORE:
 #define MAIA_PWM_FREQ_HZ            1000
 #define MAIA_PWM_TIMER              LEDC_TIMER_0
 
-// DEPOIS:
+// AFTER:
 #define MAIA_PWM_FREQ_MOTOR_LEFT    CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT
 #define MAIA_PWM_FREQ_MOTOR_RIGHT   CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT
 #define MAIA_PWM_TIMER_LEFT         LEDC_TIMER_0
 #define MAIA_PWM_TIMER_RIGHT        LEDC_TIMER_1
-Status LED (NOVO):
-c/* Status LED */
+```
+
+Status LED (NEW):
+```c
+/* Status LED */
 #define MAIA_GPIO_LED_STATUS        CONFIG_MAIA_LED_STATUS_PIN
+```
+
 I2C Device Addresses:
-c// ANTES (hardcoded):
+```c
+// BEFORE (hardcoded):
 #define MAIA_I2C_ADDR_SSD1306       0x3C
 #define MAIA_I2C_ADDR_TOF1          0x54
 #define MAIA_I2C_ADDR_TOF2          0x52
 #define MAIA_I2C_ADDR_DRV2605L      0x5A
 #define MAIA_I2C_ADDR_MPU6050       0x68
 
-// DEPOIS (do Kconfig):
+// AFTER (from Kconfig):
 #define MAIA_I2C_ADDR_SSD1306       CONFIG_MAIA_SSD1306_I2C_ADDR
 #define MAIA_I2C_ADDR_TOF1          CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR
 #define MAIA_I2C_ADDR_TOF2          CONFIG_MAIA_VL53L5CX_RIGHT_I2C_ADDR
 #define MAIA_I2C_ADDR_DRV2605L      CONFIG_MAIA_DRV2605L_I2C_ADDR
 #define MAIA_I2C_ADDR_MPU6050       CONFIG_MAIA_MPU6050_I2C_ADDR
-B) Protótipos adicionados:
-Após maia_board_init():
-c#ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
+```
+
+B) Prototypes added:
+
+After maia_board_init():
+```c
+#ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
 void maia_config_log(void);
 #endif
-Após maia_onewire_init():
-cesp_err_t maia_led_set(bool state);
+```
+
+After maia_onewire_init():
+```c
+esp_err_t maia_led_set(bool state);
 esp_err_t maia_led_toggle(void);
+```
+
 3.3. components/maia_board/src/maia_board.c
-Mudança: Adicionada chamada ao maia_config_log()
-Localização: Logo após ESP_LOGI(TAG, "============ Initializing MAIA board ============");
-cesp_err_t maia_board_init(void)
+────────────────────────────────────────────
+Change: Added call to maia_config_log()
+
+Location: Right after ESP_LOGI(TAG, "============ Initializing MAIA board ============");
+```c
+esp_err_t maia_board_init(void)
 {
   esp_err_t ret;
-
+  
   ESP_LOGI(TAG, "============ Initializing MAIA board ============");
-
-  // NOVO:
+  
+  // NEW:
 #ifdef CONFIG_MAIA_LOG_GENERAL_CONFIG
   maia_config_log();
 #endif
 
   /* Initialize GPIO pins */
   ret = maia_gpio_init();
-  // ... resto do código
+  
+  // ... rest of the code
 }
+```
+
 3.4. components/maia_board/src/maia_gpio.c
-Mudanças:
-A) VL53L5CX wrapping com ifdef:
-c// ANTES:
+───────────────────────────────────────────
+Changes:
+
+A) VL53L5CX wrapping with ifdef:
+```c
+// BEFORE:
 io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_TOF1_LPN) | ...
 
-// DEPOIS:
+// AFTER:
 #ifdef CONFIG_MAIA_VL53L5CX_ENABLE
   io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_TOF1_LPN) | ...
-  // ... todo código dos ToF
+  // ... all ToF code
 #endif
-B) MPU6050 wrapping com ifdef:
-c// ANTES:
+```
+
+B) MPU6050 wrapping with ifdef:
+```c
+// BEFORE:
 io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_IMU_INT);
 
-// DEPOIS:
+// AFTER:
 #ifdef CONFIG_MAIA_MPU6050_ENABLE
   io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_IMU_INT);
-  // ... todo código do IMU
+  // ... all IMU code
 #endif
-C) Inicialização do LED Status (NOVO):
-Adicionado ao final, antes do ESP_LOGI(TAG, "GPIO pins initialized successfully");
-c  /*
+```
+
+C) Status LED initialization (NEW):
+Added at the end, before ESP_LOGI(TAG, "GPIO pins initialized successfully");
+```c
+  /*
    * Status LED
    * * * * * * * * * * * * * * * */
-
+  
   /* Output pin for status indication */
-
+  
   io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_LED_STATUS);
   io_conf.intr_type = GPIO_INTR_DISABLE;
   io_conf.mode = GPIO_MODE_OUTPUT;
   io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
   io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
-
+  
   ret = gpio_config(&io_conf);
   if (ret != ESP_OK)
     {
       ESP_LOGE(TAG, "Failed to configure status LED pin");
       return ret;
     }
-
+  
   gpio_set_level(MAIA_GPIO_LED_STATUS, 0);         /* Start with LED off */
-D) Atualização da descrição da função:
-c// ANTES:
+```
+
+D) Function description update:
+```c
+// BEFORE:
  *   - Button  pin  (input, external pull-up)
 
-// DEPOIS:
+// AFTER:
  *   - Button  pin  (input, external pull-up)
  *   - Status LED   (output)
+```
+
 3.5. components/maia_board/src/maia_i2c.c
-Mudança: NENHUMA
-Motivo: Já usava MAIA_I2C_FREQ_HZ do header, que agora aponta para o Kconfig
+──────────────────────────────────────────
+Change: NONE
+
+Reason: Already used MAIA_I2C_FREQ_HZ from header, which now points to Kconfig
+
 3.6. components/maia_board/src/maia_onewire.c
-Mudança: Wrapping completo com ifdef
-c// ANTES:
+──────────────────────────────────────────────
+Change: Complete wrapping with ifdef
+```c
+// BEFORE:
 esp_err_t maia_onewire_init(void)
 {
   ESP_LOGI(TAG, "Initializing OneWire bus (GPIO%d)", MAIA_GPIO_ONEWIRE);
-  // ... código
+  // ... code
   return ESP_OK;
 }
 
-// DEPOIS:
+// AFTER:
 #ifdef CONFIG_MAIA_DS18B20_ENABLE
 esp_err_t maia_onewire_init(void)
 {
   ESP_LOGI(TAG, "Initializing OneWire bus (GPIO%d)", MAIA_GPIO_ONEWIRE);
-  // ... código
+  // ... code
   return ESP_OK;
 }
 #endif
+```
+
 3.7. components/maia_board/src/maia_pwm.c
-Mudanças principais:
-A) Remoção do define hardcoded:
-c// ANTES:
+──────────────────────────────────────────
+Main changes:
+
+A) Removed hardcoded define:
+```c
+// BEFORE:
 #define MAIA_PWM_FREQ_HZ CONFIG_MAIA_PWM_FREQ_HZ
 
-// DEPOIS:
-(removido - agora vem direto do header)
-B) Log de inicialização:
-c// ANTES:
+// AFTER:
+(removed - now comes directly from header)
+```
+
+B) Initialization log:
+```c
+// BEFORE:
 ESP_LOGI(TAG, "Initializing PWM (freq=%dHz, res=%d-bit)",
          MAIA_PWM_FREQ_HZ, MAIA_PWM_RESOLUTION);
 
-// DEPOIS:
+// AFTER:
 ESP_LOGI(TAG, "Initializing PWM (freq=%dHz, res=%d-bit)",
          MAIA_PWM_FREQ_MOTOR_LEFT, MAIA_PWM_RESOLUTION);
-C) Dois timers LEDC separados:
-c// ANTES (1 timer):
+```
+
+C) Two separate LEDC timers:
+```c
+// BEFORE (1 timer):
 ledc_timer_config_t timer_conf = {
     .speed_mode = MAIA_PWM_MODE,
     .duty_resolution = MAIA_PWM_RESOLUTION,
@@ -359,7 +557,7 @@ ledc_timer_config_t timer_conf = {
 };
 ret = ledc_timer_config(&timer_conf);
 
-// DEPOIS (2 timers):
+// AFTER (2 timers):
 /* Configure LEDC timer for Motor Left */
 ledc_timer_config_t timer_left = {
     .speed_mode = MAIA_PWM_MODE,
@@ -369,7 +567,8 @@ ledc_timer_config_t timer_left = {
     .clk_cfg = LEDC_AUTO_CLK,
 };
 ret = ledc_timer_config(&timer_left);
-// ... erro handling
+
+// ... error handling
 
 /* Configure LEDC timer for Motor Right */
 ledc_timer_config_t timer_right = {
@@ -380,15 +579,18 @@ ledc_timer_config_t timer_right = {
     .clk_cfg = LEDC_AUTO_CLK,
 };
 ret = ledc_timer_config(&timer_right);
-D) Channels agora referenciam seus respectivos timers:
-c// ANTES:
+```
+
+D) Channels now reference their respective timers:
+```c
+// BEFORE:
 ledc_channel_config_t ch_left = {
     // ...
     .timer_sel = MAIA_PWM_TIMER,
     // ...
 };
 
-// DEPOIS:
+// AFTER:
 ledc_channel_config_t ch_left = {
     // ...
     .timer_sel = MAIA_PWM_TIMER_LEFT,
@@ -400,16 +602,23 @@ ledc_channel_config_t ch_right = {
     .timer_sel = MAIA_PWM_TIMER_RIGHT,
     // ...
 };
-E) Atualização na descrição:
-c// ANTES:
+```
+
+E) Description update:
+```c
+// BEFORE:
  *   - Timer: 1kHz, 8-bit resolution (0-255 duty)
 
-// DEPOIS:
+// AFTER:
  *   - Timer Left:  Motor Left frequency, 8-bit resolution (0-255 duty)
  *   - Timer Right: Motor Right frequency, 8-bit resolution (0-255 duty)
+```
+
 3.8. components/maia_board/CMakeLists.txt
-Mudança: Adicionados novos arquivos fonte
-cmake# ANTES:
+──────────────────────────────────────────
+Change: Added new source files
+```cmake
+# BEFORE:
 idf_component_register(
     SRCS
         "src/maia_board.c"
@@ -423,16 +632,16 @@ idf_component_register(
         driver
 )
 
-# DEPOIS:
+# AFTER:
 idf_component_register(
     SRCS
-        "src/maia_config.c"       # NOVO
+        "src/maia_config.c"       # NEW
         "src/maia_board.c"
         "src/maia_i2c.c"
         "src/maia_gpio.c"
         "src/maia_pwm.c"
         "src/maia_onewire.c"
-        "src/maia_led.c"          # NOVO
+        "src/maia_led.c"          # NEW
     INCLUDE_DIRS
         "include"
     REQUIRES
@@ -440,44 +649,44 @@ idf_component_register(
 )
 ```
 
----
+================================================================================
+4. Initialization Flow
+================================================================================
 
-## 4. Fluxo de Inicialização
+Remains unchanged:
 
-**Permanece inalterado:**
-```
 app_main()
-  └── maia_board_init()
-      ├── [maia_config_log()]  ← NOVO (se CONFIG_MAIA_LOG_GENERAL_CONFIG=y)
-      ├── maia_gpio_init()     ← Agora inclui LED status
-      ├── maia_i2c_init()
-      ├── maia_pwm_init()      ← Agora com 2 timers
-      └── maia_onewire_init()  ← Agora condicional
-```
+└── maia_board_init()
+├── [maia_config_log()]  ← NEW (if CONFIG_MAIA_LOG_GENERAL_CONFIG=y)
+├── maia_gpio_init()     ← Now includes LED status
+├── maia_i2c_init()
+├── maia_pwm_init()      ← Now with 2 timers
+└── maia_onewire_init()  ← Now conditional
 
----
+================================================================================
+5. Line Count Added/Modified
+================================================================================
 
-## 5. Contagem de Linhas Adicionadas/Modificadas
+| File                 | Lines Before | Lines After | Delta |
+|----------------------|--------------|-------------|-------|
+| Kconfig              | 0 (new)      | 287         | +287  |
+| maia_config.c        | 0 (new)      | 119         | +119  |
+| maia_led.c           | 0 (new)      | 75          | +75   |
+| maia_board.h         | 205          | 228         | +23   |
+| maia_board.c         | 117          | 121         | +4    |
+| maia_gpio.c          | 182          | 205         | +23   |
+| maia_pwm.c           | 136          | 178         | +42   |
+| maia_onewire.c       | 60           | 62          | +2    |
+| CMakeLists.txt       | 11           | 13          | +2    |
+| Kconfig.projbuild    | 9            | 11          | +2    |
+| **TOTAL**            | **720**      | **1299**    | **+579** |
 
-| Arquivo | Linhas Antes | Linhas Depois | Delta |
-|---------|--------------|---------------|-------|
-| `Kconfig` | 0 (novo) | 287 | +287 |
-| `maia_config.c` | 0 (novo) | 119 | +119 |
-| `maia_led.c` | 0 (novo) | 75 | +75 |
-| `maia_board.h` | 205 | 228 | +23 |
-| `maia_board.c` | 117 | 121 | +4 |
-| `maia_gpio.c` | 182 | 205 | +23 |
-| `maia_pwm.c` | 136 | 178 | +42 |
-| `maia_onewire.c` | 60 | 62 | +2 |
-| `CMakeLists.txt` | 11 | 13 | +2 |
-| `Kconfig.projbuild` | 9 | 11 | +2 |
-| **TOTAL** | **720** | **1299** | **+579** |
+================================================================================
+6. Kconfig Symbols Created (Total: 46)
+================================================================================
 
----
-
-## 6. Símbolos Kconfig Criados (Total: 46)
-
-### General Configuration (20):
+General Configuration (24):
+──────────────────────────
 - CONFIG_MAIA_LOG_GENERAL_CONFIG
 - CONFIG_MAIA_TIMEOUT_SYNC_DATA_MIN
 - CONFIG_MAIA_TIMEOUT_DISPLAY_OFF_SEC
@@ -503,7 +712,8 @@ app_main()
 - CONFIG_MAIA_TUTOR_CITY
 - CONFIG_MAIA_TUTOR_STREET
 
-### Radio Configuration (8):
+Radio Configuration (9):
+─────────────────────────
 - CONFIG_MAIA_WIFI_AP_SSID
 - CONFIG_MAIA_WIFI_AP_PASSWORD
 - CONFIG_MAIA_WIFI_STA_SSID
@@ -514,7 +724,8 @@ app_main()
 - CONFIG_MAIA_BUTTON_STA_MODE_HOLD_MS
 - CONFIG_MAIA_LED_BLINK_FREQ_STA_HZ
 
-### GPIO Configuration (6):
+GPIO Configuration (6):
+───────────────────────
 - CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT
 - CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT
 - CONFIG_MAIA_BUTTON_DEBOUNCE_MS
@@ -522,7 +733,8 @@ app_main()
 - CONFIG_MAIA_LED_GPIO_21 / CONFIG_MAIA_LED_GPIO_39
 - CONFIG_MAIA_LED_STATUS_PIN
 
-### Bus Configuration (12):
+Bus Configuration (14):
+───────────────────────
 - CONFIG_MAIA_I2C_FREQ_HZ
 - CONFIG_MAIA_DRV2605L_ENABLE
 - CONFIG_MAIA_DRV2605L_I2C_ADDR
@@ -538,58 +750,55 @@ app_main()
 - CONFIG_MAIA_VL53L5CX_FILTER_STATUS_6
 - CONFIG_MAIA_DS18B20_ENABLE
 
----
-
-## 7. Dependências Entre Componentes
-```
+================================================================================
+7. Component Dependencies
+================================================================================
 maia_board.h
-    ↓
-    ├──> maia_board.c (chama maia_config_log)
-    ├──> maia_config.c (usa defines do Kconfig)
-    ├──> maia_gpio.c (inicializa LED status)
-    ├──> maia_led.c (controla LED)
-    ├──> maia_i2c.c
-    ├──> maia_pwm.c (usa 2 timers)
-    └──> maia_onewire.c (condicional)
-
+↓
+├──> maia_board.c (calls maia_config_log)
+├──> maia_config.c (uses Kconfig defines)
+├──> maia_gpio.c (initializes LED status)
+├──> maia_led.c (controls LED)
+├──> maia_i2c.c
+├──> maia_pwm.c (uses 2 timers)
+└──> maia_onewire.c (conditional)
 Kconfig
-    ↓
-    ├──> maia_board.h (defines)
-    └──> maia_config.c (loga valores)
+↓
+├──> maia_board.h (defines)
+└──> maia_config.c (logs values)
 
-8. Principais Conceitos Implementados
+================================================================================
+8. Main Concepts Implemented
+================================================================================
 
-Configurabilidade Total via Menuconfig
+Complete Configurability via Menuconfig
+────────────────────────────────────────
+- Hardware (I2C, PWM, GPIOs)
+- Peripherals (enable/disable devices)
+- Application (timeouts, WiFi modes)
+- Information (animal, tutor)
 
-Hardware (I2C, PWM, GPIOs)
-Periféricos (enable/disable devices)
-Aplicação (timeouts, WiFi modes)
-Informações (animal, tutor)
+Modularity
+──────────
+- Each peripheral can be enabled/disabled
+- Code wrapped in #ifdef
+ 
+Separation of Responsibilities
+───────────────────────────────
+- maia_gpio.c: GPIO initialization
+- maia_led.c: LED control (not initialization)
+- maia_config.c: Configuration logging
 
-
-Modularidade
-
-Cada periférico pode ser habilitado/desabilitado
-Código envolvido em #ifdef
-
-
-Separação de Responsabilidades
-
-maia_gpio.c: Inicialização de GPIOs
-maia_led.c: Controle do LED (não inicialização)
-maia_config.c: Logging de configurações
-
-
-Flexibilidade de Hardware
-
-LED status: escolha entre GPIO21 (onboard) ou GPIO39 (externo)
-PWM: frequências independentes para cada motor
-I2C: frequência configurável
-
+Hardware Flexibility
+────────────────────
+- Status LED: choose between GPIO21 (onboard) or GPIO39 (external)
+- PWM: independent frequencies for each motor
+- I2C: configurable frequency
 
 WiFi Dual Mode
+──────────────
+- AP Mode: ESP32 creates network for configuration
+- STA Mode: ESP32 connects to WiFi network for data sync
+- Configurable triggers via button
 
-AP Mode: ESP32 cria rede para configuração
-STA Mode: ESP32 conecta em rede WiFi para sync de dados
-Triggers configuráveis via botão
-==============================================================================
+================================================================================
