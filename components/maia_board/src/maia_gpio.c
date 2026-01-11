@@ -198,6 +198,22 @@ esp_err_t maia_gpio_init(void)
 
   gpio_set_level(MAIA_GPIO_LED_STATUS, 0);         /* Start with LED off */
 
+  /*
+   * Install GPIO ISR service (global, required for all interrupts)
+   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+  /* This service is shared by all GPIO interrupts in the system
+   * Must be called once before any gpio_isr_handler_add()
+   * ESP_ERR_INVALID_STATE returned if already installed (safe to ignore)
+   */
+
+  ret = gpio_install_isr_service(0);
+  if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE)
+    {
+      ESP_LOGE(TAG, "Failed to install GPIO ISR service");
+      return ret;
+    }
+
   ESP_LOGI(TAG, "GPIO pins initialized successfully");
 
   return ESP_OK;

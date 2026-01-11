@@ -15,10 +15,9 @@
  */
 
 /****************************************************************************
- * main/main.c
+ * main/tests/test_blink.c
  *
- * MAIA - Motion Assistance for Impaired Animals
- * Application entry point
+ * MAIA - LED blink test
  *
  ****************************************************************************/
 
@@ -26,54 +25,44 @@
  * Included Files
  ****************************************************************************/
 
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <driver/gpio.h>
 #include <esp_log.h>
 #include "maia_board.h"
-
-#ifdef CONFIG_MAIA_TEST_ENABLE
-#  include "tests/tests.h"
-#else
-#  include "app.h"
-#endif
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define TAG "[MAIN]"
+#define TAG "[TEST_BLINK]"
+#define LED_PIN CONFIG_MAIA_LED_STATUS_PIN
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: app_main
+ * Name: test_blink_run
  *
  * Description:
- *   Application entry point.
+ *   Run LED blink test. Simple hardware validation.
  *
  ****************************************************************************/
 
-void app_main(void)
+void test_blink_run(void)
 {
-#ifdef CONFIG_MAIA_TEST_ENABLE
+  ESP_LOGI(TAG, "=== LED Blink Test ===");
+  ESP_LOGI(TAG, "Blinking LED on GPIO%d", LED_PIN);
 
-  /* Test mode enabled */
+  gpio_reset_pin(LED_PIN);
+  gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-  ESP_LOGI(TAG, "=== MAIA MODE: TEST MODE ===");
-
-#ifdef CONFIG_MAIA_TEST_BLINK
-  test_blink_run();
-#elif defined(CONFIG_MAIA_TEST_BUTTON)
-  test_button_run();
-#endif
-
-#else
-
-  /* Normal application mode */
-
-  ESP_LOGI(TAG, "=== MAIA MODE: REAL APPLICATION ===");
-  maia_board_init();
-  app_init();
-
-#endif
+  while (1)
+    {
+      gpio_set_level(LED_PIN, 1);
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+      gpio_set_level(LED_PIN, 0);
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
 }
