@@ -12,6 +12,7 @@ set(MAIN_SRCS "main.c")
 if(CONFIG_MAIA_TEST_ENABLE)
     list(APPEND MAIN_SRCS "tests/test_blink.c")
     list(APPEND MAIN_SRCS "tests/test_button.c")
+    list(APPEND MAIN_SRCS "tests/test_ds18b20.c")
     # Add more test files here as needed:
     # list(APPEND MAIN_SRCS "tests/test_i2c.c")
     # list(APPEND MAIN_SRCS "tests/test_sensors.c")

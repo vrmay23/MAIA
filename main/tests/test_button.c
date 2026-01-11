@@ -115,10 +115,6 @@ void test_button_run(void)
   ESP_LOGI(TAG, "");
   ESP_LOGI(TAG, "Initializing board...");
 
-  /* Initialize board peripherals */
-
-  maia_board_init();
-
   /* Initialize button driver */
 
   esp_err_t ret = button_init(button_test_handler);

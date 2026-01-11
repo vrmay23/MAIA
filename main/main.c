@@ -60,11 +60,14 @@ void app_main(void)
   /* Test mode enabled */
 
   ESP_LOGI(TAG, "=== MAIA MODE: TEST MODE ===");
+  maia_board_init();
 
 #ifdef CONFIG_MAIA_TEST_BLINK
   test_blink_run();
 #elif defined(CONFIG_MAIA_TEST_BUTTON)
   test_button_run();
+#elif defined(CONFIG_MAIA_TEST_TEMPERATURE_SENSOR)
+  test_ds18b20_run();
 #endif
 
 #else

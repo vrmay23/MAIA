@@ -73,6 +73,15 @@ esp_err_t maia_board_init(void)
       ESP_LOGE(TAG, "Failed to initialize GPIO");
       return ret;
     }
+  
+  
+  /* Initialize LED */
+  ret = maia_led_init();
+  if (ret != ESP_OK)
+    {
+      ESP_LOGE(TAG, "Failed to initialize LED");
+      return ret;
+    }
 
   /* Initialize I2C bus */
 
