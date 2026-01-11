@@ -33,6 +33,42 @@
  * Public Functions
  ****************************************************************************/
 
+ /****************************************************************************
+ * Name: maia_led_init
+ *
+ * Description:
+ *   Initialize status LED GPIO.
+ *
+ * Input Parameters:
+ *   None
+ *
+ * Returned Value:
+ *   ESP_OK on success; ESP_FAIL on failure.
+ *
+ ****************************************************************************/
+
+esp_err_t maia_led_init(void)
+{
+  gpio_config_t io_conf = {
+    .pin_bit_mask = (1ULL << MAIA_GPIO_LED_STATUS),
+    .mode = GPIO_MODE_OUTPUT,
+    .pull_up_en = GPIO_PULLUP_DISABLE,
+    .pull_down_en = GPIO_PULLDOWN_DISABLE,
+    .intr_type = GPIO_INTR_DISABLE,
+  };
+
+  esp_err_t ret = gpio_config(&io_conf);
+  if (ret != ESP_OK)
+    {
+      return ret;
+    }
+
+  /* Start with LED off */
+
+  gpio_set_level(MAIA_GPIO_LED_STATUS, 0);
+  return ESP_OK;
+}
+
 /****************************************************************************
  * Name: maia_led_set
  *

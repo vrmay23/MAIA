@@ -4,6 +4,180 @@ MAIA PROJECT - RELEASE NOTES
 
 Date: 2026-01-11
 Author: Vinicius May
+Component: DS18B20 Temperature Sensor Driver + OneWire Protocol + LED Fix
+Version: v0.2.0
+Branch: 2026_01_11__driver_ds18b20_onewire
+
+SUMMARY:
+Implemented complete OneWire protocol and DS18B20 temperature sensor driver
+with configurable resolution, temperature units, and both blocking/async
+read modes. Fixed LED driver initialization bug affecting all test modes.
+
+TECHNICAL DETAILS:
+OneWire Protocol Implementation:
+- Bit-banging GPIO with precise timing (esp_rom_delay_us)
+- Reset pulse with presence detection (480µs low + 70µs sample)
+- Write bit: 60µs (0) or 6µs (1) low pulse
+- Read bit: 6µs low + 9µs wait + sample
+- Byte operations (LSB first, 8 bits per byte)
+- Dallas/Maxim CRC8 checksum (polynomial 0x8C)
+
+DS18B20 Driver Features:
+- Configurable resolution: 9-bit (0.5°C, 94ms) to 12-bit (0.0625°C, 750ms)
+- Temperature unit conversion: Celsius, Fahrenheit, Kelvin
+- Blocking mode: ds18b20_read_temperature() - single call, returns result
+- Async mode: ds18b20_trigger_conversion() + wait + ds18b20_read_scratchpad()
+- Direct scratchpad access for debugging (9 bytes with CRC validation)
+- Skip ROM mode (single sensor) with Match ROM prepared for future expansion
+- Automatic resolution configuration written to EEPROM on init
+
+CONFIGURATION:
+Kconfig menu "DS18B20 Temperature Sensor":
+- MAIA_DS18B20_ENABLE (bool, enable/disable driver)
+- MAIA_DS18B20_GPIO (int, default GPIO10)
+- MAIA_DS18B20_UNIT (choice: Celsius/Fahrenheit/Kelvin)
+- MAIA_DS18B20_RESOLUTION (choice: 9/10/11/12-bit)
+- MAIA_DS18B20_ROM_MODE (choice: Skip ROM/Match ROM)
+
+ARCHITECTURE:
+- OneWire Protocol: components/maia_board/src/maia_onewire.c (BSP layer)
+- DS18B20 Driver: components/drivers/ds18b20/ (hardware-agnostic)
+- Test Suite: main/tests/test_ds18b20.c (blocking + async validation)
+- BSP Integration: maia_board.h exposes OneWire API
+
+FILES MODIFIED:
+- components/maia_board/include/maia_board.h (added OneWire API + LED init)
+- components/maia_board/src/maia_board.c (added maia_led_init() call)
+- components/maia_board/src/maia_onewire.c (complete rewrite, ~200 lines)
+- components/maia_board/src/maia_led.c (added maia_led_init() function)
+- components/maia_board/Kconfig (added DS18B20 menu)
+- components/drivers/CMakeLists.txt (added ds18b20.c)
+- main/CMakeLists.txt (added test_ds18b20.c)
+- main/main.c (added maia_board_init() to all test modes)
+- main/Kconfig.projbuild (added MAIA_TEST_TEMPERATURE_SENSOR)
+
+FILES CREATED:
+- components/drivers/ds18b20/include/ds18b20.h (public API, 5 functions)
+- components/drivers/ds18b20/src/ds18b20.c (~320 lines, driver logic)
+- main/tests/test_ds18b20.c (~200 lines, blocking + async tests)
+
+BUG FIXES:
+LED Driver Initialization:
+- Issue: LED never initialized, toggle() calls had no effect
+- Root cause: maia_led_init() existed but never called
+- Fix: Added maia_led_init() call in maia_board_init()
+- Impact: LED now works in all test modes (button, ds18b20, blink)
+
+Test Mode Initialization:
+- Issue: I2C/GPIO/PWM not initialized in test mode
+- Root cause: main.c test mode skipped maia_board_init()
+- Fix: Added maia_board_init() before all test_xxx_run() calls
+- Impact: Tests now have full BSP initialization
+
+DEPENDENCIES:
+- ESP-IDF driver component (GPIO)
+- ESP-IDF esp_rom (esp_rom_delay_us for precise timing)
+- maia_board component (OneWire protocol)
+- FreeRTOS (vTaskDelay for conversion wait)
+
+VALIDATION:
+✓ OneWire protocol tested with DS18B20 sensor
+✓ Blocking mode: continuous 30s temperature monitoring (2s intervals)
+✓ Async mode: non-blocking conversion with LED feedback during wait
+✓ CRC validation: all scratchpad reads verified (100% success rate)
+✓ Resolution accuracy: 12-bit precision visible (0.0625°C steps)
+✓ Real-world test: ice cooling from 22.88°C to 7.31°C tracked correctly
+✓ Temperature units: Celsius validated (Fahrenheit/Kelvin configured)
+✓ LED now blinks during async test (3x 200ms pulses per cycle)
+
+TESTING NOTES:
+Hardware setup:
+- DS18B20 sensor on GPIO10 (D2)
+- External 4.7kΩ pull-up resistor to 3.3V on data line
+- VCC: 3.3V, GND: GND
+- LED: GPIO21 (onboard yellow LED on XIAO ESP32S3 Plus)
+
+Test scenarios validated:
+- Blocking read: 30 seconds @ 2s intervals (15 readings)
+- Async read: 30 seconds with LED feedback (750ms conversion wait)
+- Scratchpad dump: 9 bytes displayed with CRC (hex format)
+- Temperature range: 7°C to 23°C (ice to room temperature)
+- Conversion times: 750ms @ 12-bit (matches datasheet spec)
+
+PERFORMANCE:
+- Blocking read: 750ms total (conversion + read)
+- Async read: 750ms conversion (non-blocking), 10ms scratchpad read
+- CRC calculation: <1ms for 8 bytes
+- OneWire bit timing: ±2µs accuracy (within DS18B20 tolerance)
+
+KNOWN LIMITATIONS:
+- Skip ROM mode only (single sensor on bus)
+- Match ROM mode prepared but ds18b20_search_roms() not implemented
+- No alarm functionality (TH/TL registers unused)
+- No parasitic power mode (requires VDD connection)
+- OneWire timing not validated for ESP32 @ 240MHz (tested @ 160MHz)
+- LED active-low logic not auto-detected (assumes active-high)
+
+FUTURE ENHANCEMENTS:
+- Implement ds18b20_search_roms() for multi-sensor support
+- Add alarm threshold configuration (TH/TL registers)
+- Parasitic power mode support (strong pull-up during conversion)
+- Temperature moving average filter (noise reduction)
+- NVS storage for temperature log (circular buffer)
+- Integration with status_monitor service
+
+COMMIT MESSAGE:
+feat(drivers): implement DS18B20 OneWire temperature sensor driver
+
+- Add complete OneWire protocol implementation in maia_onewire.c
+  * Reset pulse detection with presence check
+  * Bit-level read/write operations (LSB first)
+  * Byte-level read/write operations
+  * Dallas/Maxim CRC8 checksum calculation
+  * Precise timing using esp_rom_delay_us()
+
+- Implement DS18B20 driver with async and blocking modes
+  * Configurable resolution (9/10/11/12-bit) via Kconfig
+  * Configurable temperature unit (Celsius/Fahrenheit/Kelvin)
+  * Skip ROM mode for single sensor (Match ROM prepared for future)
+  * Non-blocking trigger_conversion() for concurrent operations
+  * Direct scratchpad access for debugging
+  * CRC validation on all reads
+
+- Add comprehensive Kconfig configuration
+  * Enable/disable DS18B20 driver
+  * Temperature unit selection (°C/°F/K)
+  * Resolution selection (9-12 bit)
+  * ROM mode selection (Skip/Match)
+
+- Create test suite for DS18B20
+  * Blocking read test (30s continuous monitoring)
+  * Async read test (non-blocking with LED feedback)
+  * Scratchpad dump and CRC verification
+  * Real-world validation with ice cooling (22°C → 7°C)
+
+- Fix LED driver initialization
+  * Add maia_led_init() function with GPIO configuration
+  * Integrate LED init into maia_board_init()
+  * Fix test mode to call maia_board_init() before tests
+  * Remove duplicate board init from test_button.c
+
+- Update build system
+  * Add ds18b20.c to drivers/CMakeLists.txt
+  * Add test_ds18b20.c to main/CMakeLists.txt
+  * Update tests.h with new test function
+
+All drivers follow NuttX coding style, Apache 2.0 license, and 78-column 
+limit. Hardware validated on XIAO ESP32S3 Plus with external 4.7kΩ pull-up.
+
+Closes: MAIA-002
+Tested-by: Vinicius May
+Hardware: XIAO ESP32S3 Plus + DS18B20 sensor
+
+================================================================================
+
+Date: 2026-01-11
+Author: Vinicius May
 Component: Button Driver
 Version: v0.1.0
 branch: branch: 2026_01_10__driver_button

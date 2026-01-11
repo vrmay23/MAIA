@@ -30,5 +30,6 @@
 
 void test_blink_run(void);
 void test_button_run(void);
+void test_ds18b20_run(void);
 
 #endif /* __MAIN_TESTS_TESTS_H */

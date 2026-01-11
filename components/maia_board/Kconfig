@@ -20,7 +20,7 @@ menu "MAIA Board Configuration"
                 bool "LED Blink Test"
                 help
                     Simple LED blink test for hardware validation.
-
+            
             config MAIA_TEST_BUTTON
                 bool "Button Driver Test"
                 help
@@ -29,6 +29,15 @@ menu "MAIA Board Configuration"
                     - SINGLE_CLICK/DOUBLE_CLICK
                     - LONG_PRESS
                     - EXTRA_LONG_PRESS_1/2
+
+            config MAIA_TEST_TEMPERATURE_SENSOR
+                bool "Temperature Sensor (DS18B20)"
+                help
+                    Test DS18B20 OneWire temperature sensor:
+                    - Blocking read mode
+                    - Async read mode (trigger + scratchpad)
+                    - CRC verification
+                    - Unit conversion (Celsius/Fahrenheit/Kelvin)
 
         endchoice
 
@@ -412,12 +421,64 @@ menu "MAIA Board Configuration"
 
         menu "OneWire Devices"
 
-            menu "Temperature Sensor (DS18B20)"
-                config MAIA_DS18B20_ENABLE
-                    bool "Enable DS18B20 sensor"
-                    default y
+            config MAIA_DS18B20_ENABLE
+                bool "Enable DS18B20 Temperature Sensor"
+                default n
+                help
+                Enable DS18B20 OneWire temperature sensor driver.
+                Hardware requires 4.7kΩ pull-up resistor to 3.3V on data line.
+
+            menu "DS18B20 Temperature Sensor"
+                depends on MAIA_DS18B20_ENABLE
+
+                config MAIA_DS18B20_GPIO
+                    int "DS18B20 OneWire GPIO"
+                    default 10
                     help
-                        Enable temperature monitoring.
+                    GPIO pin connected to DS18B20 temperature sensor.
+
+                choice MAIA_DS18B20_UNIT
+                    prompt "Temperature Unit"
+                    default MAIA_DS18B20_UNIT_CELSIUS
+
+                    config MAIA_DS18B20_UNIT_CELSIUS
+                        bool "Celsius"
+
+                    config MAIA_DS18B20_UNIT_FAHRENHEIT
+                        bool "Fahrenheit"
+
+                    config MAIA_DS18B20_UNIT_KELVIN
+                        bool "Kelvin"
+                endchoice
+
+                choice MAIA_DS18B20_RESOLUTION
+                    prompt "Sensor Resolution"
+                    default MAIA_DS18B20_RESOLUTION_12BIT
+
+                    config MAIA_DS18B20_RESOLUTION_9BIT
+                        bool "9 bits"
+
+                    config MAIA_DS18B20_RESOLUTION_10BIT
+                        bool "10 bits"
+
+                    config MAIA_DS18B20_RESOLUTION_11BIT
+                        bool "11 bits"
+
+                    config MAIA_DS18B20_RESOLUTION_12BIT
+                        bool "12 bits"
+                endchoice
+
+                choice MAIA_DS18B20_ROM_MODE
+                    prompt "ROM Command Mode"
+                    default MAIA_DS18B20_ROM_SKIP
+
+                    config MAIA_DS18B20_ROM_SKIP
+                        bool "Skip"
+
+                    config MAIA_DS18B20_ROM_MATCH
+                        bool "Match"
+                endchoice
+
             endmenu
 
         endmenu

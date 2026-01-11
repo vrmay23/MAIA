@@ -30,6 +30,7 @@
  ****************************************************************************/
 
 #include <esp_err.h>
+#include <driver/gpio.h>
 #include <driver/i2c_master.h>
 #include <driver/ledc.h>
 
@@ -58,11 +59,10 @@
 
 /* ToF Sensor Pins */
 
-#define MAIA_GPIO_TOF1_LPN          1            /* low_power_enable - lidar 1*/
-#define MAIA_GPIO_TOF1_INT          43           /* interrupt_pin    - lidar 1*/
-
-#define MAIA_GPIO_TOF2_LPN          2            /* low_power_enable - lidar 2*/
-#define MAIA_GPIO_TOF2_INT          44           /* interrupt_pin    - lidar 2*/
+#define MAIA_GPIO_TOF1_LPN          1      /* low_power_enable - lidar 1*/
+#define MAIA_GPIO_TOF1_INT          43     /* interrupt_pin    - lidar 1*/
+#define MAIA_GPIO_TOF2_LPN          2      /* low_power_enable - lidar 2*/
+#define MAIA_GPIO_TOF2_INT          44     /* interrupt_pin    - lidar 2*/
 
 /* Temperature Sensor (1-Wire) */
 
@@ -77,17 +77,14 @@
 #define MAIA_I2C_FREQ_HZ            CONFIG_MAIA_I2C_FREQ_HZ
 #define MAIA_GPIO_I2C_SDA           5
 #define MAIA_GPIO_I2C_SCL           6
-
 #define MAIA_I2C_PORT               I2C_NUM_0
 
 /* PWM Motors (ERM Left and Right) */
 
 #define MAIA_PWM_FREQ_MOTOR_LEFT    CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT
 #define MAIA_PWM_FREQ_MOTOR_RIGHT   CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT
-
 #define MAIA_GPIO_MOTOR_LEFT        7
 #define MAIA_GPIO_MOTOR_RIGHT       8
-
 #define MAIA_PWM_MODE               LEDC_LOW_SPEED_MODE
 #define MAIA_PWM_RESOLUTION         LEDC_TIMER_8_BIT
 #define MAIA_PWM_CH_MOTOR_LEFT      LEDC_CHANNEL_0
@@ -235,7 +232,7 @@ esp_err_t maia_pwm_set_duty(ledc_channel_t channel, uint8_t duty);
  * Name: maia_onewire_init
  *
  * Description:
- *   Initialize OneWire bus for DS18B20 temperature sensor.
+ *   Initialize OneWire GPIO pin for DS18B20 temperature sensor.
  *
  * Input Parameters:
  *   None
@@ -246,6 +243,105 @@ esp_err_t maia_pwm_set_duty(ledc_channel_t channel, uint8_t duty);
  ****************************************************************************/
 
 esp_err_t maia_onewire_init(void);
+
+/****************************************************************************
+ * Name: maia_onewire_reset
+ *
+ * Description:
+ *   Send reset pulse on OneWire bus and check for presence.
+ *
+ * Input Parameters:
+ *   pin - GPIO pin number
+ *
+ * Returned Value:
+ *   true if device present; false otherwise
+ *
+ ****************************************************************************/
+
+bool maia_onewire_reset(gpio_num_t pin);
+
+/****************************************************************************
+ * Name: maia_onewire_write_bit
+ *
+ * Description:
+ *   Write single bit on OneWire bus.
+ *
+ * Input Parameters:
+ *   pin - GPIO pin number
+ *   bit - Bit value (0 or 1)
+ *
+ * Returned Value:
+ *   None
+ *
+ ****************************************************************************/
+
+void maia_onewire_write_bit(gpio_num_t pin, uint8_t bit);
+
+/****************************************************************************
+ * Name: maia_onewire_read_bit
+ *
+ * Description:
+ *   Read single bit from OneWire bus.
+ *
+ * Input Parameters:
+ *   pin - GPIO pin number
+ *
+ * Returned Value:
+ *   Bit value (0 or 1)
+ *
+ ****************************************************************************/
+
+uint8_t maia_onewire_read_bit(gpio_num_t pin);
+
+/****************************************************************************
+ * Name: maia_onewire_write_byte
+ *
+ * Description:
+ *   Write byte on OneWire bus (LSB first).
+ *
+ * Input Parameters:
+ *   pin  - GPIO pin number
+ *   byte - Byte to write
+ *
+ * Returned Value:
+ *   None
+ *
+ ****************************************************************************/
+
+void maia_onewire_write_byte(gpio_num_t pin, uint8_t byte);
+
+/****************************************************************************
+ * Name: maia_onewire_read_byte
+ *
+ * Description:
+ *   Read byte from OneWire bus (LSB first).
+ *
+ * Input Parameters:
+ *   pin - GPIO pin number
+ *
+ * Returned Value:
+ *   Byte read from bus
+ *
+ ****************************************************************************/
+
+uint8_t maia_onewire_read_byte(gpio_num_t pin);
+
+/****************************************************************************
+ * Name: maia_onewire_crc8
+ *
+ * Description:
+ *   Calculate Dallas/Maxim CRC8 checksum for OneWire data.
+ *
+ * Input Parameters:
+ *   data - Data buffer
+ *   len  - Data length in bytes
+ *
+ * Returned Value:
+ *   CRC8 checksum
+ *
+ ****************************************************************************/
+
+uint8_t maia_onewire_crc8(const uint8_t *data, uint8_t len);
 
 /****************************************************************************
  * Name: maia_led_init
