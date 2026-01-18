@@ -68,6 +68,8 @@ void app_main(void)
   test_button_run();
 #elif defined(CONFIG_MAIA_TEST_TEMPERATURE_SENSOR)
   test_ds18b20_run();
+#elif defined(CONFIG_MAIA_TEST_HAPTIC_MOTOR)
+  test_drv2605l_run();
 #endif
 
 #else
