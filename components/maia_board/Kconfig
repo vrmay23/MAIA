@@ -1,50 +1,5 @@
 menu "MAIA Board Configuration"
-
-    menu "Tests Configuration"
-        
-        config MAIA_TEST_ENABLE
-            bool "Enable test mode (disable MAIA App)"
-            default n
-            help
-                Enable one of the available hardware tests below.
-                When enabled, the selected test runs instead of the main app.
-
-        choice MAIA_TEST_SELECT
-            prompt "Select test to run"
-            depends on MAIA_TEST_ENABLE
-            default MAIA_TEST_BLINK
-            help
-                Choose which test to run when test mode is enabled.
-
-            config MAIA_TEST_BLINK
-                bool "LED Blink Test"
-                help
-                    Simple LED blink test for hardware validation.
-            
-            config MAIA_TEST_BUTTON
-                bool "Button Driver Test"
-                help
-                    Test button driver with all events:
-                    - PRESSED/RELEASED
-                    - SINGLE_CLICK/DOUBLE_CLICK
-                    - LONG_PRESS
-                    - EXTRA_LONG_PRESS_1/2
-
-            config MAIA_TEST_TEMPERATURE_SENSOR
-                bool "Temperature Sensor (DS18B20)"
-                help
-                    Test DS18B20 OneWire temperature sensor:
-                    - Blocking read mode
-                    - Async read mode (trigger + scratchpad)
-                    - CRC verification
-                    - Unit conversion (Celsius/Fahrenheit/Kelvin)
-
-        endchoice
-
-    endmenu
-
     menu "General Configuration"
-
         config MAIA_LOG_GENERAL_CONFIG
             bool "Log general configuration at startup"
             default y
@@ -52,7 +7,6 @@ menu "MAIA Board Configuration"
                 Print all general configuration info during initialization.
 
         menu "Timeouts"
-
             config MAIA_TIMEOUT_SYNC_DATA_MIN
                 int "Sync data to server timeout (minutes)"
                 default 10
@@ -73,11 +27,9 @@ menu "MAIA Board Configuration"
                 range 1 60
                 help
                     Time to auto-change display screen.
-
         endmenu
 
         menu "Miscellaneous"
-
             menu "Software Version"
                 config MAIA_SW_VERSION_MAJOR
                     int "Major version"
@@ -168,19 +120,15 @@ menu "MAIA Board Configuration"
                     string "Street"
                     default ""
             endmenu
-
         endmenu
-
     endmenu
 
     menu "Radio Configuration"
-
         menu "Bluetooth Configuration"
             # TODO: Add BLE configs when needed
         endmenu
 
         menu "WiFi Configuration"
-
             menu "Self (Access Point Mode)"
                 config MAIA_WIFI_AP_SSID
                     string "AP SSID"
@@ -231,15 +179,11 @@ menu "MAIA Board Configuration"
                     help
                         LED blink frequency when device is in Station mode.
             endmenu
-
         endmenu
-
     endmenu
 
     menu "GPIO Configuration"
-
         menu "Haptic Motors (ERM)"
-
             menu "Haptic Motor Right"
                 config MAIA_PWM_FREQ_MOTOR_RIGHT
                     int "PWM frequency (Hz)"
@@ -257,7 +201,6 @@ menu "MAIA Board Configuration"
                     help
                         PWM frequency for left haptic motor control.
             endmenu
-
         endmenu
 
         menu "Button Configuration"
@@ -324,11 +267,9 @@ menu "MAIA Board Configuration"
                 default 21 if MAIA_LED_GPIO_21
                 default 39 if MAIA_LED_GPIO_39
         endmenu
-
     endmenu
 
     menu "Devices Configuration"
-
         config MAIA_I2C_FREQ_HZ
             int "I2C bus frequency (Hz)"
             default 400000
@@ -337,18 +278,163 @@ menu "MAIA Board Configuration"
                 I2C SCL clock frequency (standard: 100kHz, fast: 400kHz).
 
         menu "I2C Devices"
-
             menu "Motor Driver (DRV2605L)"
                 config MAIA_DRV2605L_ENABLE
-                    bool "Enable DRV2605L driver"
+                    bool "Enable DRV2605L haptic motor driver"
                     default y
                     help
-                        Enable haptic motor driver (center motor).
+                        Enable DRV2605L I2C haptic motor driver for center motor.
+                        Texas Instruments DRV2605L supports both ERM and LRA actuators
+                        with built-in waveform library and real-time playback modes.
 
-                config MAIA_DRV2605L_I2C_ADDR
-                    hex "I2C address"
-                    default 0x5A
+                menu "DRV2605L Configuration"
                     depends on MAIA_DRV2605L_ENABLE
+
+                    config MAIA_DRV2605L_I2C_ADDR
+                        hex "I2C address"
+                        default 0x5A
+                        help
+                            DRV2605L I2C device address (default 0x5A).
+
+                    choice MAIA_DRV2605L_ACTUATOR_TYPE
+                        prompt "Actuator Type"
+                        default MAIA_DRV2605L_ACTUATOR_ERM
+                        help
+                            Select motor type connected to DRV2605L.
+
+                        config MAIA_DRV2605L_ACTUATOR_ERM
+                            bool "ERM (Eccentric Rotating Mass)"
+                            help
+                                Standard vibration motor with rotating mass.
+                                Example: 18000rpm coreless motor (1.5-3.7V).
+
+                        config MAIA_DRV2605L_ACTUATOR_LRA
+                            bool "LRA (Linear Resonant Actuator)"
+                            help
+                                Linear actuator with resonant frequency.
+                                Requires different library and calibration.
+                    endchoice
+
+                    choice MAIA_DRV2605L_LIBRARY
+                        prompt "Waveform Library"
+                        depends on MAIA_DRV2605L_ACTUATOR_ERM
+                        default MAIA_DRV2605L_LIBRARY_A
+                        help
+                            Select ERM waveform library (1-123 effects each).
+                            Reference: DRV2605L Datasheet Section 11.2
+
+                        config MAIA_DRV2605L_LIBRARY_A
+                            bool "Library A (Sharp clicks, strong vibrations)"
+                            help
+                                General purpose library with sharp response.
+                                Best for alerts and strong feedback.
+
+                        config MAIA_DRV2605L_LIBRARY_B
+                            bool "Library B (Soft bumps, light taps)"
+                            help
+                                Gentle feedback library.
+                                Best for subtle notifications.
+
+                        config MAIA_DRV2605L_LIBRARY_C
+                            bool "Library C (Medium response)"
+                            help
+                                Balanced library between A and B.
+
+                        config MAIA_DRV2605L_LIBRARY_D
+                            bool "Library D (Alert patterns)"
+                            help
+                                Notification-focused patterns.
+
+                        config MAIA_DRV2605L_LIBRARY_E
+                            bool "Library E (Buzz patterns)"
+                            help
+                                Continuous vibration patterns.
+                    endchoice
+
+                    config MAIA_DRV2605L_LIBRARY_LRA
+                        bool
+                        default y if MAIA_DRV2605L_ACTUATOR_LRA
+                        help
+                            LRA library automatically selected for LRA actuators.
+
+                    choice MAIA_DRV2605L_CONTROL_MODE
+                        prompt "Control Mode"
+                        default MAIA_DRV2605L_MODE_LIBRARY
+                        help
+                            Select haptic control mode.
+
+                        config MAIA_DRV2605L_MODE_LIBRARY
+                            bool "Library Effects (ROM pre-programmed)"
+                            help
+                                Use built-in 123 waveform effects from selected library.
+                                Simple API: play effect by ID (1-123).
+                                Effects have fixed duration and envelope.
+                                
+                                Pros: Easy to use, optimized timings
+                                Cons: Limited customization
+
+                        config MAIA_DRV2605L_MODE_COMPOSER
+                            bool "Composer Mode (Custom patterns) [FUTURE]"
+                            help
+                                **NOT YET IMPLEMENTED - RESERVED FOR FUTURE**
+                                
+                                Create custom haptic patterns using:
+                                - RTP (Real-Time Playback) mode
+                                - Custom sequencing with callbacks
+                                - Variable intensity and duration
+                                - Integration with GPIO-controlled motors
+                                
+                                Will enable unified API:
+                                  motor_set_state(ON/OFF, intensity, duration, cb)
+                                  motor_play_pattern(pattern, cb)
+                                
+                                This mode prepares driver for future service layer
+                                that will control all 3 motors (1x DRV2605L + 2x PWM).
+                    endchoice
+
+                    config MAIA_DRV2605L_AUTO_CALIBRATION
+                        bool "Run auto-calibration on startup"
+                        default y
+                        depends on MAIA_DRV2605L_MODE_LIBRARY
+                        help
+                            Automatically calibrate motor on driver initialization.
+                            Recommended for first use or after motor change.
+                            Takes ~1-2 seconds during init.
+                            
+                            Datasheet Section 9.2 (Auto-Calibration Procedure)
+
+                    config MAIA_DRV2605L_RATED_VOLTAGE
+                        int "Motor rated voltage (RMS, 0-255)"
+                        default 90
+                        range 0 255
+                        depends on MAIA_DRV2605L_MODE_LIBRARY
+                        help
+                            RMS voltage rating of the motor.
+                            Formula: value = V_rms * 255 / 5.6
+                            
+                            For 3V motor: (3.0 * 255) / 5.6 ≈ 136
+                            For 2.0V motor: (2.0 * 255) / 5.6 ≈ 90
+                            
+                            Default 90 is safe for most ERM motors.
+                            Datasheet Section 8.5.16 (Rated Voltage Register)
+
+                    config MAIA_DRV2605L_OVERDRIVE_CLAMP
+                        int "Overdrive clamp voltage (0-255)"
+                        default 180
+                        range 0 255
+                        depends on MAIA_DRV2605L_MODE_LIBRARY
+                        help
+                            Maximum voltage during overdrive.
+                            Should be ~120% of rated voltage.
+                            
+                            For 3V motor: clamp ≈ 3.6V → (3.6 * 255) / 5.6 ≈ 163
+                            For 2.0V motor: clamp ≈ 2.4V → (2.4 * 255) / 5.6 ≈ 109
+                            
+                            Default 180 provides good headroom.
+                            Datasheet Section 8.5.17 (Overdrive Clamp Voltage)
+
+                endmenu
+
             endmenu
 
             menu "Display (SSD1306)"
@@ -416,26 +502,25 @@ menu "MAIA Board Configuration"
                     help
                         Filter invalid readings with no return signal.
             endmenu
-
         endmenu
 
         menu "OneWire Devices"
-
             config MAIA_DS18B20_ENABLE
                 bool "Enable DS18B20 Temperature Sensor"
                 default n
                 help
-                Enable DS18B20 OneWire temperature sensor driver.
-                Hardware requires 4.7kΩ pull-up resistor to 3.3V on data line.
+                    Enable DS18B20 OneWire temperature sensor driver.
+                    Hardware requires 4.7kΩ pull-up resistor to 3.3V on data line.
 
             menu "DS18B20 Temperature Sensor"
                 depends on MAIA_DS18B20_ENABLE
 
                 config MAIA_DS18B20_GPIO
                     int "DS18B20 OneWire GPIO"
-                    default 10
+                    default 3
                     help
-                    GPIO pin connected to DS18B20 temperature sensor.
+                        GPIO pin connected to DS18B20 temperature sensor.
+                        Default: GPIO3 (D2 on XIAO ESP32S3)
 
                 choice MAIA_DS18B20_UNIT
                     prompt "Temperature Unit"
@@ -478,10 +563,60 @@ menu "MAIA Board Configuration"
                     config MAIA_DS18B20_ROM_MATCH
                         bool "Match"
                 endchoice
-
             endmenu
-
         endmenu
+    endmenu
+
+    menu "Tests Configuration"
+        
+        config MAIA_TEST_ENABLE
+            bool "Enable test mode (disable MAIA App)"
+            default n
+            help
+                Enable one of the available hardware tests below.
+                When enabled, the selected test runs instead of the main app.
+
+        choice MAIA_TEST_SELECT
+            prompt "Select test to run"
+            depends on MAIA_TEST_ENABLE
+            default MAIA_TEST_BLINK
+            help
+                Choose which test to run when test mode is enabled.
+
+            config MAIA_TEST_BLINK
+                bool "LED Blink Test"
+                help
+                    Simple LED blink test for hardware validation.
+            
+            config MAIA_TEST_BUTTON
+                bool "Button Driver Test"
+                help
+                    Test button driver with all events:
+                    - PRESSED/RELEASED
+                    - SINGLE_CLICK/DOUBLE_CLICK
+                    - LONG_PRESS
+                    - EXTRA_LONG_PRESS_1/2
+
+            config MAIA_TEST_TEMPERATURE_SENSOR
+                bool "Temperature Sensor (DS18B20)"
+                help
+                    Test DS18B20 OneWire temperature sensor:
+                    - Blocking read mode
+                    - Async read mode (trigger + scratchpad)
+                    - CRC verification
+                    - Unit conversion (Celsius/Fahrenheit/Kelvin)
+
+            config MAIA_TEST_HAPTIC_MOTOR
+                bool "Haptic Motor (DRV2605L)"
+                help
+                    Test DRV2605L haptic motor driver:
+                    - Library effects playback (1-123)
+                    - Effect sequencing
+                    - Auto-calibration
+                    - RTP mode (if composer enabled)
+                    - Device status monitoring
+
+        endchoice
 
     endmenu
 
