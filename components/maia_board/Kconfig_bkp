@@ -439,92 +439,23 @@ menu "MAIA Board Configuration"
 
             menu "Display (SSD1306)"
                 config MAIA_SSD1306_ENABLE
-                    bool "Enable SSD1306 OLED display driver"
+                    bool "Enable SSD1306 OLED"
                     default y
                     help
-                        Enable I2C OLED display driver for status and
-                        information display. SSD1306 controller supports
-                        128x32 monochrome display with hardware contrast
-                        control and low power sleep mode.
+                        Enable OLED display driver.
 
-                menu "SSD1306 Configuration"
+                config MAIA_SSD1306_I2C_ADDR
+                    hex "I2C address"
+                    default 0x3C
                     depends on MAIA_SSD1306_ENABLE
 
-                    config MAIA_SSD1306_I2C_ADDR
-                        hex "I2C device address"
-                        default 0x3C
-                        help
-                            SSD1306 I2C address (7-bit).
-                            Common values: 0x3C or 0x3D.
-
-                    config MAIA_SSD1306_WIDTH
-                        int
-                        default 128
-                        help
-                            Display width in pixels (fixed hardware).
-
-                    config MAIA_SSD1306_HEIGHT
-                        int
-                        default 32
-                        help
-                            Display height in pixels (fixed hardware).
-
-                    config MAIA_SSD1306_CONTRAST
-                        int "Default contrast level (0-255)"
-                        default 127
-                        range 0 255
-                        help
-                            OLED contrast level at initialization.
-                            0 = minimum brightness (dimmest)
-                            127 = medium brightness (50%)
-                            255 = maximum brightness (brightest)
-                            
-                            Can be changed at runtime via
-                            ssd1306_set_contrast().
-
-                    choice MAIA_SSD1306_ROTATION
-                        prompt "Display rotation"
-                        default MAIA_SSD1306_ROTATION_0
-                        help
-                            Rotate display orientation by flipping
-                            vertically and horizontally.
-
-                        config MAIA_SSD1306_ROTATION_0
-                            bool "Normal (0 degrees)"
-                            help
-                                Standard orientation.
-
-                        config MAIA_SSD1306_ROTATION_180
-                            bool "Flipped (180 degrees)"
-                            help
-                                Upside-down orientation.
-                    endchoice
-
-                    config MAIA_SSD1306_NUM_PAGES
-                        int "Number of display pages"
-                        default 3
-                        range 1 10
-                        help
-                            Total number of virtual screens/pages
-                            available for cycling through different
-                            information displays.
-                            
-                            Typical usage:
-                              Page 0: Splash (animal/tutor info)
-                              Page 1: Status (sensors, connectivity)
-                              Page 2: Diagnostics (errors, warnings)
-                            
-                            Page switching implemented in application.
-
-                    config MAIA_SSD1306_DEFAULT_PAGE
-                        int "Default page on boot"
-                        default 0
-                        range 0 9
-                        help
-                            Which page to display after driver init.
-                            Must be less than MAIA_SSD1306_NUM_PAGES.
-
-                endmenu
+                config MAIA_SSD1306_CONTRAST
+                    int "Display contrast (%)"
+                    default 100
+                    range 0 100
+                    depends on MAIA_SSD1306_ENABLE
+                    help
+                        OLED display contrast level (0-100%).
             endmenu
 
             menu "IMU (MPU6050)"
@@ -684,17 +615,6 @@ menu "MAIA Board Configuration"
                     - Auto-calibration
                     - RTP mode (if composer enabled)
                     - Device status monitoring
-
-            config MAIA_TEST_DISPLAY
-                bool "OLED Display (SSD1306)"
-                help
-                    Test SSD1306 OLED display driver:
-                    - Display initialization
-                    - Framebuffer rendering
-                    - Text output (small and large fonts)
-                    - Screen on/off (power management)
-                    - Contrast adjustment
-                    - Pixel drawing
 
         endchoice
 

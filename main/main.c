@@ -70,6 +70,8 @@ void app_main(void)
   test_ds18b20_run();
 #elif defined(CONFIG_MAIA_TEST_HAPTIC_MOTOR)
   test_drv2605l_run();
+#elif defined(CONFIG_MAIA_TEST_DISPLAY)
+  test_ssd1306_run();
 #endif
 
 #else
