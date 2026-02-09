@@ -15,7 +15,7 @@ idf_component_register(
         # Add more driver sources here as needed:
         # "vl53l5cx/src/vl53l5cx.c"
         # "mpu6050/src/mpu6050.c"
-        # "ssd1306/src/ssd1306.c"
+        "ssd1306/src/ssd1306.c"
     
     # Public include directories
     # These headers are visible to components that depend on "drivers"
@@ -26,7 +26,7 @@ idf_component_register(
         # Add more driver includes here as needed:
         # "vl53l5cx/include"
         # "mpu6050/include"
-        # "ssd1306/include"
+        "ssd1306/include"
     
     # Private include directories
     # Only visible within this component
