@@ -33,5 +33,6 @@ void test_button_run(void);
 void test_ds18b20_run(void);
 void test_drv2605l_run(void);
 void test_ssd1306_run(void);
+void test_mpu6050_run(void);
 
 #endif /* __MAIN_TESTS_TESTS_H */

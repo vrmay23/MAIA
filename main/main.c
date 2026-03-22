@@ -72,6 +72,8 @@ void app_main(void)
   test_drv2605l_run();
 #elif defined(CONFIG_MAIA_TEST_DISPLAY)
   test_ssd1306_run();
+#elif defined(CONFIG_MAIA_TEST_IMU)
+  test_mpu6050_run();
 #endif
 
 #else

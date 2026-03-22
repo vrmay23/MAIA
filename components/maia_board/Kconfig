@@ -527,17 +527,131 @@ menu "MAIA Board Configuration"
                 endmenu
             endmenu
 
-            menu "IMU (MPU6050)"
-                config MAIA_MPU6050_ENABLE
-                    bool "Enable MPU6050 IMU"
+            menu "IMU"
+                config MAIA_IMU_ENABLE
+                    bool "Enable IMU"
                     default y
                     help
-                        Enable IMU (accelerometer + gyroscope).
-
-                config MAIA_MPU6050_I2C_ADDR
-                    hex "I2C address"
-                    default 0x68
-                    depends on MAIA_MPU6050_ENABLE
+                        Enable Inertial Measurement Unit driver.
+ 
+                choice MAIA_IMU_DEVICE
+                    prompt "IMU device"
+                    depends on MAIA_IMU_ENABLE
+                    default MAIA_IMU_MPU6050
+                    help
+                        Select the IMU device connected to the I2C bus.
+ 
+                    config MAIA_IMU_MPU6050
+                        bool "MPU-6050 (InvenSense, accel+gyro+DMP)"
+                        help
+                            6-axis IMU with integrated Digital Motion
+                            Processor. Provides raw accel/gyro and
+                            quaternion output via DMP firmware.
+ 
+                    config MAIA_IMU_ADXL345
+                        bool "ADXL345 (Analog Devices, accel only)"
+                        help
+                            3-axis accelerometer only. No gyroscope,
+                            no DMP. Use when gyro is not required.
+                endchoice
+ 
+                menu "MPU-6050 Configuration"
+                    depends on MAIA_IMU_ENABLE && MAIA_IMU_MPU6050
+ 
+                    config MAIA_MPU6050_I2C_ADDR
+                        hex "I2C address"
+                        default 0x68
+                        help
+                            0x68 when AD0 pin is low (default).
+                            0x69 when AD0 pin is high.
+ 
+                    choice MAIA_MPU6050_ACCEL_RANGE
+                        prompt "Accelerometer range"
+                        default MAIA_MPU6050_ACCEL_2G
+                        help
+                            Full-scale range for accelerometer.
+                            Lower range = higher resolution.
+ 
+                        config MAIA_MPU6050_ACCEL_2G
+                            bool "±2g  (16384 LSB/g)"
+                        config MAIA_MPU6050_ACCEL_4G
+                            bool "±4g  ( 8192 LSB/g)"
+                        config MAIA_MPU6050_ACCEL_8G
+                            bool "±8g  ( 4096 LSB/g)"
+                        config MAIA_MPU6050_ACCEL_16G
+                            bool "±16g ( 2048 LSB/g)"
+                    endchoice
+ 
+                    choice MAIA_MPU6050_GYRO_RANGE
+                        prompt "Gyroscope range"
+                        default MAIA_MPU6050_GYRO_250
+ 
+                        config MAIA_MPU6050_GYRO_250
+                            bool "±250  °/s (131.0 LSB/°/s)"
+                        config MAIA_MPU6050_GYRO_500
+                            bool "±500  °/s ( 65.5 LSB/°/s)"
+                        config MAIA_MPU6050_GYRO_1000
+                            bool "±1000 °/s ( 32.8 LSB/°/s)"
+                        config MAIA_MPU6050_GYRO_2000
+                            bool "±2000 °/s ( 16.4 LSB/°/s)"
+                    endchoice
+ 
+                    config MAIA_MPU6050_SAMPLE_RATE_DIV
+                        int "Sample rate divider (0-255)"
+                        default 7
+                        range 0 255
+                        help
+                            Output rate = 1kHz / (divider + 1).
+                            7  -> 125 Hz
+                            0  -> 1000 Hz
+                            99 ->  10 Hz
+ 
+                    config MAIA_MPU6050_DMP_ENABLE
+                        bool "Enable DMP (quaternion output)"
+                        default y
+                        help
+                            Load InvenSense DMP firmware at startup.
+                            Enables quaternion output via FIFO at
+                            up to 200 Hz. Required for orientation
+                            (roll/pitch/yaw) output.
+ 
+                    config MAIA_MPU6050_INT_ENABLE
+                        bool "Enable data-ready interrupt (GPIO4)"
+                        default y
+                        help
+                            Assert INT pin on MAIA_GPIO_IMU_INT
+                            (GPIO4) when new data or DMP packet is
+                            ready. Required for interrupt-driven
+                            operation and DMP FIFO reading.
+ 
+                endmenu
+ 
+                menu "ADXL345 Configuration"
+                    depends on MAIA_IMU_ENABLE && MAIA_IMU_ADXL345
+ 
+                    config MAIA_ADXL345_I2C_ADDR
+                        hex "I2C address"
+                        default 0x53
+                        help
+                            0x53 when SDO/ALT ADDRESS pin is low.
+                            0x1D when SDO/ALT ADDRESS pin is high.
+ 
+                    choice MAIA_ADXL345_ACCEL_RANGE
+                        prompt "Accelerometer range"
+                        default MAIA_ADXL345_ACCEL_2G
+ 
+                        config MAIA_ADXL345_ACCEL_2G
+                            bool "±2g"
+                        config MAIA_ADXL345_ACCEL_4G
+                            bool "±4g"
+                        config MAIA_ADXL345_ACCEL_8G
+                            bool "±8g"
+                        config MAIA_ADXL345_ACCEL_16G
+                            bool "±16g"
+                    endchoice
+ 
+                endmenu
+ 
             endmenu
 
             menu "LiDAR (VL53L5CX)"
@@ -695,6 +809,19 @@ menu "MAIA Board Configuration"
                     - Screen on/off (power management)
                     - Contrast adjustment
                     - Pixel drawing
+
+            config MAIA_TEST_IMU
+                bool "IMU (MPU6050)"
+                help
+                    Test MPU-6050 IMU driver:
+                    - WHO_AM_I identification
+                    - Factory self-test
+                    - Raw and scaled accel/gyro reads
+                    - Gyro bias calibration
+                    - Runtime range switching
+                    - Sleep / wakeup power management
+                    - DMP quaternion output
+                    - Quaternion to Euler angles
 
         endchoice
 
