@@ -16,5 +16,6 @@
     "--query-driver=**",
     "--compile-commands-dir=/home/vinicius/embedded_sys/esp32space/maiamute/build"
   ],
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "idf.currentSetup": "/home/vinicius/embedded_sys/esp-idf"
 }

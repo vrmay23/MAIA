@@ -1,0 +1,811 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/vinicius/git/MAIA/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+Animal Information	components/maia_board/Kconfig	/^            menu "Animal Information"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+Animal Information	components/maia_board/Kconfig_bkp	/^            menu "Animal Information"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+BUTTON_EVENT_DOUBLE_CLICK	components/drivers/button/include/button.h	/^  BUTTON_EVENT_DOUBLE_CLICK,          \/* Two short presses *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_EXTRA_LONG_PRESS_1	components/drivers/button/include/button.h	/^  BUTTON_EVENT_EXTRA_LONG_PRESS_1,    \/* Held for extra duration 1 *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_EXTRA_LONG_PRESS_2	components/drivers/button/include/button.h	/^  BUTTON_EVENT_EXTRA_LONG_PRESS_2,    \/* Held for extra duration 2 *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_LONG_PRESS	components/drivers/button/include/button.h	/^  BUTTON_EVENT_LONG_PRESS,            \/* Held for configured duration *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_PRESSED	components/drivers/button/include/button.h	/^  BUTTON_EVENT_PRESSED = 0,           \/* Button physically pressed *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_RELEASED	components/drivers/button/include/button.h	/^  BUTTON_EVENT_RELEASED,              \/* Button physically released *\/$/;"	e	enum:__anond13beff80103
+BUTTON_EVENT_SINGLE_CLICK	components/drivers/button/include/button.h	/^  BUTTON_EVENT_SINGLE_CLICK,          \/* Short press + release *\/$/;"	e	enum:__anond13beff80103
+BUTTON_STATE_DEBOUNCING_PRESS	components/drivers/button/src/button.c	/^  BUTTON_STATE_DEBOUNCING_PRESS,$/;"	e	enum:__anon387eed170103	file:
+BUTTON_STATE_DEBOUNCING_RELEASE	components/drivers/button/src/button.c	/^  BUTTON_STATE_DEBOUNCING_RELEASE,$/;"	e	enum:__anon387eed170103	file:
+BUTTON_STATE_IDLE	components/drivers/button/src/button.c	/^  BUTTON_STATE_IDLE = 0,$/;"	e	enum:__anon387eed170103	file:
+BUTTON_STATE_PRESSED	components/drivers/button/src/button.c	/^  BUTTON_STATE_PRESSED,$/;"	e	enum:__anon387eed170103	file:
+BUTTON_STATE_WAIT_DOUBLE_CLICK	components/drivers/button/src/button.c	/^  BUTTON_STATE_WAIT_DOUBLE_CLICK,$/;"	e	enum:__anon387eed170103	file:
+Bluetooth Configuration	components/maia_board/Kconfig	/^        menu "Bluetooth Configuration"$/;"	m	menu:MAIA Board Configuration""Radio Configuration
+Bluetooth Configuration	components/maia_board/Kconfig_bkp	/^        menu "Bluetooth Configuration"$/;"	m	menu:MAIA Board Configuration""Radio Configuration
+Button Configuration	components/maia_board/Kconfig	/^        menu "Button Configuration"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+Button Configuration	components/maia_board/Kconfig_bkp	/^        menu "Button Configuration"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+CONFIG_MAIA_ANIMAL_AGE	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_AGE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_AGE	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_AGE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_ALLERGY	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_ALLERGY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_ALLERGY	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_ALLERGY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_BLOOD_TYPE	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_BLOOD_TYPE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_BLOOD_TYPE	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_BLOOD_TYPE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_BREED	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_BREED$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_BREED	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_BREED$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_COMORBIDITY	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_COMORBIDITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_COMORBIDITY	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_COMORBIDITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_NAME	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_NAME	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_SPECIES	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_SPECIES$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_SPECIES	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_SPECIES$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_WEIGHT	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_WEIGHT$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_ANIMAL_WEIGHT	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_WEIGHT$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+CONFIG_MAIA_BUTTON_DEBOUNCE_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_DEBOUNCE_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_DEBOUNCE_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_DEBOUNCE_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_LONG_PRESS_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_LONG_PRESS_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_BUTTON_LONG_PRESS_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_LONG_PRESS_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+CONFIG_MAIA_DRV2605L_ACTUATOR_ERM	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_ACTUATOR_ERM$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+CONFIG_MAIA_DRV2605L_ACTUATOR_ERM	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_ACTUATOR_ERM$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+CONFIG_MAIA_DRV2605L_ACTUATOR_LRA	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_ACTUATOR_LRA$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+CONFIG_MAIA_DRV2605L_ACTUATOR_LRA	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_ACTUATOR_LRA$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+CONFIG_MAIA_DRV2605L_AUTO_CALIBRATION	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_AUTO_CALIBRATION$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_AUTO_CALIBRATION	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_AUTO_CALIBRATION$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_ENABLE	components/maia_board/Kconfig	/^                config MAIA_DRV2605L_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+CONFIG_MAIA_DRV2605L_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_DRV2605L_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+CONFIG_MAIA_DRV2605L_I2C_ADDR	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_LIBRARY_A	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_A$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_A	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_A$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_B	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_B$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_B	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_B$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_C	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_C$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_C	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_C$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_D	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_D$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_D	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_D$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_E	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_E$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_E	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_E$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+CONFIG_MAIA_DRV2605L_LIBRARY_LRA	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_LIBRARY_LRA$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_LIBRARY_LRA	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_LIBRARY_LRA$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_MODE_COMPOSER	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_MODE_COMPOSER$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+CONFIG_MAIA_DRV2605L_MODE_COMPOSER	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_MODE_COMPOSER$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+CONFIG_MAIA_DRV2605L_MODE_LIBRARY	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_MODE_LIBRARY$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+CONFIG_MAIA_DRV2605L_MODE_LIBRARY	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_MODE_LIBRARY$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+CONFIG_MAIA_DRV2605L_OVERDRIVE_CLAMP	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_OVERDRIVE_CLAMP$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_OVERDRIVE_CLAMP	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_OVERDRIVE_CLAMP$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_RATED_VOLTAGE	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_RATED_VOLTAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DRV2605L_RATED_VOLTAGE	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_RATED_VOLTAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+CONFIG_MAIA_DS18B20_ENABLE	components/maia_board/Kconfig	/^            config MAIA_DS18B20_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+CONFIG_MAIA_DS18B20_ENABLE	components/maia_board/Kconfig_bkp	/^            config MAIA_DS18B20_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+CONFIG_MAIA_DS18B20_GPIO	components/maia_board/Kconfig	/^                config MAIA_DS18B20_GPIO$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+CONFIG_MAIA_DS18B20_GPIO	components/maia_board/Kconfig_bkp	/^                config MAIA_DS18B20_GPIO$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+CONFIG_MAIA_DS18B20_RESOLUTION_10BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_10BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_10BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_10BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_11BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_11BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_11BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_11BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_12BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_12BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_12BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_12BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_9BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_9BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_RESOLUTION_9BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_9BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+CONFIG_MAIA_DS18B20_ROM_MATCH	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_ROM_MATCH$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+CONFIG_MAIA_DS18B20_ROM_MATCH	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_ROM_MATCH$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+CONFIG_MAIA_DS18B20_ROM_SKIP	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_ROM_SKIP$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+CONFIG_MAIA_DS18B20_ROM_SKIP	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_ROM_SKIP$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+CONFIG_MAIA_DS18B20_UNIT_CELSIUS	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_CELSIUS$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_DS18B20_UNIT_CELSIUS	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_CELSIUS$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_DS18B20_UNIT_FAHRENHEIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_FAHRENHEIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_DS18B20_UNIT_FAHRENHEIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_FAHRENHEIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_DS18B20_UNIT_KELVIN	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_KELVIN$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_DS18B20_UNIT_KELVIN	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_KELVIN$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+CONFIG_MAIA_I2C_FREQ_HZ	components/maia_board/Kconfig	/^        config MAIA_I2C_FREQ_HZ$/;"	c	menu:MAIA Board Configuration""Devices Configuration
+CONFIG_MAIA_I2C_FREQ_HZ	components/maia_board/Kconfig_bkp	/^        config MAIA_I2C_FREQ_HZ$/;"	c	menu:MAIA Board Configuration""Devices Configuration
+CONFIG_MAIA_LED_BLINK_FREQ_AP_HZ	components/maia_board/Kconfig	/^                config MAIA_LED_BLINK_FREQ_AP_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_LED_BLINK_FREQ_AP_HZ	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_BLINK_FREQ_AP_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_LED_BLINK_FREQ_STA_HZ	components/maia_board/Kconfig	/^                config MAIA_LED_BLINK_FREQ_STA_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_LED_BLINK_FREQ_STA_HZ	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_BLINK_FREQ_STA_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_LED_GPIO_21	components/maia_board/Kconfig	/^                config MAIA_LED_GPIO_21$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+CONFIG_MAIA_LED_GPIO_21	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_GPIO_21$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+CONFIG_MAIA_LED_GPIO_39	components/maia_board/Kconfig	/^                config MAIA_LED_GPIO_39$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+CONFIG_MAIA_LED_GPIO_39	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_GPIO_39$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+CONFIG_MAIA_LED_STATUS_PIN	components/maia_board/Kconfig	/^            config MAIA_LED_STATUS_PIN$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+CONFIG_MAIA_LED_STATUS_PIN	components/maia_board/Kconfig_bkp	/^            config MAIA_LED_STATUS_PIN$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+CONFIG_MAIA_LOG_GENERAL_CONFIG	components/maia_board/Kconfig	/^        config MAIA_LOG_GENERAL_CONFIG$/;"	c	menu:MAIA Board Configuration""General Configuration
+CONFIG_MAIA_LOG_GENERAL_CONFIG	components/maia_board/Kconfig_bkp	/^        config MAIA_LOG_GENERAL_CONFIG$/;"	c	menu:MAIA Board Configuration""General Configuration
+CONFIG_MAIA_MPU6050_ENABLE	components/maia_board/Kconfig	/^                config MAIA_MPU6050_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+CONFIG_MAIA_MPU6050_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_MPU6050_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+CONFIG_MAIA_MPU6050_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_MPU6050_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+CONFIG_MAIA_MPU6050_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_MPU6050_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT	components/maia_board/Kconfig	/^                config MAIA_PWM_FREQ_MOTOR_LEFT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Left
+CONFIG_MAIA_PWM_FREQ_MOTOR_LEFT	components/maia_board/Kconfig_bkp	/^                config MAIA_PWM_FREQ_MOTOR_LEFT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Left
+CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT	components/maia_board/Kconfig	/^                config MAIA_PWM_FREQ_MOTOR_RIGHT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Right
+CONFIG_MAIA_PWM_FREQ_MOTOR_RIGHT	components/maia_board/Kconfig_bkp	/^                config MAIA_PWM_FREQ_MOTOR_RIGHT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Right
+CONFIG_MAIA_SSD1306_CONTRAST	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_CONTRAST$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SSD1306_CONTRAST	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_CONTRAST$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+CONFIG_MAIA_SSD1306_DEFAULT_PAGE	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_DEFAULT_PAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SSD1306_ENABLE	components/maia_board/Kconfig	/^                config MAIA_SSD1306_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+CONFIG_MAIA_SSD1306_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+CONFIG_MAIA_SSD1306_HEIGHT	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_HEIGHT$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SSD1306_I2C_ADDR	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SSD1306_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+CONFIG_MAIA_SSD1306_NUM_PAGES	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_NUM_PAGES$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SSD1306_ROTATION_0	components/maia_board/Kconfig	/^                        config MAIA_SSD1306_ROTATION_0$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration""MAIA_SSD1306_ROTATION
+CONFIG_MAIA_SSD1306_ROTATION_180	components/maia_board/Kconfig	/^                        config MAIA_SSD1306_ROTATION_180$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration""MAIA_SSD1306_ROTATION
+CONFIG_MAIA_SSD1306_WIDTH	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_WIDTH$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+CONFIG_MAIA_SW_VERSION_MAJOR	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_MAJOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_SW_VERSION_MAJOR	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_MAJOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_SW_VERSION_MINOR	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_MINOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_SW_VERSION_MINOR	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_MINOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_SW_VERSION_PATCH	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_PATCH$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_SW_VERSION_PATCH	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_PATCH$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+CONFIG_MAIA_TEST_BLINK	components/maia_board/Kconfig	/^            config MAIA_TEST_BLINK$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_BLINK	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_BLINK$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_BUTTON	components/maia_board/Kconfig	/^            config MAIA_TEST_BUTTON$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_BUTTON	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_BUTTON$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_DISPLAY	components/maia_board/Kconfig	/^            config MAIA_TEST_DISPLAY$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_ENABLE	components/maia_board/Kconfig	/^        config MAIA_TEST_ENABLE$/;"	c	menu:MAIA Board Configuration""Tests Configuration
+CONFIG_MAIA_TEST_ENABLE	components/maia_board/Kconfig_bkp	/^        config MAIA_TEST_ENABLE$/;"	c	menu:MAIA Board Configuration""Tests Configuration
+CONFIG_MAIA_TEST_HAPTIC_MOTOR	components/maia_board/Kconfig	/^            config MAIA_TEST_HAPTIC_MOTOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_HAPTIC_MOTOR	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_HAPTIC_MOTOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_TEMPERATURE_SENSOR	components/maia_board/Kconfig	/^            config MAIA_TEST_TEMPERATURE_SENSOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TEST_TEMPERATURE_SENSOR	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_TEMPERATURE_SENSOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+CONFIG_MAIA_TIMEOUT_DISPLAY_OFF_SEC	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_DISPLAY_OFF_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TIMEOUT_DISPLAY_OFF_SEC	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_DISPLAY_OFF_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TIMEOUT_DISPLAY_SCREEN_SEC	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_DISPLAY_SCREEN_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TIMEOUT_DISPLAY_SCREEN_SEC	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_DISPLAY_SCREEN_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TIMEOUT_SYNC_DATA_MIN	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_SYNC_DATA_MIN$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TIMEOUT_SYNC_DATA_MIN	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_SYNC_DATA_MIN$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+CONFIG_MAIA_TUTOR_CITY	components/maia_board/Kconfig	/^                config MAIA_TUTOR_CITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_CITY	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_CITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_COUNTRY	components/maia_board/Kconfig	/^                config MAIA_TUTOR_COUNTRY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_COUNTRY	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_COUNTRY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_EMAIL	components/maia_board/Kconfig	/^                config MAIA_TUTOR_EMAIL$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_EMAIL	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_EMAIL$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_NAME	components/maia_board/Kconfig	/^                config MAIA_TUTOR_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_NAME	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_PHONE	components/maia_board/Kconfig	/^                config MAIA_TUTOR_PHONE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_PHONE	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_PHONE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_SOCIAL_MEDIA	components/maia_board/Kconfig	/^                config MAIA_TUTOR_SOCIAL_MEDIA$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_SOCIAL_MEDIA	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_SOCIAL_MEDIA$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_STATE	components/maia_board/Kconfig	/^                config MAIA_TUTOR_STATE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_STATE	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_STATE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_STREET	components/maia_board/Kconfig	/^                config MAIA_TUTOR_STREET$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_STREET	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_STREET$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_SURNAME	components/maia_board/Kconfig	/^                config MAIA_TUTOR_SURNAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_TUTOR_SURNAME	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_SURNAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+CONFIG_MAIA_VL53L5CX_ENABLE	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_FILTER_STATUS_5	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_FILTER_STATUS_5$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_FILTER_STATUS_5	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_FILTER_STATUS_5$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_FILTER_STATUS_6	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_FILTER_STATUS_6$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_FILTER_STATUS_6	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_FILTER_STATUS_6$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_LEFT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_LEFT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_RIGHT_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_RIGHT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_VL53L5CX_RIGHT_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_RIGHT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+CONFIG_MAIA_WIFI_AP_PASSWORD	components/maia_board/Kconfig	/^                config MAIA_WIFI_AP_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_WIFI_AP_PASSWORD	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_AP_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_WIFI_AP_SSID	components/maia_board/Kconfig	/^                config MAIA_WIFI_AP_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_WIFI_AP_SSID	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_AP_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+CONFIG_MAIA_WIFI_STA_PASSWORD	components/maia_board/Kconfig	/^                config MAIA_WIFI_STA_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_WIFI_STA_PASSWORD	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_STA_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_WIFI_STA_SSID	components/maia_board/Kconfig	/^                config MAIA_WIFI_STA_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_WIFI_STA_SSID	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_STA_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_WIFI_SYNC_INTERVAL_MIN	components/maia_board/Kconfig	/^                config MAIA_WIFI_SYNC_INTERVAL_MIN$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+CONFIG_MAIA_WIFI_SYNC_INTERVAL_MIN	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_SYNC_INTERVAL_MIN$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+DEBOUNCE_TIME_MS	components/drivers/button/src/button.c	/^#define DEBOUNCE_TIME_MS /;"	d	file:
+DISPLAY_HEIGHT	main/tests/test_ssd1306.c	/^#define DISPLAY_HEIGHT /;"	d	file:
+DISPLAY_WIDTH	main/tests/test_ssd1306.c	/^#define DISPLAY_WIDTH /;"	d	file:
+DOUBLE_CLICK_WINDOW_MS	components/drivers/button/src/button.c	/^#define DOUBLE_CLICK_WINDOW_MS /;"	d	file:
+DRV2605L Configuration	components/maia_board/Kconfig	/^                menu "DRV2605L Configuration"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+DRV2605L Configuration	components/maia_board/Kconfig_bkp	/^                menu "DRV2605L Configuration"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+DRV2605L_ACTUATOR_ERM	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_ACTUATOR_ERM = 0,  \/* Eccentric Rotating Mass motor *\/$/;"	e	enum:__anon7946efea0203
+DRV2605L_ACTUATOR_LRA	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_ACTUATOR_LRA = 1,  \/* Linear Resonant Actuator *\/$/;"	e	enum:__anon7946efea0203
+DRV2605L_AUTOCAL_TIMEOUT_MS	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_AUTOCAL_TIMEOUT_MS /;"	d	file:
+DRV2605L_EFFECT_MAX	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_EFFECT_MAX /;"	d
+DRV2605L_EFFECT_MIN	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_EFFECT_MIN /;"	d
+DRV2605L_EFFECT_STOP	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_EFFECT_STOP /;"	d
+DRV2605L_FEEDBACK_ERM	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_FEEDBACK_ERM /;"	d
+DRV2605L_FEEDBACK_LRA	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_FEEDBACK_LRA /;"	d
+DRV2605L_GO_BIT	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_GO_BIT /;"	d
+DRV2605L_I2C_ADDR_DEFAULT	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_I2C_ADDR_DEFAULT /;"	d
+DRV2605L_I2C_TIMEOUT_MS	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_I2C_TIMEOUT_MS /;"	d	file:
+DRV2605L_LIBRARY_EMPTY	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_EMPTY /;"	d
+DRV2605L_LIBRARY_ERM_A	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_ERM_A /;"	d
+DRV2605L_LIBRARY_ERM_B	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_ERM_B /;"	d
+DRV2605L_LIBRARY_ERM_C	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_ERM_C /;"	d
+DRV2605L_LIBRARY_ERM_D	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_ERM_D /;"	d
+DRV2605L_LIBRARY_ERM_E	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_ERM_E /;"	d
+DRV2605L_LIBRARY_LRA	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_LIBRARY_LRA /;"	d
+DRV2605L_LIB_EMPTY	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_EMPTY = DRV2605L_LIBRARY_EMPTY,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_ERM_A	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_ERM_A = DRV2605L_LIBRARY_ERM_A,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_ERM_B	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_ERM_B = DRV2605L_LIBRARY_ERM_B,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_ERM_C	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_ERM_C = DRV2605L_LIBRARY_ERM_C,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_ERM_D	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_ERM_D = DRV2605L_LIBRARY_ERM_D,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_ERM_E	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_ERM_E = DRV2605L_LIBRARY_ERM_E,$/;"	e	enum:__anon7946efea0303
+DRV2605L_LIB_LRA	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_LIB_LRA   = DRV2605L_LIBRARY_LRA,$/;"	e	enum:__anon7946efea0303
+DRV2605L_MODE_AUDIOVIBE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_AUDIOVIBE /;"	d
+DRV2605L_MODE_AUTOCAL	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_AUTOCAL /;"	d
+DRV2605L_MODE_DIAGNOSE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_DIAGNOSE /;"	d
+DRV2605L_MODE_EXTTRIGEDGE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_EXTTRIGEDGE /;"	d
+DRV2605L_MODE_EXTTRIGLVL	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_EXTTRIGLVL /;"	d
+DRV2605L_MODE_INTTRIG	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_INTTRIG /;"	d
+DRV2605L_MODE_PWMANALOG	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_PWMANALOG /;"	d
+DRV2605L_MODE_REALTIME	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_REALTIME /;"	d
+DRV2605L_MODE_STANDBY	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_MODE_STANDBY /;"	d
+DRV2605L_OP_MODE_AUDIO_VIBE	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_AUDIO_VIBE       = DRV2605L_MODE_AUDIOVIBE,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_AUTO_CALIBRATION	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_AUTO_CALIBRATION = DRV2605L_MODE_AUTOCAL,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_DIAGNOSE	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_DIAGNOSE         = DRV2605L_MODE_DIAGNOSE,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_EXTERNAL_EDGE	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_EXTERNAL_EDGE    = DRV2605L_MODE_EXTTRIGEDGE,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_EXTERNAL_LEVEL	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_EXTERNAL_LEVEL   = DRV2605L_MODE_EXTTRIGLVL,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_INTERNAL_TRIGGER	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_INTERNAL_TRIGGER = DRV2605L_MODE_INTTRIG,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_PWM_ANALOG	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_PWM_ANALOG       = DRV2605L_MODE_PWMANALOG,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_REALTIME	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_REALTIME         = DRV2605L_MODE_REALTIME,$/;"	e	enum:__anon7946efea0103
+DRV2605L_OP_MODE_STANDBY	components/drivers/drv2605l/include/drv2605l.h	/^  DRV2605L_OP_MODE_STANDBY          = DRV2605L_MODE_STANDBY,$/;"	e	enum:__anon7946efea0103
+DRV2605L_REG_AUDIOCTRL	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_AUDIOCTRL /;"	d
+DRV2605L_REG_AUDIOMAX	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_AUDIOMAX /;"	d
+DRV2605L_REG_AUDIOVIBE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_AUDIOVIBE /;"	d
+DRV2605L_REG_AUTOCALCOMP	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_AUTOCALCOMP /;"	d
+DRV2605L_REG_AUTOCALEMP	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_AUTOCALEMP /;"	d
+DRV2605L_REG_BREAK	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_BREAK /;"	d
+DRV2605L_REG_CLAMPV	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_CLAMPV /;"	d
+DRV2605L_REG_CONTROL1	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_CONTROL1 /;"	d
+DRV2605L_REG_CONTROL2	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_CONTROL2 /;"	d
+DRV2605L_REG_CONTROL3	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_CONTROL3 /;"	d
+DRV2605L_REG_CONTROL4	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_CONTROL4 /;"	d
+DRV2605L_REG_FEEDBACK	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_FEEDBACK /;"	d
+DRV2605L_REG_GO	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_GO /;"	d
+DRV2605L_REG_LIBRARY	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_LIBRARY /;"	d
+DRV2605L_REG_LRARESON	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_LRARESON /;"	d
+DRV2605L_REG_MODE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_MODE /;"	d
+DRV2605L_REG_OVERDRIVE	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_OVERDRIVE /;"	d
+DRV2605L_REG_RATEDV	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_RATEDV /;"	d
+DRV2605L_REG_RTPIN	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_RTPIN /;"	d
+DRV2605L_REG_STATUS	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_STATUS /;"	d
+DRV2605L_REG_SUSTAINNEG	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_SUSTAINNEG /;"	d
+DRV2605L_REG_SUSTAINPOS	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_SUSTAINPOS /;"	d
+DRV2605L_REG_VBAT	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_VBAT /;"	d
+DRV2605L_REG_WAVESEQ1	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ1 /;"	d
+DRV2605L_REG_WAVESEQ2	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ2 /;"	d
+DRV2605L_REG_WAVESEQ3	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ3 /;"	d
+DRV2605L_REG_WAVESEQ4	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ4 /;"	d
+DRV2605L_REG_WAVESEQ5	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ5 /;"	d
+DRV2605L_REG_WAVESEQ6	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ6 /;"	d
+DRV2605L_REG_WAVESEQ7	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ7 /;"	d
+DRV2605L_REG_WAVESEQ8	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_REG_WAVESEQ8 /;"	d
+DRV2605L_STATUS_DEVICE_ID	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_STATUS_DEVICE_ID /;"	d	file:
+DRV2605L_STATUS_DIAG_RESULT	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_STATUS_DIAG_RESULT /;"	d
+DRV2605L_STATUS_DIAG_RESULT	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_STATUS_DIAG_RESULT /;"	d	file:
+DRV2605L_STATUS_OC_DETECT	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_STATUS_OC_DETECT /;"	d
+DRV2605L_STATUS_OC_DETECT	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_STATUS_OC_DETECT /;"	d	file:
+DRV2605L_STATUS_OVER_TEMP	components/drivers/drv2605l/include/drv2605l.h	/^#define DRV2605L_STATUS_OVER_TEMP /;"	d
+DRV2605L_STATUS_OVER_TEMP	components/drivers/drv2605l/src/drv2605l.c	/^#define DRV2605L_STATUS_OVER_TEMP /;"	d	file:
+DS18B20 Temperature Sensor	components/maia_board/Kconfig	/^            menu "DS18B20 Temperature Sensor"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+DS18B20 Temperature Sensor	components/maia_board/Kconfig_bkp	/^            menu "DS18B20 Temperature Sensor"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+DS18B20_CMD_ALARM_SEARCH	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_ALARM_SEARCH /;"	d	file:
+DS18B20_CMD_CONVERT_T	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_CONVERT_T /;"	d	file:
+DS18B20_CMD_COPY_SCRATCH	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_COPY_SCRATCH /;"	d	file:
+DS18B20_CMD_MATCH_ROM	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_MATCH_ROM /;"	d	file:
+DS18B20_CMD_READ_POWER	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_READ_POWER /;"	d	file:
+DS18B20_CMD_READ_ROM	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_READ_ROM /;"	d	file:
+DS18B20_CMD_READ_SCRATCH	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_READ_SCRATCH /;"	d	file:
+DS18B20_CMD_RECALL_E2	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_RECALL_E2 /;"	d	file:
+DS18B20_CMD_SEARCH_ROM	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_SEARCH_ROM /;"	d	file:
+DS18B20_CMD_SKIP_ROM	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_SKIP_ROM /;"	d	file:
+DS18B20_CMD_WRITE_SCRATCH	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CMD_WRITE_SCRATCH /;"	d	file:
+DS18B20_CONV_TIME_10BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CONV_TIME_10BIT /;"	d	file:
+DS18B20_CONV_TIME_11BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CONV_TIME_11BIT /;"	d	file:
+DS18B20_CONV_TIME_12BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CONV_TIME_12BIT /;"	d	file:
+DS18B20_CONV_TIME_9BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_CONV_TIME_9BIT /;"	d	file:
+DS18B20_RES_10BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_RES_10BIT /;"	d	file:
+DS18B20_RES_11BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_RES_11BIT /;"	d	file:
+DS18B20_RES_12BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_RES_12BIT /;"	d	file:
+DS18B20_RES_9BIT	components/drivers/ds18b20/src/ds18b20.c	/^#define DS18B20_RES_9BIT /;"	d	file:
+DS18B20_ROM_SIZE	components/drivers/ds18b20/include/ds18b20.h	/^#define DS18B20_ROM_SIZE /;"	d
+DS18B20_SCRATCHPAD_SIZE	components/drivers/ds18b20/include/ds18b20.h	/^#define DS18B20_SCRATCHPAD_SIZE /;"	d
+Devices Configuration	components/maia_board/Kconfig	/^    menu "Devices Configuration"$/;"	m	menu:MAIA Board Configuration
+Devices Configuration	components/maia_board/Kconfig_bkp	/^    menu "Devices Configuration"$/;"	m	menu:MAIA Board Configuration
+Display (SSD1306)	components/maia_board/Kconfig	/^            menu "Display (SSD1306)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+Display (SSD1306)	components/maia_board/Kconfig_bkp	/^            menu "Display (SSD1306)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+EXTRA_LONG_1_THRESHOLD_MS	components/drivers/button/src/button.c	/^#define EXTRA_LONG_1_THRESHOLD_MS /;"	d	file:
+EXTRA_LONG_2_THRESHOLD_MS	components/drivers/button/src/button.c	/^#define EXTRA_LONG_2_THRESHOLD_MS /;"	d	file:
+FONT_5X8_HEIGHT	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_5X8_HEIGHT /;"	d	file:
+FONT_5X8_WIDTH	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_5X8_WIDTH /;"	d	file:
+FONT_8X16_HEIGHT	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_8X16_HEIGHT /;"	d	file:
+FONT_8X16_WIDTH	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_8X16_WIDTH /;"	d	file:
+FONT_FIRST_CHAR	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_FIRST_CHAR /;"	d	file:
+FONT_LAST_CHAR	components/drivers/ssd1306/src/ssd1306.c	/^#define FONT_LAST_CHAR /;"	d	file:
+GPIO Configuration	components/maia_board/Kconfig	/^    menu "GPIO Configuration"$/;"	m	menu:MAIA Board Configuration
+GPIO Configuration	components/maia_board/Kconfig_bkp	/^    menu "GPIO Configuration"$/;"	m	menu:MAIA Board Configuration
+General Configuration	components/maia_board/Kconfig	/^    menu "General Configuration"$/;"	m	menu:MAIA Board Configuration
+General Configuration	components/maia_board/Kconfig_bkp	/^    menu "General Configuration"$/;"	m	menu:MAIA Board Configuration
+Haptic Motor Left	components/maia_board/Kconfig	/^            menu "Haptic Motor Left"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)
+Haptic Motor Left	components/maia_board/Kconfig_bkp	/^            menu "Haptic Motor Left"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)
+Haptic Motor Right	components/maia_board/Kconfig	/^            menu "Haptic Motor Right"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)
+Haptic Motor Right	components/maia_board/Kconfig_bkp	/^            menu "Haptic Motor Right"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)
+Haptic Motors (ERM)	components/maia_board/Kconfig	/^        menu "Haptic Motors (ERM)"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+Haptic Motors (ERM)	components/maia_board/Kconfig_bkp	/^        menu "Haptic Motors (ERM)"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+I2C Devices	components/maia_board/Kconfig	/^        menu "I2C Devices"$/;"	m	menu:MAIA Board Configuration""Devices Configuration
+I2C Devices	components/maia_board/Kconfig_bkp	/^        menu "I2C Devices"$/;"	m	menu:MAIA Board Configuration""Devices Configuration
+IMU (MPU6050)	components/maia_board/Kconfig	/^            menu "IMU (MPU6050)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+IMU (MPU6050)	components/maia_board/Kconfig_bkp	/^            menu "IMU (MPU6050)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+LED_PIN	main/tests/test_blink.c	/^#define LED_PIN /;"	d	file:
+LEDs Configuration	components/maia_board/Kconfig	/^        menu "LEDs Configuration"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+LEDs Configuration	components/maia_board/Kconfig_bkp	/^        menu "LEDs Configuration"$/;"	m	menu:MAIA Board Configuration""GPIO Configuration
+LONG_PRESS_THRESHOLD_MS	components/drivers/button/src/button.c	/^#define LONG_PRESS_THRESHOLD_MS /;"	d	file:
+LiDAR (VL53L5CX)	components/maia_board/Kconfig	/^            menu "LiDAR (VL53L5CX)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+LiDAR (VL53L5CX)	components/maia_board/Kconfig_bkp	/^            menu "LiDAR (VL53L5CX)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+MAIA Board Configuration	components/maia_board/Kconfig	/^menu "MAIA Board Configuration"$/;"	m
+MAIA Board Configuration	components/maia_board/Kconfig_bkp	/^menu "MAIA Board Configuration"$/;"	m
+MAIA_ANIMAL_AGE	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_AGE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_AGE	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_AGE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_ALLERGY	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_ALLERGY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_ALLERGY	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_ALLERGY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_BLOOD_TYPE	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_BLOOD_TYPE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_BLOOD_TYPE	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_BLOOD_TYPE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_BREED	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_BREED$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_BREED	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_BREED$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_COMORBIDITY	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_COMORBIDITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_COMORBIDITY	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_COMORBIDITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_NAME	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_NAME	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_SPECIES	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_SPECIES$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_SPECIES	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_SPECIES$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_WEIGHT	components/maia_board/Kconfig	/^                config MAIA_ANIMAL_WEIGHT$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_ANIMAL_WEIGHT	components/maia_board/Kconfig_bkp	/^                config MAIA_ANIMAL_WEIGHT$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Animal Information
+MAIA_BUTTON_DEBOUNCE_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_DEBOUNCE_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_DEBOUNCE_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_DEBOUNCE_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_DOUBLE_CLICK_WINDOW_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_1_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_EXTRA_LONG_PRESS_2_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_LONG_PRESS_MS	components/maia_board/Kconfig	/^            config MAIA_BUTTON_LONG_PRESS_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_BUTTON_LONG_PRESS_MS	components/maia_board/Kconfig_bkp	/^            config MAIA_BUTTON_LONG_PRESS_MS$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Button Configuration
+MAIA_DRV2605L_ACTUATOR_ERM	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_ACTUATOR_ERM$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+MAIA_DRV2605L_ACTUATOR_ERM	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_ACTUATOR_ERM$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+MAIA_DRV2605L_ACTUATOR_LRA	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_ACTUATOR_LRA$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+MAIA_DRV2605L_ACTUATOR_LRA	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_ACTUATOR_LRA$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_ACTUATOR_TYPE
+MAIA_DRV2605L_ACTUATOR_TYPE	components/maia_board/Kconfig	/^                    choice MAIA_DRV2605L_ACTUATOR_TYPE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_ACTUATOR_TYPE	components/maia_board/Kconfig_bkp	/^                    choice MAIA_DRV2605L_ACTUATOR_TYPE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_AUTO_CALIBRATION	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_AUTO_CALIBRATION$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_AUTO_CALIBRATION	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_AUTO_CALIBRATION$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_CONTROL_MODE	components/maia_board/Kconfig	/^                    choice MAIA_DRV2605L_CONTROL_MODE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_CONTROL_MODE	components/maia_board/Kconfig_bkp	/^                    choice MAIA_DRV2605L_CONTROL_MODE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_ENABLE	components/maia_board/Kconfig	/^                config MAIA_DRV2605L_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+MAIA_DRV2605L_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_DRV2605L_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)
+MAIA_DRV2605L_I2C_ADDR	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_LIBRARY	components/maia_board/Kconfig	/^                    choice MAIA_DRV2605L_LIBRARY$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_LIBRARY	components/maia_board/Kconfig_bkp	/^                    choice MAIA_DRV2605L_LIBRARY$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_LIBRARY_A	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_A$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_A	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_A$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_B	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_B$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_B	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_B$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_C	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_C$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_C	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_C$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_D	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_D$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_D	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_D$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_E	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_LIBRARY_E$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_E	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_LIBRARY_E$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_LIBRARY
+MAIA_DRV2605L_LIBRARY_LRA	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_LIBRARY_LRA$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_LIBRARY_LRA	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_LIBRARY_LRA$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_MODE_COMPOSER	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_MODE_COMPOSER$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+MAIA_DRV2605L_MODE_COMPOSER	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_MODE_COMPOSER$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+MAIA_DRV2605L_MODE_LIBRARY	components/maia_board/Kconfig	/^                        config MAIA_DRV2605L_MODE_LIBRARY$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+MAIA_DRV2605L_MODE_LIBRARY	components/maia_board/Kconfig_bkp	/^                        config MAIA_DRV2605L_MODE_LIBRARY$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration""MAIA_DRV2605L_CONTROL_MODE
+MAIA_DRV2605L_OVERDRIVE_CLAMP	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_OVERDRIVE_CLAMP$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_OVERDRIVE_CLAMP	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_OVERDRIVE_CLAMP$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_RATED_VOLTAGE	components/maia_board/Kconfig	/^                    config MAIA_DRV2605L_RATED_VOLTAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DRV2605L_RATED_VOLTAGE	components/maia_board/Kconfig_bkp	/^                    config MAIA_DRV2605L_RATED_VOLTAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Motor Driver (DRV2605L)""DRV2605L Configuration
+MAIA_DS18B20_ENABLE	components/maia_board/Kconfig	/^            config MAIA_DS18B20_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+MAIA_DS18B20_ENABLE	components/maia_board/Kconfig_bkp	/^            config MAIA_DS18B20_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices
+MAIA_DS18B20_GPIO	components/maia_board/Kconfig	/^                config MAIA_DS18B20_GPIO$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_GPIO	components/maia_board/Kconfig_bkp	/^                config MAIA_DS18B20_GPIO$/;"	c	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_RESOLUTION	components/maia_board/Kconfig	/^                choice MAIA_DS18B20_RESOLUTION$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_RESOLUTION	components/maia_board/Kconfig_bkp	/^                choice MAIA_DS18B20_RESOLUTION$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_RESOLUTION_10BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_10BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_10BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_10BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_11BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_11BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_11BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_11BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_12BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_12BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_12BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_12BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_9BIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_RESOLUTION_9BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_RESOLUTION_9BIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_RESOLUTION_9BIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_RESOLUTION
+MAIA_DS18B20_ROM_MATCH	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_ROM_MATCH$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+MAIA_DS18B20_ROM_MATCH	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_ROM_MATCH$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+MAIA_DS18B20_ROM_MODE	components/maia_board/Kconfig	/^                choice MAIA_DS18B20_ROM_MODE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_ROM_MODE	components/maia_board/Kconfig_bkp	/^                choice MAIA_DS18B20_ROM_MODE$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_ROM_SKIP	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_ROM_SKIP$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+MAIA_DS18B20_ROM_SKIP	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_ROM_SKIP$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_ROM_MODE
+MAIA_DS18B20_UNIT	components/maia_board/Kconfig	/^                choice MAIA_DS18B20_UNIT$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_UNIT	components/maia_board/Kconfig_bkp	/^                choice MAIA_DS18B20_UNIT$/;"	C	menu:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor
+MAIA_DS18B20_UNIT_CELSIUS	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_CELSIUS$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_DS18B20_UNIT_CELSIUS	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_CELSIUS$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_DS18B20_UNIT_FAHRENHEIT	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_FAHRENHEIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_DS18B20_UNIT_FAHRENHEIT	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_FAHRENHEIT$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_DS18B20_UNIT_KELVIN	components/maia_board/Kconfig	/^                    config MAIA_DS18B20_UNIT_KELVIN$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_DS18B20_UNIT_KELVIN	components/maia_board/Kconfig_bkp	/^                    config MAIA_DS18B20_UNIT_KELVIN$/;"	c	choice:MAIA Board Configuration""Devices Configuration""OneWire Devices""DS18B20 Temperature Sensor""MAIA_DS18B20_UNIT
+MAIA_GPIO_BUTTON	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_BUTTON /;"	d
+MAIA_GPIO_I2C_SCL	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_I2C_SCL /;"	d
+MAIA_GPIO_I2C_SDA	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_I2C_SDA /;"	d
+MAIA_GPIO_IMU_INT	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_IMU_INT /;"	d
+MAIA_GPIO_LED_STATUS	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_LED_STATUS /;"	d
+MAIA_GPIO_MOTOR_LEFT	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_MOTOR_LEFT /;"	d
+MAIA_GPIO_MOTOR_RIGHT	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_MOTOR_RIGHT /;"	d
+MAIA_GPIO_ONEWIRE	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_ONEWIRE /;"	d
+MAIA_GPIO_TOF1_INT	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_TOF1_INT /;"	d
+MAIA_GPIO_TOF1_LPN	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_TOF1_LPN /;"	d
+MAIA_GPIO_TOF2_INT	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_TOF2_INT /;"	d
+MAIA_GPIO_TOF2_LPN	components/maia_board/include/maia_board.h	/^#define MAIA_GPIO_TOF2_LPN /;"	d
+MAIA_I2C_ADDR_DRV2605L	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_ADDR_DRV2605L /;"	d
+MAIA_I2C_ADDR_MPU6050	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_ADDR_MPU6050 /;"	d
+MAIA_I2C_ADDR_SSD1306	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_ADDR_SSD1306 /;"	d
+MAIA_I2C_ADDR_TOF1	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_ADDR_TOF1 /;"	d
+MAIA_I2C_ADDR_TOF2	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_ADDR_TOF2 /;"	d
+MAIA_I2C_FREQ_HZ	components/maia_board/Kconfig	/^        config MAIA_I2C_FREQ_HZ$/;"	c	menu:MAIA Board Configuration""Devices Configuration
+MAIA_I2C_FREQ_HZ	components/maia_board/Kconfig_bkp	/^        config MAIA_I2C_FREQ_HZ$/;"	c	menu:MAIA Board Configuration""Devices Configuration
+MAIA_I2C_FREQ_HZ	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_FREQ_HZ /;"	d
+MAIA_I2C_PORT	components/maia_board/include/maia_board.h	/^#define MAIA_I2C_PORT /;"	d
+MAIA_LED_BLINK_FREQ_AP_HZ	components/maia_board/Kconfig	/^                config MAIA_LED_BLINK_FREQ_AP_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_LED_BLINK_FREQ_AP_HZ	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_BLINK_FREQ_AP_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_LED_BLINK_FREQ_STA_HZ	components/maia_board/Kconfig	/^                config MAIA_LED_BLINK_FREQ_STA_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_LED_BLINK_FREQ_STA_HZ	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_BLINK_FREQ_STA_HZ$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_LED_GPIO_21	components/maia_board/Kconfig	/^                config MAIA_LED_GPIO_21$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+MAIA_LED_GPIO_21	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_GPIO_21$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+MAIA_LED_GPIO_39	components/maia_board/Kconfig	/^                config MAIA_LED_GPIO_39$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+MAIA_LED_GPIO_39	components/maia_board/Kconfig_bkp	/^                config MAIA_LED_GPIO_39$/;"	c	choice:MAIA Board Configuration""GPIO Configuration""LEDs Configuration""MAIA_LED_STATUS_GPIO
+MAIA_LED_STATUS_GPIO	components/maia_board/Kconfig	/^            choice MAIA_LED_STATUS_GPIO$/;"	C	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+MAIA_LED_STATUS_GPIO	components/maia_board/Kconfig_bkp	/^            choice MAIA_LED_STATUS_GPIO$/;"	C	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+MAIA_LED_STATUS_PIN	components/maia_board/Kconfig	/^            config MAIA_LED_STATUS_PIN$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+MAIA_LED_STATUS_PIN	components/maia_board/Kconfig_bkp	/^            config MAIA_LED_STATUS_PIN$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""LEDs Configuration
+MAIA_LOG_GENERAL_CONFIG	components/maia_board/Kconfig	/^        config MAIA_LOG_GENERAL_CONFIG$/;"	c	menu:MAIA Board Configuration""General Configuration
+MAIA_LOG_GENERAL_CONFIG	components/maia_board/Kconfig_bkp	/^        config MAIA_LOG_GENERAL_CONFIG$/;"	c	menu:MAIA Board Configuration""General Configuration
+MAIA_MPU6050_ENABLE	components/maia_board/Kconfig	/^                config MAIA_MPU6050_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+MAIA_MPU6050_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_MPU6050_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+MAIA_MPU6050_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_MPU6050_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+MAIA_MPU6050_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_MPU6050_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""IMU (MPU6050)
+MAIA_PWM_CH_MOTOR_LEFT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_CH_MOTOR_LEFT /;"	d
+MAIA_PWM_CH_MOTOR_RIGHT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_CH_MOTOR_RIGHT /;"	d
+MAIA_PWM_FREQ_MOTOR_LEFT	components/maia_board/Kconfig	/^                config MAIA_PWM_FREQ_MOTOR_LEFT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Left
+MAIA_PWM_FREQ_MOTOR_LEFT	components/maia_board/Kconfig_bkp	/^                config MAIA_PWM_FREQ_MOTOR_LEFT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Left
+MAIA_PWM_FREQ_MOTOR_LEFT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_FREQ_MOTOR_LEFT /;"	d
+MAIA_PWM_FREQ_MOTOR_RIGHT	components/maia_board/Kconfig	/^                config MAIA_PWM_FREQ_MOTOR_RIGHT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Right
+MAIA_PWM_FREQ_MOTOR_RIGHT	components/maia_board/Kconfig_bkp	/^                config MAIA_PWM_FREQ_MOTOR_RIGHT$/;"	c	menu:MAIA Board Configuration""GPIO Configuration""Haptic Motors (ERM)""Haptic Motor Right
+MAIA_PWM_FREQ_MOTOR_RIGHT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_FREQ_MOTOR_RIGHT /;"	d
+MAIA_PWM_MODE	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_MODE /;"	d
+MAIA_PWM_RESOLUTION	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_RESOLUTION /;"	d
+MAIA_PWM_TIMER_LEFT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_TIMER_LEFT /;"	d
+MAIA_PWM_TIMER_RIGHT	components/maia_board/include/maia_board.h	/^#define MAIA_PWM_TIMER_RIGHT /;"	d
+MAIA_SSD1306_CONTRAST	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_CONTRAST$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_CONTRAST	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_CONTRAST$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+MAIA_SSD1306_DEFAULT_PAGE	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_DEFAULT_PAGE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_ENABLE	components/maia_board/Kconfig	/^                config MAIA_SSD1306_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+MAIA_SSD1306_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+MAIA_SSD1306_HEIGHT	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_HEIGHT$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_I2C_ADDR	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_SSD1306_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+MAIA_SSD1306_NUM_PAGES	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_NUM_PAGES$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_ROTATION	components/maia_board/Kconfig	/^                    choice MAIA_SSD1306_ROTATION$/;"	C	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SSD1306_ROTATION_0	components/maia_board/Kconfig	/^                        config MAIA_SSD1306_ROTATION_0$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration""MAIA_SSD1306_ROTATION
+MAIA_SSD1306_ROTATION_180	components/maia_board/Kconfig	/^                        config MAIA_SSD1306_ROTATION_180$/;"	c	choice:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration""MAIA_SSD1306_ROTATION
+MAIA_SSD1306_WIDTH	components/maia_board/Kconfig	/^                    config MAIA_SSD1306_WIDTH$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)""SSD1306 Configuration
+MAIA_SW_VERSION_MAJOR	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_MAJOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_SW_VERSION_MAJOR	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_MAJOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_SW_VERSION_MINOR	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_MINOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_SW_VERSION_MINOR	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_MINOR$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_SW_VERSION_PATCH	components/maia_board/Kconfig	/^                config MAIA_SW_VERSION_PATCH$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_SW_VERSION_PATCH	components/maia_board/Kconfig_bkp	/^                config MAIA_SW_VERSION_PATCH$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Software Version
+MAIA_TEST_BLINK	components/maia_board/Kconfig	/^            config MAIA_TEST_BLINK$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_BLINK	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_BLINK$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_BUTTON	components/maia_board/Kconfig	/^            config MAIA_TEST_BUTTON$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_BUTTON	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_BUTTON$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_DISPLAY	components/maia_board/Kconfig	/^            config MAIA_TEST_DISPLAY$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_ENABLE	components/maia_board/Kconfig	/^        config MAIA_TEST_ENABLE$/;"	c	menu:MAIA Board Configuration""Tests Configuration
+MAIA_TEST_ENABLE	components/maia_board/Kconfig_bkp	/^        config MAIA_TEST_ENABLE$/;"	c	menu:MAIA Board Configuration""Tests Configuration
+MAIA_TEST_HAPTIC_MOTOR	components/maia_board/Kconfig	/^            config MAIA_TEST_HAPTIC_MOTOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_HAPTIC_MOTOR	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_HAPTIC_MOTOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_SELECT	components/maia_board/Kconfig	/^        choice MAIA_TEST_SELECT$/;"	C	menu:MAIA Board Configuration""Tests Configuration
+MAIA_TEST_SELECT	components/maia_board/Kconfig_bkp	/^        choice MAIA_TEST_SELECT$/;"	C	menu:MAIA Board Configuration""Tests Configuration
+MAIA_TEST_TEMPERATURE_SENSOR	components/maia_board/Kconfig	/^            config MAIA_TEST_TEMPERATURE_SENSOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TEST_TEMPERATURE_SENSOR	components/maia_board/Kconfig_bkp	/^            config MAIA_TEST_TEMPERATURE_SENSOR$/;"	c	choice:MAIA Board Configuration""Tests Configuration""MAIA_TEST_SELECT
+MAIA_TIMEOUT_DISPLAY_OFF_SEC	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_DISPLAY_OFF_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TIMEOUT_DISPLAY_OFF_SEC	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_DISPLAY_OFF_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TIMEOUT_DISPLAY_SCREEN_SEC	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_DISPLAY_SCREEN_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TIMEOUT_DISPLAY_SCREEN_SEC	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_DISPLAY_SCREEN_SEC$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TIMEOUT_SYNC_DATA_MIN	components/maia_board/Kconfig	/^            config MAIA_TIMEOUT_SYNC_DATA_MIN$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TIMEOUT_SYNC_DATA_MIN	components/maia_board/Kconfig_bkp	/^            config MAIA_TIMEOUT_SYNC_DATA_MIN$/;"	c	menu:MAIA Board Configuration""General Configuration""Timeouts
+MAIA_TUTOR_CITY	components/maia_board/Kconfig	/^                config MAIA_TUTOR_CITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_CITY	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_CITY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_COUNTRY	components/maia_board/Kconfig	/^                config MAIA_TUTOR_COUNTRY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_COUNTRY	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_COUNTRY$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_EMAIL	components/maia_board/Kconfig	/^                config MAIA_TUTOR_EMAIL$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_EMAIL	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_EMAIL$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_NAME	components/maia_board/Kconfig	/^                config MAIA_TUTOR_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_NAME	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_NAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_PHONE	components/maia_board/Kconfig	/^                config MAIA_TUTOR_PHONE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_PHONE	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_PHONE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_SOCIAL_MEDIA	components/maia_board/Kconfig	/^                config MAIA_TUTOR_SOCIAL_MEDIA$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_SOCIAL_MEDIA	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_SOCIAL_MEDIA$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_STATE	components/maia_board/Kconfig	/^                config MAIA_TUTOR_STATE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_STATE	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_STATE$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_STREET	components/maia_board/Kconfig	/^                config MAIA_TUTOR_STREET$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_STREET	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_STREET$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_SURNAME	components/maia_board/Kconfig	/^                config MAIA_TUTOR_SURNAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_TUTOR_SURNAME	components/maia_board/Kconfig_bkp	/^                config MAIA_TUTOR_SURNAME$/;"	c	menu:MAIA Board Configuration""General Configuration""Miscellaneous""Tutor Information
+MAIA_VL53L5CX_ENABLE	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_ENABLE	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_ENABLE$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_FILTER_STATUS_5	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_FILTER_STATUS_5$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_FILTER_STATUS_5	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_FILTER_STATUS_5$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_FILTER_STATUS_6	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_FILTER_STATUS_6$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_FILTER_STATUS_6	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_FILTER_STATUS_6$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_LEFT_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_LEFT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_LEFT_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_LEFT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_RIGHT_I2C_ADDR	components/maia_board/Kconfig	/^                config MAIA_VL53L5CX_RIGHT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_VL53L5CX_RIGHT_I2C_ADDR	components/maia_board/Kconfig_bkp	/^                config MAIA_VL53L5CX_RIGHT_I2C_ADDR$/;"	c	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""LiDAR (VL53L5CX)
+MAIA_WIFI_AP_PASSWORD	components/maia_board/Kconfig	/^                config MAIA_WIFI_AP_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_WIFI_AP_PASSWORD	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_AP_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_WIFI_AP_SSID	components/maia_board/Kconfig	/^                config MAIA_WIFI_AP_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_WIFI_AP_SSID	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_AP_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Self (Access Point Mode)
+MAIA_WIFI_STA_PASSWORD	components/maia_board/Kconfig	/^                config MAIA_WIFI_STA_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_WIFI_STA_PASSWORD	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_STA_PASSWORD$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_WIFI_STA_SSID	components/maia_board/Kconfig	/^                config MAIA_WIFI_STA_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_WIFI_STA_SSID	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_STA_SSID$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_WIFI_SYNC_INTERVAL_MIN	components/maia_board/Kconfig	/^                config MAIA_WIFI_SYNC_INTERVAL_MIN$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+MAIA_WIFI_SYNC_INTERVAL_MIN	components/maia_board/Kconfig_bkp	/^                config MAIA_WIFI_SYNC_INTERVAL_MIN$/;"	c	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration""Server (Station Mode)
+Miscellaneous	components/maia_board/Kconfig	/^        menu "Miscellaneous"$/;"	m	menu:MAIA Board Configuration""General Configuration
+Miscellaneous	components/maia_board/Kconfig_bkp	/^        menu "Miscellaneous"$/;"	m	menu:MAIA Board Configuration""General Configuration
+Motor Driver (DRV2605L)	components/maia_board/Kconfig	/^            menu "Motor Driver (DRV2605L)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+Motor Driver (DRV2605L)	components/maia_board/Kconfig_bkp	/^            menu "Motor Driver (DRV2605L)"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices
+OW_CRC8_POLY	components/maia_board/src/maia_onewire.c	/^#define OW_CRC8_POLY /;"	d	file:
+OW_READ_LOW_US	components/maia_board/src/maia_onewire.c	/^#define OW_READ_LOW_US /;"	d	file:
+OW_READ_RELEASE_US	components/maia_board/src/maia_onewire.c	/^#define OW_READ_RELEASE_US /;"	d	file:
+OW_READ_WAIT_US	components/maia_board/src/maia_onewire.c	/^#define OW_READ_WAIT_US /;"	d	file:
+OW_RESET_LOW_US	components/maia_board/src/maia_onewire.c	/^#define OW_RESET_LOW_US /;"	d	file:
+OW_RESET_RELEASE_US	components/maia_board/src/maia_onewire.c	/^#define OW_RESET_RELEASE_US /;"	d	file:
+OW_RESET_WAIT_US	components/maia_board/src/maia_onewire.c	/^#define OW_RESET_WAIT_US /;"	d	file:
+OW_WRITE_0_HIGH_US	components/maia_board/src/maia_onewire.c	/^#define OW_WRITE_0_HIGH_US /;"	d	file:
+OW_WRITE_0_LOW_US	components/maia_board/src/maia_onewire.c	/^#define OW_WRITE_0_LOW_US /;"	d	file:
+OW_WRITE_1_HIGH_US	components/maia_board/src/maia_onewire.c	/^#define OW_WRITE_1_HIGH_US /;"	d	file:
+OW_WRITE_1_LOW_US	components/maia_board/src/maia_onewire.c	/^#define OW_WRITE_1_LOW_US /;"	d	file:
+OneWire Devices	components/maia_board/Kconfig	/^        menu "OneWire Devices"$/;"	m	menu:MAIA Board Configuration""Devices Configuration
+OneWire Devices	components/maia_board/Kconfig_bkp	/^        menu "OneWire Devices"$/;"	m	menu:MAIA Board Configuration""Devices Configuration
+Radio Configuration	components/maia_board/Kconfig	/^    menu "Radio Configuration"$/;"	m	menu:MAIA Board Configuration
+Radio Configuration	components/maia_board/Kconfig_bkp	/^    menu "Radio Configuration"$/;"	m	menu:MAIA Board Configuration
+SSD1306 Configuration	components/maia_board/Kconfig	/^                menu "SSD1306 Configuration"$/;"	m	menu:MAIA Board Configuration""Devices Configuration""I2C Devices""Display (SSD1306)
+SSD1306_BUFFER_SIZE	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_BUFFER_SIZE /;"	d	file:
+SSD1306_CMD_CHARGE_PUMP	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_CHARGE_PUMP /;"	d	file:
+SSD1306_CMD_COLUMN_ADDR	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_COLUMN_ADDR /;"	d	file:
+SSD1306_CMD_COM_SCAN_DEC	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_COM_SCAN_DEC /;"	d	file:
+SSD1306_CMD_COM_SCAN_INC	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_COM_SCAN_INC /;"	d	file:
+SSD1306_CMD_DISPLAY_ALL_ON	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_DISPLAY_ALL_ON /;"	d	file:
+SSD1306_CMD_DISPLAY_ALL_ON_RESUME	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_DISPLAY_ALL_ON_RESUME /;"	d	file:
+SSD1306_CMD_DISPLAY_OFF	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_DISPLAY_OFF /;"	d	file:
+SSD1306_CMD_DISPLAY_ON	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_DISPLAY_ON /;"	d	file:
+SSD1306_CMD_INVERT_DISPLAY	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_INVERT_DISPLAY /;"	d	file:
+SSD1306_CMD_MEMORY_MODE	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_MEMORY_MODE /;"	d	file:
+SSD1306_CMD_NORMAL_DISPLAY	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_NORMAL_DISPLAY /;"	d	file:
+SSD1306_CMD_PAGE_ADDR	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_PAGE_ADDR /;"	d	file:
+SSD1306_CMD_SEG_REMAP	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SEG_REMAP /;"	d	file:
+SSD1306_CMD_SET_COMPINS	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_COMPINS /;"	d	file:
+SSD1306_CMD_SET_CONTRAST	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_CONTRAST /;"	d	file:
+SSD1306_CMD_SET_DISPLAY_CLK_DIV	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_DISPLAY_CLK_DIV /;"	d	file:
+SSD1306_CMD_SET_DISPLAY_OFFSET	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_DISPLAY_OFFSET /;"	d	file:
+SSD1306_CMD_SET_HIGH_COLUMN	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_HIGH_COLUMN /;"	d	file:
+SSD1306_CMD_SET_LOW_COLUMN	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_LOW_COLUMN /;"	d	file:
+SSD1306_CMD_SET_MULTIPLEX	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_MULTIPLEX /;"	d	file:
+SSD1306_CMD_SET_PRECHARGE	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_PRECHARGE /;"	d	file:
+SSD1306_CMD_SET_START_LINE	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_START_LINE /;"	d	file:
+SSD1306_CMD_SET_VCOMH_DESELECT	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CMD_SET_VCOMH_DESELECT /;"	d	file:
+SSD1306_CONTROL_CMD_SINGLE	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CONTROL_CMD_SINGLE /;"	d	file:
+SSD1306_CONTROL_CMD_STREAM	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CONTROL_CMD_STREAM /;"	d	file:
+SSD1306_CONTROL_DATA_STREAM	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_CONTROL_DATA_STREAM /;"	d	file:
+SSD1306_FONT_LARGE	components/drivers/ssd1306/include/ssd1306.h	/^    SSD1306_FONT_LARGE = 1  \/**< 8x16 font for titles\/emphasis *\/$/;"	e	enum:__anond12642e80103
+SSD1306_FONT_SMALL	components/drivers/ssd1306/include/ssd1306.h	/^    SSD1306_FONT_SMALL = 0, \/**< 5x8 font for normal text *\/$/;"	e	enum:__anond12642e80103
+SSD1306_H	components/drivers/ssd1306/include/ssd1306.h	/^#define SSD1306_H$/;"	d
+SSD1306_HEIGHT	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_HEIGHT /;"	d	file:
+SSD1306_I2C_ADDR	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_I2C_ADDR /;"	d	file:
+SSD1306_TIMEOUT_MS	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_TIMEOUT_MS /;"	d	file:
+SSD1306_WIDTH	components/drivers/ssd1306/src/ssd1306.c	/^#define SSD1306_WIDTH /;"	d	file:
+Self (Access Point Mode)	components/maia_board/Kconfig	/^            menu "Self (Access Point Mode)"$/;"	m	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration
+Self (Access Point Mode)	components/maia_board/Kconfig_bkp	/^            menu "Self (Access Point Mode)"$/;"	m	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration
+Server (Station Mode)	components/maia_board/Kconfig	/^            menu "Server (Station Mode)"$/;"	m	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration
+Server (Station Mode)	components/maia_board/Kconfig_bkp	/^            menu "Server (Station Mode)"$/;"	m	menu:MAIA Board Configuration""Radio Configuration""WiFi Configuration
+Software Version	components/maia_board/Kconfig	/^            menu "Software Version"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+Software Version	components/maia_board/Kconfig_bkp	/^            menu "Software Version"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+TAG	components/drivers/button/src/button.c	/^#define TAG /;"	d	file:
+TAG	components/drivers/drv2605l/src/drv2605l.c	/^#define TAG /;"	d	file:
+TAG	components/drivers/ds18b20/src/ds18b20.c	/^#define TAG /;"	d	file:
+TAG	components/drivers/ssd1306/src/ssd1306.c	/^static const char *TAG = "ssd1306";$/;"	v	typeref:typename:const char *	file:
+TAG	components/maia_board/src/maia_board.c	/^#define TAG /;"	d	file:
+TAG	components/maia_board/src/maia_config.c	/^#define TAG /;"	d	file:
+TAG	components/maia_board/src/maia_gpio.c	/^#define TAG /;"	d	file:
+TAG	components/maia_board/src/maia_i2c.c	/^#define TAG /;"	d	file:
+TAG	components/maia_board/src/maia_onewire.c	/^#define TAG /;"	d	file:
+TAG	components/maia_board/src/maia_pwm.c	/^#define TAG /;"	d	file:
+TAG	main/main.c	/^#define TAG /;"	d	file:
+TAG	main/tests/test_blink.c	/^#define TAG /;"	d	file:
+TAG	main/tests/test_button.c	/^#define TAG /;"	d	file:
+TAG	main/tests/test_drv2605l.c	/^#define TAG /;"	d	file:
+TAG	main/tests/test_ds18b20.c	/^#define TAG /;"	d	file:
+TAG	main/tests/test_ssd1306.c	/^#define TAG /;"	d	file:
+TAG_LOG_EMPTY	components/maia_board/src/maia_board.c	/^#define TAG_LOG_EMPTY /;"	d	file:
+TEST_DELAY_LONG_MS	main/tests/test_ssd1306.c	/^#define TEST_DELAY_LONG_MS /;"	d	file:
+TEST_DELAY_MEDIUM_MS	main/tests/test_ssd1306.c	/^#define TEST_DELAY_MEDIUM_MS /;"	d	file:
+TEST_DELAY_SHORT_MS	main/tests/test_ssd1306.c	/^#define TEST_DELAY_SHORT_MS /;"	d	file:
+TEST_DURATION_MS	main/tests/test_ds18b20.c	/^#define TEST_DURATION_MS /;"	d	file:
+TEST_READ_INTERVAL_MS	main/tests/test_ds18b20.c	/^#define TEST_READ_INTERVAL_MS /;"	d	file:
+Tests Configuration	components/maia_board/Kconfig	/^    menu "Tests Configuration"$/;"	m	menu:MAIA Board Configuration
+Tests Configuration	components/maia_board/Kconfig_bkp	/^    menu "Tests Configuration"$/;"	m	menu:MAIA Board Configuration
+Timeouts	components/maia_board/Kconfig	/^        menu "Timeouts"$/;"	m	menu:MAIA Board Configuration""General Configuration
+Timeouts	components/maia_board/Kconfig_bkp	/^        menu "Timeouts"$/;"	m	menu:MAIA Board Configuration""General Configuration
+Tutor Information	components/maia_board/Kconfig	/^            menu "Tutor Information"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+Tutor Information	components/maia_board/Kconfig_bkp	/^            menu "Tutor Information"$/;"	m	menu:MAIA Board Configuration""General Configuration""Miscellaneous
+WiFi Configuration	components/maia_board/Kconfig	/^        menu "WiFi Configuration"$/;"	m	menu:MAIA Board Configuration""Radio Configuration
+WiFi Configuration	components/maia_board/Kconfig_bkp	/^        menu "WiFi Configuration"$/;"	m	menu:MAIA Board Configuration""Radio Configuration
+__COMPONENTS_APP_INCLUDE_APP_H	components/app/include/app.h	/^#define __COMPONENTS_APP_INCLUDE_APP_H$/;"	d
+__COMPONENTS_APP_INCLUDE_APP_TASKS_H	components/app/include/app_tasks.h	/^#define __COMPONENTS_APP_INCLUDE_APP_TASKS_H$/;"	d
+__COMPONENTS_DRIVERS_BUTTON_INCLUDE_BUTTON_H	components/drivers/button/include/button.h	/^#define __COMPONENTS_DRIVERS_BUTTON_INCLUDE_BUTTON_H$/;"	d
+__COMPONENTS_DRIVERS_DRV2605L_INCLUDE_DRV2605L_H	components/drivers/drv2605l/include/drv2605l.h	/^#define __COMPONENTS_DRIVERS_DRV2605L_INCLUDE_DRV2605L_H$/;"	d
+__COMPONENTS_DRIVERS_DS18B20_INCLUDE_DS18B20_H	components/drivers/ds18b20/include/ds18b20.h	/^#define __COMPONENTS_DRIVERS_DS18B20_INCLUDE_DS18B20_H$/;"	d
+__COMPONENTS_DRIVERS_MPU6050_INCLUDE_MPU6050_H	components/drivers/mpu6050/include/mpu6050.h	/^#define __COMPONENTS_DRIVERS_MPU6050_INCLUDE_MPU6050_H$/;"	d
+__COMPONENTS_DRIVERS_VL53L5CX_INCLUDE_VL53L5CX_H	components/drivers/vl53l5cx/include/vl53l5cx.h	/^#define __COMPONENTS_DRIVERS_VL53L5CX_INCLUDE_VL53L5CX_H$/;"	d
+__COMPONENTS_MAIA_BOARD_INCLUDE_MAIA_BOARD_H	components/maia_board/include/maia_board.h	/^#define __COMPONENTS_MAIA_BOARD_INCLUDE_MAIA_BOARD_H$/;"	d
+__COMPONENTS_SERVICES_DATA_LOGGER_INCLUDE_DATA_LOGGER_H	components/services/data_logger/include/data_logger.h	/^#define __COMPONENTS_SERVICES_DATA_LOGGER_INCLUDE_DATA_LOGGER_H$/;"	d
+__COMPONENTS_SERVICES_HAPTIC_FEEDBACK_INCLUDE_HAPTIC_FEEDBACK_H	components/services/haptic_feedback/include/haptic_feedback.h	/^#define __COMPONENTS_SERVICES_HAPTIC_FEEDBACK_INCLUDE_HAPTIC_FEEDBACK_H$/;"	d
+__COMPONENTS_SERVICES_OBSTACLE_DETECTION_INCLUDE_OBSTACLE_DETECTION_H	components/services/obstacle_detection/include/obstacle_detection.h	/^#define __COMPONENTS_SERVICES_OBSTACLE_DETECTION_INCLUDE_OBSTACLE_DETECTION_H$/;"	d
+__COMPONENTS_SERVICES_POWER_MANAGER_INCLUDE_POWER_MANAGER_H	components/services/power_manager/include/power_manager.h	/^#define __COMPONENTS_SERVICES_POWER_MANAGER_INCLUDE_POWER_MANAGER_H$/;"	d
+__COMPONENTS_SERVICES_STATUS_MONITOR_INCLUDE_STATUS_MONITOR_H	components/services/status_monitor/include/status_monitor.h	/^#define __COMPONENTS_SERVICES_STATUS_MONITOR_INCLUDE_STATUS_MONITOR_H$/;"	d
+__MAIN_TESTS_TESTS_H	main/tests/tests.h	/^#define __MAIN_TESTS_TESTS_H$/;"	d
+__anon387eed170103	components/drivers/button/src/button.c	/^{$/;"	g	file:
+__anon387eed170208	components/drivers/button/src/button.c	/^{$/;"	s	file:
+__anon3ad5a6880108	components/drivers/ds18b20/include/ds18b20.h	/^{$/;"	s
+__anon7946efea0103	components/drivers/drv2605l/include/drv2605l.h	/^{$/;"	g
+__anon7946efea0203	components/drivers/drv2605l/include/drv2605l.h	/^{$/;"	g
+__anon7946efea0303	components/drivers/drv2605l/include/drv2605l.h	/^{$/;"	g
+__anon7946efea0408	components/drivers/drv2605l/include/drv2605l.h	/^{$/;"	s
+__anond12642e80103	components/drivers/ssd1306/include/ssd1306.h	/^{$/;"	g
+__anond13beff80103	components/drivers/button/include/button.h	/^{$/;"	g
+actuator	components/drivers/drv2605l/include/drv2605l.h	/^  drv2605l_actuator_t actuator;   \/* Actuator type (ERM\/LRA) *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:drv2605l_actuator_t
+app_init	components/app/src/app.c	/^esp_err_t app_init(void)$/;"	f	typeref:typename:esp_err_t
+app_main	main/main.c	/^void app_main(void)$/;"	f	typeref:typename:void
+auto_calibrate	components/drivers/drv2605l/include/drv2605l.h	/^  bool auto_calibrate;            \/* Run auto-calibration on init *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:bool
+button_callback_t	components/drivers/button/include/button.h	/^typedef void (*button_callback_t)(button_event_t event);$/;"	t	typeref:typename:void (*)(button_event_t event)
+button_context_t	components/drivers/button/src/button.c	/^} button_context_t;$/;"	t	typeref:struct:__anon387eed170208	file:
+button_debounce_timer_callback	components/drivers/button/src/button.c	/^static void button_debounce_timer_callback(void *arg)$/;"	f	typeref:typename:void	file:
+button_deinit	components/drivers/button/src/button.c	/^esp_err_t button_deinit(void)$/;"	f	typeref:typename:esp_err_t
+button_double_click_timer_callback	components/drivers/button/src/button.c	/^static void button_double_click_timer_callback(void *arg)$/;"	f	typeref:typename:void	file:
+button_event_t	components/drivers/button/include/button.h	/^} button_event_t;$/;"	t	typeref:enum:__anond13beff80103
+button_get_state	components/drivers/button/src/button.c	/^bool button_get_state(void)$/;"	f	typeref:typename:bool
+button_init	components/drivers/button/src/button.c	/^esp_err_t button_init(button_callback_t callback)$/;"	f	typeref:typename:esp_err_t
+button_isr_handler	components/drivers/button/src/button.c	/^static void IRAM_ATTR button_isr_handler(void *arg)$/;"	f	typeref:typename:void IRAM_ATTR	file:
+button_notify_event	components/drivers/button/src/button.c	/^static void button_notify_event(button_event_t event)$/;"	f	typeref:typename:void	file:
+button_press_timer_callback	components/drivers/button/src/button.c	/^static void button_press_timer_callback(void *arg)$/;"	f	typeref:typename:void	file:
+button_process_press	components/drivers/button/src/button.c	/^static void button_process_press(void)$/;"	f	typeref:typename:void	file:
+button_process_release	components/drivers/button/src/button.c	/^static void button_process_release(void)$/;"	f	typeref:typename:void	file:
+button_state_t	components/drivers/button/src/button.c	/^} button_state_t;$/;"	t	typeref:enum:__anon387eed170103	file:
+button_test_handler	main/tests/test_button.c	/^static void button_test_handler(button_event_t event)$/;"	f	typeref:typename:void	file:
+callback	components/drivers/button/src/button.c	/^  button_callback_t callback;$/;"	m	struct:__anon387eed170208	typeref:typename:button_callback_t	file:
+click_count	components/drivers/button/src/button.c	/^  uint8_t click_count;$/;"	m	struct:__anon387eed170208	typeref:typename:uint8_t	file:
+debounce_timer	components/drivers/button/src/button.c	/^  esp_timer_handle_t debounce_timer;$/;"	m	struct:__anon387eed170208	typeref:typename:esp_timer_handle_t	file:
+double_timer	components/drivers/button/src/button.c	/^  esp_timer_handle_t double_timer;$/;"	m	struct:__anon387eed170208	typeref:typename:esp_timer_handle_t	file:
+drv2605l_actuator_t	components/drivers/drv2605l/include/drv2605l.h	/^} drv2605l_actuator_t;$/;"	t	typeref:enum:__anon7946efea0203
+drv2605l_config_t	components/drivers/drv2605l/include/drv2605l.h	/^} drv2605l_config_t;$/;"	t	typeref:struct:__anon7946efea0408
+drv2605l_get_library_from_config	components/drivers/drv2605l/src/drv2605l.c	/^static drv2605l_library_t drv2605l_get_library_from_config(void)$/;"	f	typeref:typename:drv2605l_library_t	file:
+drv2605l_get_status	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_get_status(uint8_t *status)$/;"	f	typeref:typename:esp_err_t
+drv2605l_i2c_read_reg	components/drivers/drv2605l/src/drv2605l.c	/^static esp_err_t drv2605l_i2c_read_reg(uint8_t reg, uint8_t *value)$/;"	f	typeref:typename:esp_err_t	file:
+drv2605l_i2c_write_reg	components/drivers/drv2605l/src/drv2605l.c	/^static esp_err_t drv2605l_i2c_write_reg(uint8_t reg, uint8_t value)$/;"	f	typeref:typename:esp_err_t	file:
+drv2605l_init	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_init(const drv2605l_config_t *config)$/;"	f	typeref:typename:esp_err_t
+drv2605l_library_t	components/drivers/drv2605l/include/drv2605l.h	/^} drv2605l_library_t;$/;"	t	typeref:enum:__anon7946efea0303
+drv2605l_mode_t	components/drivers/drv2605l/include/drv2605l.h	/^} drv2605l_mode_t;$/;"	t	typeref:enum:__anon7946efea0103
+drv2605l_play_effect	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_play_effect(uint8_t effect_id)$/;"	f	typeref:typename:esp_err_t
+drv2605l_play_sequence	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_play_sequence(const uint8_t *effects,$/;"	f	typeref:typename:esp_err_t
+drv2605l_run_autocalibration	components/drivers/drv2605l/src/drv2605l.c	/^static esp_err_t drv2605l_run_autocalibration(void)$/;"	f	typeref:typename:esp_err_t	file:
+drv2605l_set_library	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_set_library(drv2605l_library_t library)$/;"	f	typeref:typename:esp_err_t
+drv2605l_set_mode	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_set_mode(drv2605l_mode_t mode)$/;"	f	typeref:typename:esp_err_t
+drv2605l_set_rtp_value	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_set_rtp_value(uint8_t value)$/;"	f	typeref:typename:esp_err_t
+drv2605l_standby	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_standby(void)$/;"	f	typeref:typename:esp_err_t
+drv2605l_stop	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_stop(void)$/;"	f	typeref:typename:esp_err_t
+drv2605l_wakeup	components/drivers/drv2605l/src/drv2605l.c	/^esp_err_t drv2605l_wakeup(void)$/;"	f	typeref:typename:esp_err_t
+ds18b20_convert_temperature	components/drivers/ds18b20/src/ds18b20.c	/^static float ds18b20_convert_temperature(int16_t raw)$/;"	f	typeref:typename:float	file:
+ds18b20_deinit	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_deinit(void)$/;"	f	typeref:typename:esp_err_t
+ds18b20_get_conversion_time	components/drivers/ds18b20/src/ds18b20.c	/^static uint16_t ds18b20_get_conversion_time(void)$/;"	f	typeref:typename:uint16_t	file:
+ds18b20_get_resolution_config	components/drivers/ds18b20/src/ds18b20.c	/^static uint8_t ds18b20_get_resolution_config(void)$/;"	f	typeref:typename:uint8_t	file:
+ds18b20_init	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_init(void)$/;"	f	typeref:typename:esp_err_t
+ds18b20_read_scratchpad	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_read_scratchpad(uint8_t *data, const ds18b20_rom_t *rom)$/;"	f	typeref:typename:esp_err_t
+ds18b20_read_temperature	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_read_temperature(float *temp, const ds18b20_rom_t *rom)$/;"	f	typeref:typename:esp_err_t
+ds18b20_rom_t	components/drivers/ds18b20/include/ds18b20.h	/^} ds18b20_rom_t;$/;"	t	typeref:struct:__anon3ad5a6880108
+ds18b20_search_roms	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_search_roms(ds18b20_rom_t *roms, uint8_t max_roms,$/;"	f	typeref:typename:esp_err_t
+ds18b20_select_device	components/drivers/ds18b20/src/ds18b20.c	/^static esp_err_t ds18b20_select_device(const ds18b20_rom_t *rom)$/;"	f	typeref:typename:esp_err_t	file:
+ds18b20_trigger_conversion	components/drivers/ds18b20/src/ds18b20.c	/^esp_err_t ds18b20_trigger_conversion(const ds18b20_rom_t *rom)$/;"	f	typeref:typename:esp_err_t
+g_button_ctx	components/drivers/button/src/button.c	/^static button_context_t g_button_ctx = {0};$/;"	v	typeref:typename:button_context_t	file:
+g_config	components/drivers/drv2605l/src/drv2605l.c	/^static drv2605l_config_t g_config;$/;"	v	typeref:typename:drv2605l_config_t	file:
+g_conversion_time_ms	components/drivers/ds18b20/src/ds18b20.c	/^static uint16_t g_conversion_time_ms;$/;"	v	typeref:typename:uint16_t	file:
+g_dev_handle	components/drivers/drv2605l/src/drv2605l.c	/^static i2c_master_dev_handle_t g_dev_handle = NULL;$/;"	v	typeref:typename:i2c_master_dev_handle_t	file:
+g_font5x8	components/drivers/ssd1306/src/ssd1306.c	/^static const uint8_t g_font5x8[][5] =$/;"	v	typeref:typename:const uint8_t[][5]	file:
+g_font8x16	components/drivers/ssd1306/src/ssd1306.c	/^static const uint8_t g_font8x16[][16] =$/;"	v	typeref:typename:const uint8_t[][16]	file:
+g_framebuffer	components/drivers/ssd1306/src/ssd1306.c	/^static uint8_t g_framebuffer[SSD1306_BUFFER_SIZE];$/;"	v	typeref:typename:uint8_t[]	file:
+g_i2c_bus_handle	components/maia_board/src/maia_i2c.c	/^static i2c_master_bus_handle_t g_i2c_bus_handle = NULL;$/;"	v	typeref:typename:i2c_master_bus_handle_t	file:
+g_initialized	components/drivers/drv2605l/src/drv2605l.c	/^static bool g_initialized = false;$/;"	v	typeref:typename:bool	file:
+g_initialized	components/drivers/ds18b20/src/ds18b20.c	/^static bool g_initialized = false;$/;"	v	typeref:typename:bool	file:
+g_onewire_pin	components/drivers/ds18b20/src/ds18b20.c	/^static gpio_num_t g_onewire_pin;$/;"	v	typeref:typename:gpio_num_t	file:
+g_resolution_config	components/drivers/ds18b20/src/ds18b20.c	/^static uint8_t g_resolution_config;$/;"	v	typeref:typename:uint8_t	file:
+g_ssd1306_handle	components/drivers/ssd1306/src/ssd1306.c	/^static i2c_master_dev_handle_t g_ssd1306_handle = NULL;$/;"	v	typeref:typename:i2c_master_dev_handle_t	file:
+g_test_count	main/tests/test_ssd1306.c	/^static uint8_t g_test_count = 0;$/;"	v	typeref:typename:uint8_t	file:
+g_test_passed	main/tests/test_ssd1306.c	/^static uint8_t g_test_passed = 0;$/;"	v	typeref:typename:uint8_t	file:
+i2c_addr	components/drivers/drv2605l/include/drv2605l.h	/^  uint8_t i2c_addr;               \/* I2C address (default 0x5A) *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:uint8_t
+initialized	components/drivers/button/src/button.c	/^  bool initialized;$/;"	m	struct:__anon387eed170208	typeref:typename:bool	file:
+library	components/drivers/drv2605l/include/drv2605l.h	/^  drv2605l_library_t library;     \/* Effect library selection *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:drv2605l_library_t
+maia_board_init	components/maia_board/src/maia_board.c	/^esp_err_t maia_board_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_config_log	components/maia_board/src/maia_config.c	/^void maia_config_log(void)$/;"	f	typeref:typename:void
+maia_gpio_init	components/maia_board/src/maia_gpio.c	/^esp_err_t maia_gpio_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_i2c_get_bus_handle	components/maia_board/src/maia_i2c.c	/^i2c_master_bus_handle_t maia_i2c_get_bus_handle(void)$/;"	f	typeref:typename:i2c_master_bus_handle_t
+maia_i2c_init	components/maia_board/src/maia_i2c.c	/^esp_err_t maia_i2c_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_led_init	components/maia_board/src/maia_led.c	/^esp_err_t maia_led_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_led_set	components/maia_board/src/maia_led.c	/^esp_err_t maia_led_set(bool state)$/;"	f	typeref:typename:esp_err_t
+maia_led_toggle	components/maia_board/src/maia_led.c	/^esp_err_t maia_led_toggle(void)$/;"	f	typeref:typename:esp_err_t
+maia_onewire_crc8	components/maia_board/src/maia_onewire.c	/^uint8_t maia_onewire_crc8(const uint8_t *data, uint8_t len)$/;"	f	typeref:typename:uint8_t
+maia_onewire_init	components/maia_board/src/maia_onewire.c	/^esp_err_t maia_onewire_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_onewire_read_bit	components/maia_board/src/maia_onewire.c	/^uint8_t maia_onewire_read_bit(gpio_num_t pin)$/;"	f	typeref:typename:uint8_t
+maia_onewire_read_byte	components/maia_board/src/maia_onewire.c	/^uint8_t maia_onewire_read_byte(gpio_num_t pin)$/;"	f	typeref:typename:uint8_t
+maia_onewire_reset	components/maia_board/src/maia_onewire.c	/^bool maia_onewire_reset(gpio_num_t pin)$/;"	f	typeref:typename:bool
+maia_onewire_write_bit	components/maia_board/src/maia_onewire.c	/^void maia_onewire_write_bit(gpio_num_t pin, uint8_t bit)$/;"	f	typeref:typename:void
+maia_onewire_write_byte	components/maia_board/src/maia_onewire.c	/^void maia_onewire_write_byte(gpio_num_t pin, uint8_t byte)$/;"	f	typeref:typename:void
+maia_pwm_init	components/maia_board/src/maia_pwm.c	/^esp_err_t maia_pwm_init(void)$/;"	f	typeref:typename:esp_err_t
+maia_pwm_set_duty	components/maia_board/src/maia_pwm.c	/^esp_err_t maia_pwm_set_duty(ledc_channel_t channel, uint8_t duty)$/;"	f	typeref:typename:esp_err_t
+mpu6050_init	components/drivers/mpu6050/src/mpu6050.c	/^esp_err_t mpu6050_init(void)$/;"	f	typeref:typename:esp_err_t
+onewire_read_pin	components/maia_board/src/maia_onewire.c	/^static inline uint8_t onewire_read_pin(gpio_num_t pin)$/;"	f	typeref:typename:uint8_t	file:
+onewire_set_input	components/maia_board/src/maia_onewire.c	/^static inline void onewire_set_input(gpio_num_t pin)$/;"	f	typeref:typename:void	file:
+onewire_set_output_low	components/maia_board/src/maia_onewire.c	/^static inline void onewire_set_output_low(gpio_num_t pin)$/;"	f	typeref:typename:void	file:
+overdrive_clamp	components/drivers/drv2605l/include/drv2605l.h	/^  uint8_t overdrive_clamp;        \/* Overdrive clamp voltage *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:uint8_t
+press_time	components/drivers/button/src/button.c	/^  int64_t press_time;$/;"	m	struct:__anon387eed170208	typeref:typename:int64_t	file:
+press_timer	components/drivers/button/src/button.c	/^  esp_timer_handle_t press_timer;$/;"	m	struct:__anon387eed170208	typeref:typename:esp_timer_handle_t	file:
+rated_voltage	components/drivers/drv2605l/include/drv2605l.h	/^  uint8_t rated_voltage;          \/* Rated voltage register value *\/$/;"	m	struct:__anon7946efea0408	typeref:typename:uint8_t
+rom	components/drivers/ds18b20/include/ds18b20.h	/^  uint8_t rom[DS18B20_ROM_SIZE];$/;"	m	struct:__anon3ad5a6880108	typeref:typename:uint8_t[]
+ssd1306_clear	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_clear(void)$/;"	f	typeref:typename:esp_err_t
+ssd1306_display	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_display(void)$/;"	f	typeref:typename:esp_err_t
+ssd1306_draw_char	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_draw_char(uint8_t x, uint8_t y, char ch,$/;"	f	typeref:typename:esp_err_t
+ssd1306_draw_char_5x8	components/drivers/ssd1306/src/ssd1306.c	/^static void ssd1306_draw_char_5x8(uint8_t x, uint8_t y, char ch)$/;"	f	typeref:typename:void	file:
+ssd1306_draw_char_8x16	components/drivers/ssd1306/src/ssd1306.c	/^static void ssd1306_draw_char_8x16(uint8_t x, uint8_t y, char ch)$/;"	f	typeref:typename:void	file:
+ssd1306_draw_string	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_draw_string(uint8_t x, uint8_t y, const char *str,$/;"	f	typeref:typename:esp_err_t
+ssd1306_font_t	components/drivers/ssd1306/include/ssd1306.h	/^} ssd1306_font_t;$/;"	t	typeref:enum:__anond12642e80103
+ssd1306_init	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_init(void)$/;"	f	typeref:typename:esp_err_t
+ssd1306_screen_off	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_screen_off(void)$/;"	f	typeref:typename:esp_err_t
+ssd1306_screen_on	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_screen_on(void)$/;"	f	typeref:typename:esp_err_t
+ssd1306_set_contrast	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_set_contrast(uint8_t contrast)$/;"	f	typeref:typename:esp_err_t
+ssd1306_set_pixel	components/drivers/ssd1306/src/ssd1306.c	/^esp_err_t ssd1306_set_pixel(uint8_t x, uint8_t y, bool on)$/;"	f	typeref:typename:esp_err_t
+ssd1306_write_command	components/drivers/ssd1306/src/ssd1306.c	/^static esp_err_t ssd1306_write_command(uint8_t cmd)$/;"	f	typeref:typename:esp_err_t	file:
+ssd1306_write_data	components/drivers/ssd1306/src/ssd1306.c	/^static esp_err_t ssd1306_write_data(const uint8_t *data, size_t len)$/;"	f	typeref:typename:esp_err_t	file:
+state	components/drivers/button/src/button.c	/^  button_state_t state;$/;"	m	struct:__anon387eed170208	typeref:typename:button_state_t	file:
+task_display	components/app/src/task_display.c	/^void task_display(void *pvParameters)$/;"	f	typeref:typename:void
+task_haptic	components/app/src/task_haptic.c	/^void task_haptic(void *pvParameters)$/;"	f	typeref:typename:void
+task_monitor	components/app/src/task_monitor.c	/^void task_monitor(void *pvParameters)$/;"	f	typeref:typename:void
+task_sensing	components/app/src/task_sensing.c	/^void task_sensing(void *pvParameters)$/;"	f	typeref:typename:void
+test_blink_run	main/tests/test_blink.c	/^void test_blink_run(void)$/;"	f	typeref:typename:void
+test_button_run	main/tests/test_button.c	/^void test_button_run(void)$/;"	f	typeref:typename:void
+test_clear_display	main/tests/test_ssd1306.c	/^static void test_clear_display(void)$/;"	f	typeref:typename:void	file:
+test_contrast	main/tests/test_ssd1306.c	/^static void test_contrast(void)$/;"	f	typeref:typename:void	file:
+test_drv2605l_run	main/tests/test_drv2605l.c	/^void test_drv2605l_run(void)$/;"	f	typeref:typename:void
+test_ds18b20_async	main/tests/test_ds18b20.c	/^static void test_ds18b20_async(void)$/;"	f	typeref:typename:void	file:
+test_ds18b20_blocking	main/tests/test_ds18b20.c	/^static void test_ds18b20_blocking(void)$/;"	f	typeref:typename:void	file:
+test_ds18b20_run	main/tests/test_ds18b20.c	/^void test_ds18b20_run(void)$/;"	f	typeref:typename:void
+test_info_display	main/tests/test_ssd1306.c	/^static void test_info_display(void)$/;"	f	typeref:typename:void	file:
+test_init	main/tests/test_ssd1306.c	/^static void test_init(void)$/;"	f	typeref:typename:void	file:
+test_large_font	main/tests/test_ssd1306.c	/^static void test_large_font(void)$/;"	f	typeref:typename:void	file:
+test_mixed_fonts	main/tests/test_ssd1306.c	/^static void test_mixed_fonts(void)$/;"	f	typeref:typename:void	file:
+test_pixel_drawing	main/tests/test_ssd1306.c	/^static void test_pixel_drawing(void)$/;"	f	typeref:typename:void	file:
+test_print_header	main/tests/test_ssd1306.c	/^static void test_print_header(const char *description)$/;"	f	typeref:typename:void	file:
+test_print_result	main/tests/test_ssd1306.c	/^static void test_print_result(bool passed)$/;"	f	typeref:typename:void	file:
+test_screen_power	main/tests/test_ssd1306.c	/^static void test_screen_power(void)$/;"	f	typeref:typename:void	file:
+test_small_font	main/tests/test_ssd1306.c	/^static void test_small_font(void)$/;"	f	typeref:typename:void	file:
+test_ssd1306_run	main/tests/test_ssd1306.c	/^void test_ssd1306_run(void)$/;"	f	typeref:typename:void
+test_status_screen	main/tests/test_ssd1306.c	/^static void test_status_screen(void)$/;"	f	typeref:typename:void	file:
+vl53l5cx_init	components/drivers/vl53l5cx/src/vl53l5cx.c	/^esp_err_t vl53l5cx_init(void)$/;"	f	typeref:typename:esp_err_t

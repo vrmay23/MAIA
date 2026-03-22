@@ -137,16 +137,11 @@ esp_err_t maia_gpio_init(void)
    * * * * * * * * * * * * * * * */
 
 #ifdef CONFIG_MAIA_MPU6050_ENABLE
-  /*
-   Input with internal pull-up
-   MPU6050 INT is configurable, default active high
-  */
-
   io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_IMU_INT);
-  io_conf.intr_type = GPIO_INTR_POSEDGE;           /* trigger on rise        */
-  io_conf.mode = GPIO_MODE_INPUT;                  /* set as input           */
-  io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;    /* disable pulldown       */
-  io_conf.pull_up_en = GPIO_PULLUP_ENABLE;         /* enable internal pullup */
+  io_conf.intr_type    = GPIO_INTR_DISABLE;  /* driver habilita quando pronto */
+  io_conf.mode         = GPIO_MODE_INPUT;
+  io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+  io_conf.pull_up_en   = GPIO_PULLUP_ENABLE;
 
   ret = gpio_config(&io_conf);
   if (ret != ESP_OK)
