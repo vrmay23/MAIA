@@ -37,7 +37,6 @@ sdkconfig
 /components/.idf/
 **/components/.idf/
 # For modern ESP-IDF component manager
-managed_components/
 # If ESP-IDF tools are installed/referenced locally to the project
 .espressif/
 
@@ -76,3 +75,9 @@ Desktop.ini
 *.workspace # General workspace files, can be from various tools
 *.suo       # Visual Studio Solution User Options
 *.sln.docstates # Visual Studio
+dependencies.lock
+main/idf_component.yml
+
+# ST ULD — allow stub CMakeLists.txt, ignore ST sources
+managed_components/stm32-vl53l5cx/*
+!managed_components/stm32-vl53l5cx/CMakeLists.txt
