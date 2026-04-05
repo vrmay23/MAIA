@@ -16,6 +16,7 @@ if(CONFIG_MAIA_TEST_ENABLE)
     list(APPEND MAIN_SRCS "tests/test_drv2605l.c")
     list(APPEND MAIN_SRCS "tests/test_ssd1306.c")
     list(APPEND MAIN_SRCS "tests/test_mpu6050.c")
+    list(APPEND MAIN_SRCS "tests/test_vl53l5cx.c")
     # Add more test files here as needed:
     # list(APPEND MAIN_SRCS "tests/test_i2c.c")
     # list(APPEND MAIN_SRCS "tests/test_sensors.c")

@@ -684,6 +684,108 @@ menu "MAIA Board Configuration"
                     depends on MAIA_VL53L5CX_ENABLE
                     help
                         Filter invalid readings with no return signal.
+
+                config MAIA_VL53L5CX_DUAL_SENSOR_ENABLE
+                    bool "Enable dual sensor mode"
+                    default y
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Use two VL53L5CX sensors (left + right).
+                        When disabled, only the left sensor is used.
+
+                config MAIA_VL53L5CX_RANGING_FREQ_HZ
+                    int "Ranging frequency (Hz)"
+                    default 10
+                    range 1 60
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Measurement frequency. Higher values use more
+                        power. Max 60Hz at 4x4, 15Hz at 8x8.
+
+                choice MAIA_VL53L5CX_RESOLUTION
+                    prompt "Resolution"
+                    default MAIA_VL53L5CX_RESOLUTION_8X8
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Number of ranging zones.
+
+                    config MAIA_VL53L5CX_RESOLUTION_4X4
+                        bool "4x4 (16 zones, up to 60Hz)"
+
+                    config MAIA_VL53L5CX_RESOLUTION_8X8
+                        bool "8x8 (64 zones, up to 15Hz)"
+                endchoice
+
+                config MAIA_VL53L5CX_INTEGRATION_TIME_MS
+                    int "Integration time (ms)"
+                    default 5
+                    range 5 1000
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        VCSEL integration time per measurement.
+                        Only relevant in autonomous ranging mode.
+                        Lower values save power but reduce range.
+
+                choice MAIA_VL53L5CX_RANGING_MODE
+                    prompt "Ranging mode"
+                    default MAIA_VL53L5CX_RANGING_MODE_AUTONOMOUS
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Continuous: VCSEL always on, best range.
+                        Autonomous: VCSEL pulsed, lower power.
+
+                    config MAIA_VL53L5CX_RANGING_MODE_CONTINUOUS
+                        bool "Continuous (max range, high power)"
+
+                    config MAIA_VL53L5CX_RANGING_MODE_AUTONOMOUS
+                        bool "Autonomous (lower power, default)"
+                endchoice
+
+                config MAIA_VL53L5CX_MIN_SIGNAL_PER_SPAD
+                    int "Minimum signal per SPAD threshold"
+                    default 0
+                    range 0 4096
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Minimum signal per SPAD to consider a zone
+                        valid. 0 disables this filter.
+
+                choice MAIA_VL53L5CX_TARGET_ORDER
+                    prompt "Target order"
+                    default MAIA_VL53L5CX_TARGET_ORDER_CLOSEST
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Report closest or strongest target first.
+
+                    config MAIA_VL53L5CX_TARGET_ORDER_CLOSEST
+                        bool "Closest target first"
+
+                    config MAIA_VL53L5CX_TARGET_ORDER_STRONGEST
+                        bool "Strongest signal first"
+                endchoice
+
+                choice MAIA_VL53L5CX_POWER_MODE
+                    prompt "Default power mode"
+                    default MAIA_VL53L5CX_POWER_MODE_ACTIVE
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Initial power mode at startup.
+
+                    config MAIA_VL53L5CX_POWER_MODE_ACTIVE
+                        bool "Active"
+
+                    config MAIA_VL53L5CX_POWER_MODE_LOW_POWER
+                        bool "Low power (sleep)"
+                endchoice
+
+                config MAIA_VL53L5CX_LOG_RAW_DATA
+                    bool "Log raw zone data"
+                    default n
+                    depends on MAIA_VL53L5CX_ENABLE
+                    help
+                        Print per-zone distance and status on every
+                        maia_tof_get_data() call. Very verbose.
+
             endmenu
         endmenu
 
@@ -823,6 +925,18 @@ menu "MAIA Board Configuration"
                     - DMP quaternion output
                     - Quaternion to Euler angles
 
+            config MAIA_TEST_TOF
+                bool "ToF Sensor (VL53L5CX)"
+                help
+                    Test VL53L5CX ToF sensor driver:
+                    - Single sensor init
+                    - Firmware upload verification
+                    - Device ID check (is_alive)
+                    - Single ranging read (poll, 1 frame)
+                    - Zone data validity (status filtering)
+                    - Distance plausibility
+                    - Resolution set/get
+                    - Power mode (sleep/wake/read)
         endchoice
 
     endmenu

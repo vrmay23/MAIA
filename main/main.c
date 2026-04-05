@@ -74,6 +74,8 @@ void app_main(void)
   test_ssd1306_run();
 #elif defined(CONFIG_MAIA_TEST_IMU)
   test_mpu6050_run();
+#elif defined(CONFIG_MAIA_TEST_TOF)
+  test_vl53l5cx_run();
 #endif
 
 #else

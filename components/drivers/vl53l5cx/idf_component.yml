@@ -1,0 +1,14 @@
+## IDF Component Manager manifest for VL53L5CX ULD
+##
+## The ST VL53L5CX Ultra Lite Driver (ULD) is fetched from
+## the official STMicroelectronics GitHub repository at
+## build time. This keeps the MAIA repository Apache 2.0
+## clean — the ULD is BSD-3-Clause licensed.
+##
+## The downloaded sources land in managed_components/ which
+## is in .gitignore.
+
+## components/drivers/vl53l5cx/idf_component.yml
+dependencies:
+  stm32-vl53l5cx:
+    git: https://github.com/STMicroelectronics/stm32-vl53l5cx.git
