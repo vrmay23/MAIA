@@ -1,0 +1,336 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "e3ae1188-f771-48b5-a870-af6b70f80a1a")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 24.13 96.266)
+		(size 64.516 50.038)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0c5a11be-1c4b-4ec4-b4c0-64371ba1e0bc")
+		(property "Sheetname" "peripheral"
+			(at 24.13 95.5544 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "peripheral.kicad_sch"
+			(at 24.13 146.8886 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 18.034 164.084)
+		(size 44.958 29.718)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "2cba70aa-4073-459e-b7cc-1f6378d39313")
+		(property "Sheetname" "block_diagram"
+			(at 18.034 163.3724 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "block_diagram.kicad_sch"
+			(at 18.034 194.3866 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 71.12 164.084)
+		(size 45.466 29.21)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "2e176014-b1e0-46e1-8f6b-fe0c823d31f0")
+		(property "Sheetname" "symbols_reference"
+			(at 71.12 163.3724 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "symbols_reference.kicad_sch"
+			(at 71.12 193.8786 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 24.13 25.908)
+		(size 66.294 52.578)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "60ca8d7a-34c5-4dcb-a1f4-cb7850e4cb3c")
+		(property "Sheetname" "power_manager"
+			(at 24.13 25.1964 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power_manage.kicad_sch"
+			(at 24.13 79.0706 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 114.808 96.52)
+		(size 66.294 52.07)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "a8f8e1c9-aa8b-4353-a399-6bacb786be73")
+		(property "Sheetname" "mcu"
+			(at 114.808 95.8084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu.kicad_sch"
+			(at 114.808 149.1746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 115.57 25.908)
+		(size 67.31 51.816)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "ee5e2a80-1ea2-41bc-a5f6-6bed5a2c1f4f")
+		(property "Sheetname" "connectors"
+			(at 115.57 25.1964 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "connectors.kicad_sch"
+			(at 115.57 78.3086 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 125.476 164.084)
+		(size 44.958 29.972)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "fd876e83-80ac-4490-bb41-b910bca855d9")
+		(property "Sheetname" "info"
+			(at 125.476 163.3724 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "info.kicad_sch"
+			(at 125.476 194.6406 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "maia"
+				(path "/e3ae1188-f771-48b5-a870-af6b70f80a1a"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

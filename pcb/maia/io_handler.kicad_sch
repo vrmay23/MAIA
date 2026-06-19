@@ -1,0 +1,58 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "5506698a-22fc-4d60-bf90-a7f1105ff70d")
+	(paper "A4")
+	(lib_symbols)
+	(label "BTN_02"
+		(at 72.39 52.07 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "22748a20-ddf2-4915-9ded-c619526ebb43")
+	)
+	(label "boot_esp"
+		(at 72.39 59.69 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3f8c51c3-fe57-45f4-95e2-a90460f72ae6")
+	)
+	(label "BTN_01"
+		(at 72.39 49.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6e51b489-c709-4e31-84d9-abaea781a1a7")
+	)
+	(label "enable_esp"
+		(at 72.39 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7e665c0b-2599-4e2d-b66e-4eb8f9697d94")
+	)
+	(label "USER_LED"
+		(at 72.39 57.15 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dd2a6970-0a84-4134-82ec-ac10e1f2705f")
+	)
+)
