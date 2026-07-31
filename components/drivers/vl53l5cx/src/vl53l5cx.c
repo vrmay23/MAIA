@@ -114,6 +114,9 @@
 #define STATUS_SIGNAL_FAIL     6
 #define DISTANCE_FILTERED      (-1)
 
+#define MIN_SIGNAL_PER_SPAD \
+    CONFIG_MAIA_VL53L5CX_MIN_SIGNAL_PER_SPAD
+
 /**********************************************************
  * Private Types
  **********************************************************/
@@ -470,6 +473,20 @@ static void filter_data(maia_tof_data_t *data)
 #ifdef CONFIG_MAIA_VL53L5CX_FILTER_STATUS_6
       if (data->target_status[i] ==
           STATUS_SIGNAL_FAIL)
+        {
+          data->distance_mm[i] = DISTANCE_FILTERED;
+        }
+#endif
+
+#if MIN_SIGNAL_PER_SPAD > 0
+
+      /* Reject zones whose return signal is too weak
+       * relative to the sensor's noise floor — the
+       * main lever against unreliable readings in
+       * bright ambient light (sunlight raises the
+       * noise floor and starves weak returns). */
+
+      if (data->signal_per_spad[i] < MIN_SIGNAL_PER_SPAD)
         {
           data->distance_mm[i] = DISTANCE_FILTERED;
         }

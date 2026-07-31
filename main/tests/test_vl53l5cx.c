@@ -581,6 +581,35 @@ static bool test_power_mode(void)
 #  define LIVE_GRID_SIZE  4
 #endif
 
+/**********************************************************
+ * Name: format_distance
+ *
+ * Description:
+ *   Render a millimeter distance as meters (2 decimals),
+ *   except under 10cm where mm is more readable than a
+ *   fraction of a meter. Negative input means "no valid
+ *   reading".
+ *
+ **********************************************************/
+
+static void format_distance(int mm, char *buf,
+                            size_t buf_size)
+{
+  if (mm < 0)
+    {
+      snprintf(buf, buf_size, "----");
+    }
+  else if (mm < 100)
+    {
+      snprintf(buf, buf_size, "%dmm", mm);
+    }
+  else
+    {
+      snprintf(buf, buf_size, "%.2fm",
+               (double)mm / 1000.0);
+    }
+}
+
 /* OLED heat-map layout. The grid occupies a square block
  * the full height of the 128x32 panel, leaving the right
  * side for text. Cell size adapts so both 4x4 and 8x8
@@ -609,6 +638,8 @@ static void test_live_distance_stream(void)
   int             row;
   int             col;
   int             half;
+  char            closest_str[10];
+  char            center_str[10];
 
   print_header("Phase 2: Live distance stream");
   ESP_LOGI(TAG,
@@ -678,21 +709,26 @@ static void test_live_distance_stream(void)
             }
         }
 
+      format_distance(min_mm, closest_str,
+                      sizeof(closest_str));
+
       if (min_mm != -1 && center_count > 0)
         {
+          format_distance(center_sum / center_count,
+                          center_str,
+                          sizeof(center_str));
           ESP_LOGI(TAG,
-                   "Closest: %4dmm (zone %2d)  |  "
-                   "Center: %4dmm (%d/4 valid)",
-                   min_mm, min_zone,
-                   center_sum / center_count,
-                   center_count);
+                   "Closest: %6s (zone %2d)  |  "
+                   "Center: %6s (%d/4 valid)",
+                   closest_str, min_zone,
+                   center_str, center_count);
         }
       else if (min_mm != -1)
         {
           ESP_LOGI(TAG,
-                   "Closest: %4dmm (zone %2d)  |  "
+                   "Closest: %6s (zone %2d)  |  "
                    "Center: ---- (no valid target)",
-                   min_mm, min_zone);
+                   closest_str, min_zone);
         }
       else
         {
@@ -823,6 +859,7 @@ static void test_live_matrix_display(void)
   maia_tof_data_t data;
   esp_err_t       ret;
   char            line[16];
+  char            dist_str[10];
   int             i;
   int             row;
   int             col;
@@ -841,9 +878,9 @@ static void test_live_matrix_display(void)
 
   ESP_LOGI(TAG,
            "Denser block = closer target "
-           "(solid <100mm, empty >%dmm or no return). "
+           "(solid <10cm, empty >%.1fm or no return). "
            "Reset the board to stop.",
-           MATRIX_MAX_MM);
+           (double)MATRIX_MAX_MM / 1000.0);
 
   ret = maia_tof_start_ranging();
   if (ret != ESP_OK)
@@ -899,8 +936,9 @@ static void test_live_matrix_display(void)
 
       if (min_mm != -1)
         {
-          snprintf(line, sizeof(line), "%dmm", min_mm);
-          ssd1306_draw_string(MATRIX_TEXT_X, 2, line,
+          format_distance(min_mm, dist_str,
+                          sizeof(dist_str));
+          ssd1306_draw_string(MATRIX_TEXT_X, 2, dist_str,
                               SSD1306_FONT_SMALL);
 
           snprintf(line, sizeof(line), "r%d c%d",
@@ -910,8 +948,8 @@ static void test_live_matrix_display(void)
                               SSD1306_FONT_SMALL);
 
           ESP_LOGI(TAG,
-                   "Closest: %4dmm (r%d c%d)",
-                   min_mm,
+                   "Closest: %6s (r%d c%d)",
+                   dist_str,
                    min_zone / LIVE_GRID_SIZE,
                    min_zone % LIVE_GRID_SIZE);
         }
