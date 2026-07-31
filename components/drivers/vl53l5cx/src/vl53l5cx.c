@@ -56,9 +56,24 @@
 
 #define VL53L5CX_DEFAULT_ADDR  UINT16_C(0x52)
 
-#define TOF1_LPN_GPIO  MAIA_GPIO_TOF1_LPN
+/* The driver's primary/"LEFT" sensor slot normally
+ * drives the physical LEFT sensor's GPIOs. In
+ * single-sensor "right only" mode (Kconfig, e.g. when
+ * the physical LEFT unit is known bad — a solder
+ * defect, not a firmware issue — while RIGHT is fine),
+ * it drives the physical RIGHT sensor's GPIOs instead,
+ * still targeting TOF1_ADDR for consistency with the
+ * other modes. */
+
+#if defined(CONFIG_MAIA_VL53L5CX_MODE_RIGHT_ONLY)
+#  define TOF1_LPN_GPIO  MAIA_GPIO_TOF2_LPN
+#  define TOF1_INT_GPIO  MAIA_GPIO_TOF2_INT
+#else
+#  define TOF1_LPN_GPIO  MAIA_GPIO_TOF1_LPN
+#  define TOF1_INT_GPIO  MAIA_GPIO_TOF1_INT
+#endif
+
 #define TOF2_LPN_GPIO  MAIA_GPIO_TOF2_LPN
-#define TOF1_INT_GPIO  MAIA_GPIO_TOF1_INT
 #define TOF2_INT_GPIO  MAIA_GPIO_TOF2_INT
 
 #define TOF1_ADDR  CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR
@@ -159,7 +174,7 @@ static esp_err_t init_lpn_gpio(gpio_num_t gpio)
 
   memset(&cfg, 0, sizeof(cfg));
   cfg.pin_bit_mask = (1ULL << (uint32_t)gpio);
-  cfg.mode         = GPIO_MODE_OUTPUT;
+  cfg.mode         = GPIO_MODE_INPUT_OUTPUT;
   cfg.pull_up_en   = GPIO_PULLUP_DISABLE;
   cfg.pull_down_en = GPIO_PULLDOWN_DISABLE;
   cfg.intr_type    = GPIO_INTR_DISABLE;
@@ -211,8 +226,23 @@ static esp_err_t register_sensor(
 
   memset(&dev_cfg, 0, sizeof(dev_cfg));
   dev_cfg.dev_addr_length = I2C_ADDR_BIT_LEN_7;
-  dev_cfg.device_address  = address;
+
+  /* address is ST's 8-bit wire convention; ESP-IDF's
+   * new I2C master driver wants the plain 7-bit
+   * address for I2C_ADDR_BIT_LEN_7. */
+
+  dev_cfg.device_address  = (uint16_t)(address >> 1);
   dev_cfg.scl_speed_hz    = MAIA_I2C_FREQ_HZ;
+
+  /* VL53L5CX's internal MCU stretches SCL while
+   * servicing a real register access (unlike a bare
+   * i2c_master_probe(), which never touches a register
+   * and hardcodes a generous 20ms stretch tolerance).
+   * ESP-IDF's per-device default is only 2ms
+   * (I2C_LL_SCL_WAIT_US_VAL_DEFAULT on ESP32-S3), too
+   * tight for this sensor. Match the probe's margin. */
+
+  dev_cfg.scl_wait_us     = 20000;
 
   ret = i2c_master_bus_add_device(
             bus, &dev_cfg,
@@ -306,8 +336,13 @@ static esp_err_t init_single_sensor(
   uint8_t   status;
   uint8_t   alive = 0;
 
+  /* Community VL53L5CX multi-sensor designs cite 100ms
+   * as the minimum reliable wait after LPn goes high
+   * before the first I2C access; 200ms keeps a 2x safety
+   * margin without adding meaningful boot latency. */
+
   lpn_set(sensor->lpn_gpio, 1);
-  vTaskDelay(pdMS_TO_TICKS(10));
+  vTaskDelay(pdMS_TO_TICKS(200));
 
   ret = register_sensor(
             &sensor->uld_cfg.platform, boot_addr);
@@ -342,19 +377,30 @@ static esp_err_t init_single_sensor(
 
   if (target_addr != boot_addr)
     {
-      /* ULD expects 8-bit wire address */
+      /* target_addr is already 8-bit wire format,
+       * same convention as boot_addr.
+       *
+       * NOTE: vl53l5cx_set_i2c_address() issues 3
+       * WrByte calls (select bank, write new address,
+       * restore bank). The sensor starts responding at
+       * the NEW address as soon as the 2nd call lands,
+       * but our dev_handle is still bound to boot_addr,
+       * so the 3rd call always NACKs — a deterministic
+       * false failure, not a real one. So we don't trust
+       * this status; we re-register at target_addr and
+       * confirm with a fresh is_alive() there instead. */
 
       status = vl53l5cx_set_i2c_address(
                    &sensor->uld_cfg,
-                   (uint16_t)(target_addr << 1));
+                   target_addr);
       if (status != 0)
         {
-          ESP_LOGE(TAG,
-                   "Addr 0x%02x->0x%02x failed",
-                   boot_addr, target_addr);
-          unregister_sensor(
-              &sensor->uld_cfg.platform);
-          return ESP_FAIL;
+          ESP_LOGW(TAG,
+                   "Addr 0x%02x->0x%02x reported "
+                   "failure (may be a false "
+                   "negative); verifying at 0x%02x",
+                   boot_addr, target_addr,
+                   target_addr);
         }
 
       unregister_sensor(&sensor->uld_cfg.platform);
@@ -365,6 +411,18 @@ static esp_err_t init_single_sensor(
       if (ret != ESP_OK)
         {
           return ret;
+        }
+
+      status = vl53l5cx_is_alive(
+                   &sensor->uld_cfg, &alive);
+      if (status != 0 || alive == 0)
+        {
+          ESP_LOGE(TAG,
+                   "Addr 0x%02x->0x%02x truly failed",
+                   boot_addr, target_addr);
+          unregister_sensor(
+              &sensor->uld_cfg.platform);
+          return ESP_FAIL;
         }
 
       ESP_LOGI(TAG, "Reassigned to 0x%02x",
@@ -431,7 +489,12 @@ static void filter_data(maia_tof_data_t *data)
  *   1. Both LPn LOW
  *   2. Sensor LEFT:  0x52 -> TOF1_ADDR (0x54)
  *   3. Sensor RIGHT: 0x52 -> TOF2_ADDR (0x52)
- *   Only LEFT initialized if dual sensor disabled.
+ *   Only the "LEFT"/primary slot is initialized unless
+ *   CONFIG_MAIA_VL53L5CX_MODE_DUAL is set (Kconfig
+ *   choice MAIA_VL53L5CX_MODE: dual / left only / right
+ *   only). In "right only" mode, TOF1_LPN_GPIO/
+ *   TOF1_INT_GPIO are remapped to the physical RIGHT
+ *   sensor's GPIOs (see pre-processor section above).
  *
  * Input Parameters:
  *   None
@@ -444,6 +507,9 @@ static void filter_data(maia_tof_data_t *data)
 esp_err_t maia_tof_init(void)
 {
   esp_err_t ret;
+
+  ESP_LOGI(TAG, "Driver file built: %s %s",
+           __DATE__, __TIME__);
 
   if (g_driver_initialized)
     {
@@ -470,7 +536,7 @@ esp_err_t maia_tof_init(void)
 
   lpn_set(TOF1_LPN_GPIO, 0);
 
-#ifdef CONFIG_MAIA_VL53L5CX_DUAL_SENSOR_ENABLE
+#ifdef CONFIG_MAIA_VL53L5CX_MODE_DUAL
   ret = init_lpn_gpio(TOF2_LPN_GPIO);
   if (ret != ESP_OK)
     {
@@ -486,7 +552,7 @@ esp_err_t maia_tof_init(void)
       return ret;
     }
 
-#ifdef CONFIG_MAIA_VL53L5CX_DUAL_SENSOR_ENABLE
+#ifdef CONFIG_MAIA_VL53L5CX_MODE_DUAL
   ret = init_int_gpio(TOF2_INT_GPIO);
   if (ret != ESP_OK)
     {
@@ -506,7 +572,7 @@ esp_err_t maia_tof_init(void)
       return ret;
     }
 
-#ifdef CONFIG_MAIA_VL53L5CX_DUAL_SENSOR_ENABLE
+#ifdef CONFIG_MAIA_VL53L5CX_MODE_DUAL
   ESP_LOGI(TAG, "--- RIGHT sensor ---");
   ret = init_single_sensor(
             &g_sensors[MAIA_TOF_SENSOR_RIGHT],

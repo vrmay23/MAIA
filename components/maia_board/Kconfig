@@ -685,13 +685,28 @@ menu "MAIA Board Configuration"
                     help
                         Filter invalid readings with no return signal.
 
-                config MAIA_VL53L5CX_DUAL_SENSOR_ENABLE
-                    bool "Enable dual sensor mode"
-                    default y
+                choice MAIA_VL53L5CX_MODE
+                    prompt "Sensor mode"
+                    default MAIA_VL53L5CX_MODE_DUAL
                     depends on MAIA_VL53L5CX_ENABLE
                     help
-                        Use two VL53L5CX sensors (left + right).
-                        When disabled, only the left sensor is used.
+                        Select which physical VL53L5CX sensor(s) to
+                        bring up. Use one of the single-sensor modes
+                        if one unit is known bad (e.g. a solder
+                        defect) while the other works fine — this
+                        does not require any source change, only
+                        reconfiguring which physical GPIOs/address
+                        the driver's primary sensor slot uses.
+
+                    config MAIA_VL53L5CX_MODE_DUAL
+                        bool "Dual sensor (left + right)"
+
+                    config MAIA_VL53L5CX_MODE_LEFT_ONLY
+                        bool "Single sensor - left only"
+
+                    config MAIA_VL53L5CX_MODE_RIGHT_ONLY
+                        bool "Single sensor - right only"
+                endchoice
 
                 config MAIA_VL53L5CX_RANGING_FREQ_HZ
                     int "Ranging frequency (Hz)"
@@ -928,7 +943,22 @@ menu "MAIA Board Configuration"
             config MAIA_TEST_TOF
                 bool "ToF Sensor (VL53L5CX)"
                 help
-                    Test VL53L5CX ToF sensor driver:
+                    Test VL53L5CX ToF sensor driver. See
+                    MAIA_TEST_TOF_MODE below for which
+                    sub-test runs.
+        endchoice
+
+        choice MAIA_TEST_TOF_MODE
+            prompt "ToF test mode"
+            depends on MAIA_TEST_TOF
+            default MAIA_TEST_TOF_MODE_SUITE
+            help
+                Which VL53L5CX test to run when the ToF
+                Sensor test is selected above.
+
+            config MAIA_TEST_TOF_MODE_SUITE
+                bool "Basic test suite"
+                help
                     - Single sensor init
                     - Firmware upload verification
                     - Device ID check (is_alive)
@@ -937,6 +967,26 @@ menu "MAIA Board Configuration"
                     - Distance plausibility
                     - Resolution set/get
                     - Power mode (sleep/wake/read)
+
+            config MAIA_TEST_TOF_MODE_LIVE
+                bool "Live distance stream"
+                help
+                    Init the sensor, start ranging, and
+                    continuously print the closest valid
+                    distance so you can see it change as
+                    you move an object toward/away from
+                    the sensor. Runs until reset.
+
+            config MAIA_TEST_TOF_MODE_MATRIX
+                bool "Live matrix view on OLED"
+                help
+                    Render the full zone grid live on the
+                    SSD1306 as a proximity heat map: the
+                    denser a cell, the closer the target
+                    in that zone. Shows what the sensor
+                    sees spatially rather than a single
+                    number. Requires the OLED display.
+                    Runs until reset.
         endchoice
 
     endmenu

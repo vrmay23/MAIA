@@ -49,6 +49,16 @@
 
 #define MAIA_TOF_I2C_TIMEOUT_MS  1000
 
+/* ESP-IDF's new I2C master driver can occasionally
+ * report ESP_ERR_INVALID_STATE for a transaction that
+ * actually completed on the wire (observed directly:
+ * an address-reassignment WrByte "failed" yet the
+ * sensor had verifiably taken the new address). Retry
+ * a few times before giving up. */
+
+#define MAIA_TOF_I2C_MAX_ATTEMPTS    3
+#define MAIA_TOF_I2C_RETRY_DELAY_MS  2
+
 /**********************************************************
  * Public Functions
  **********************************************************/
@@ -81,6 +91,7 @@ uint8_t WrMulti(VL53L5CX_Platform *p_platform,
   i2c_master_transmit_multi_buffer_info_t bufs[2];
   uint8_t                                 reg[2];
   esp_err_t                               ret;
+  int                                     attempt;
 
   reg[0] = (uint8_t)((RegisterAddress >> 8) & 0xFF);
   reg[1] = (uint8_t)(RegisterAddress & 0xFF);
@@ -90,11 +101,22 @@ uint8_t WrMulti(VL53L5CX_Platform *p_platform,
   bufs[1].write_buffer = p_values;
   bufs[1].buffer_size  = (size_t)size;
 
-  ret = i2c_master_multi_buffer_transmit(
-            p_platform->dev_handle,
-            bufs,
-            2,
-            MAIA_TOF_I2C_TIMEOUT_MS);
+  for (attempt = 0; attempt < MAIA_TOF_I2C_MAX_ATTEMPTS;
+       attempt++)
+    {
+      ret = i2c_master_multi_buffer_transmit(
+                p_platform->dev_handle,
+                bufs,
+                2,
+                MAIA_TOF_I2C_TIMEOUT_MS);
+      if (ret == ESP_OK)
+        {
+          break;
+        }
+
+      vTaskDelay(pdMS_TO_TICKS(
+          MAIA_TOF_I2C_RETRY_DELAY_MS));
+    }
 
   if (ret != ESP_OK)
     {
@@ -135,16 +157,28 @@ uint8_t WrByte(VL53L5CX_Platform *p_platform,
 {
   uint8_t   buf[3];
   esp_err_t ret;
+  int       attempt;
 
   buf[0] = (uint8_t)((RegisterAddress >> 8) & 0xFF);
   buf[1] = (uint8_t)(RegisterAddress & 0xFF);
   buf[2] = value;
 
-  ret = i2c_master_transmit(
-            p_platform->dev_handle,
-            buf,
-            sizeof(buf),
-            MAIA_TOF_I2C_TIMEOUT_MS);
+  for (attempt = 0; attempt < MAIA_TOF_I2C_MAX_ATTEMPTS;
+       attempt++)
+    {
+      ret = i2c_master_transmit(
+                p_platform->dev_handle,
+                buf,
+                sizeof(buf),
+                MAIA_TOF_I2C_TIMEOUT_MS);
+      if (ret == ESP_OK)
+        {
+          break;
+        }
+
+      vTaskDelay(pdMS_TO_TICKS(
+          MAIA_TOF_I2C_RETRY_DELAY_MS));
+    }
 
   if (ret != ESP_OK)
     {
@@ -187,17 +221,29 @@ uint8_t RdMulti(VL53L5CX_Platform *p_platform,
 {
   uint8_t   reg[2];
   esp_err_t ret;
+  int       attempt;
 
   reg[0] = (uint8_t)((RegisterAddress >> 8) & 0xFF);
   reg[1] = (uint8_t)(RegisterAddress & 0xFF);
 
-  ret = i2c_master_transmit_receive(
-            p_platform->dev_handle,
-            reg,
-            sizeof(reg),
-            p_values,
-            (size_t)size,
-            MAIA_TOF_I2C_TIMEOUT_MS);
+  for (attempt = 0; attempt < MAIA_TOF_I2C_MAX_ATTEMPTS;
+       attempt++)
+    {
+      ret = i2c_master_transmit_receive(
+                p_platform->dev_handle,
+                reg,
+                sizeof(reg),
+                p_values,
+                (size_t)size,
+                MAIA_TOF_I2C_TIMEOUT_MS);
+      if (ret == ESP_OK)
+        {
+          break;
+        }
+
+      vTaskDelay(pdMS_TO_TICKS(
+          MAIA_TOF_I2C_RETRY_DELAY_MS));
+    }
 
   if (ret != ESP_OK)
     {
@@ -237,17 +283,29 @@ uint8_t RdByte(VL53L5CX_Platform *p_platform,
 {
   uint8_t   reg[2];
   esp_err_t ret;
+  int       attempt;
 
   reg[0] = (uint8_t)((RegisterAddress >> 8) & 0xFF);
   reg[1] = (uint8_t)(RegisterAddress & 0xFF);
 
-  ret = i2c_master_transmit_receive(
-            p_platform->dev_handle,
-            reg,
-            sizeof(reg),
-            p_value,
-            1,
-            MAIA_TOF_I2C_TIMEOUT_MS);
+  for (attempt = 0; attempt < MAIA_TOF_I2C_MAX_ATTEMPTS;
+       attempt++)
+    {
+      ret = i2c_master_transmit_receive(
+                p_platform->dev_handle,
+                reg,
+                sizeof(reg),
+                p_value,
+                1,
+                MAIA_TOF_I2C_TIMEOUT_MS);
+      if (ret == ESP_OK)
+        {
+          break;
+        }
+
+      vTaskDelay(pdMS_TO_TICKS(
+          MAIA_TOF_I2C_RETRY_DELAY_MS));
+    }
 
   if (ret != ESP_OK)
     {

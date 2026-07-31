@@ -93,7 +93,7 @@ esp_err_t maia_gpio_init(void)
                          (1ULL << MAIA_GPIO_TOF2_LPN);
 
   io_conf.intr_type = GPIO_INTR_DISABLE;           /* disabling interrupt    */
-  io_conf.mode = GPIO_MODE_OUTPUT;                 /* setting as output      */
+  io_conf.mode = GPIO_MODE_INPUT_OUTPUT;           /* output + readback      */
   io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;    /* we have external 47k   */
   io_conf.pull_up_en = GPIO_PULLUP_DISABLE;        /* ensure no conlicts     */
 
