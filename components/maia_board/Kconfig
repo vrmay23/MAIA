@@ -129,55 +129,331 @@ menu "MAIA Board Configuration"
         endmenu
 
         menu "WiFi Configuration"
-            menu "Self (Access Point Mode)"
-                config MAIA_WIFI_AP_SSID
-                    string "AP SSID"
-                    default "MAIA-Setup"
-                    help
-                        SSID for the Access Point created by MAIA device.
+            config MAIA_WIFI_ENABLE
+                bool "Enable WiFi"
+                default y
+                help
+                    Enable the WiFi radio driver (components/drivers/wifi).
+                    The driver is mechanism only: bring the station
+                    interface up, attempt an association, raise a
+                    diagnostic AP, scan. It does not decide anything —
+                    not which mode to boot into (MAIA_WIFI_MODE below is
+                    read by the caller, never by the driver itself), and
+                    not how to react to a disconnect (see
+                    MAIA_WIFI_STA_MAX_RETRY below). Today that caller is
+                    main/tests/test_wifi.c; an app/service will take
+                    over the same role later without the driver
+                    changing. See the SCOPE note in
+                    components/drivers/wifi/include/maia_wifi.h and
+                    spec/wifi_subsystem.md.
 
-                config MAIA_WIFI_AP_PASSWORD
-                    string "AP Password"
-                    default "maiamute2026"
-                    help
-                        Password for the Access Point (min 8 chars).
+            choice MAIA_WIFI_MODE
+                prompt "WiFi operating mode"
+                depends on MAIA_WIFI_ENABLE
+                default MAIA_WIFI_MODE_AUTO
+                help
+                    Selects what the device should do at boot. Not read
+                    by the driver — this is consulted by whatever code
+                    orchestrates the driver's primitives (currently
+                    MAIA_TEST_WIFI_MODE_CONNECT in test_wifi.c).
 
-                config MAIA_LED_BLINK_FREQ_AP_HZ
-                    int "LED blink frequency in AP mode (Hz)"
-                    default 10
-                    range 1 100
+                config MAIA_WIFI_MODE_AUTO
+                    bool "Auto (stored credentials -> STA, else diagnostic AP)"
                     help
-                        LED blink frequency when device is in AP mode.
-            endmenu
+                        Check esp_wifi's own persisted station config
+                        (the same record the future provisioning manager
+                        will read) and connect if a credential is
+                        stored. Otherwise raise the diagnostic AP.
 
-            menu "Server (Station Mode)"
+                config MAIA_WIFI_MODE_STA
+                    bool "Station only (credentials from Kconfig)"
+                    help
+                        Bench and CI mode. Uses MAIA_WIFI_STA_SSID /
+                        MAIA_WIFI_STA_PASSWORD below and never falls
+                        back to the AP. Do not ship with this.
+
+                config MAIA_WIFI_MODE_AP
+                    bool "Access Point only (diagnostic)"
+                    help
+                        Raises a plain WPA2 access point with no
+                        provisioning. Useful for testing the radio and
+                        antenna without a router nearby — see the
+                        WROOM-1U note under MAIA_WIFI_AP_SSID_PREFIX.
+
+                config MAIA_WIFI_MODE_PROVISIONING
+                    bool "Interactive provisioning (SoftAP + phone app)"
+                    help
+                        If already provisioned, connect directly.
+                        Otherwise raise a SoftAP and run the ESP-IDF
+                        wifi_provisioning manager (protocomm, security
+                        1) so a phone can supply credentials at
+                        runtime — no LCD, no buttons, no typing on the
+                        device. Today the client is the stock
+                        "ESP SoftAP Prov" app (Espressif, free,
+                        Android/iOS); MaiaProvApp will speak the same
+                        protocol later. See
+                        components/services/wifi_prov_service/ and
+                        spec/wifi_subsystem.md sections 8-9.
+            endchoice
+
+            menu "Station"
+                depends on MAIA_WIFI_ENABLE
+                # Not depends on !MAIA_WIFI_MODE_AP: the driver always
+                # compiles STA support regardless of which mode is the
+                # boot default (components/drivers/CMakeLists.txt gates
+                # only on MAIA_WIFI_ENABLE), and
+                # components/services/wifi_prov_service/ reads
+                # MAIA_WIFI_STA_MAX_RETRY unconditionally for its
+                # already-provisioned connect path. Hiding this menu
+                # under a mode condition would make these symbols
+                # vanish from sdkconfig.h while code that always
+                # compiles still references them — a real build
+                # failure this project hit once already.
+
                 config MAIA_WIFI_STA_SSID
-                    string "Server WiFi SSID"
+                    string "Seed WiFi SSID"
                     default ""
                     help
-                        SSID of the WiFi network to connect for data sync.
-                        Configured via web interface and saved to NVS.
+                        Used directly in Station-only mode. In Auto mode
+                        this is written to esp_wifi's persisted config
+                        only the first time, when no stored credentials
+                        exist yet — after that, the stored value is
+                        authoritative and this Kconfig value is ignored.
 
                 config MAIA_WIFI_STA_PASSWORD
-                    string "Server WiFi Password"
+                    string "Seed WiFi Password"
                     default ""
+
+                config MAIA_WIFI_STA_MAX_RETRY
+                    int "Connection attempts before giving up"
+                    default 5
+                    range 1 20
                     help
-                        Password of the WiFi network to connect.
-                        Configured via web interface and saved to NVS.
+                        Not read by the driver — the driver reports a
+                        raw disconnect reason code and stops there
+                        (see the SCOPE note in maia_wifi.h). This
+                        value is consumed by whoever implements the
+                        reconnect policy on top of it:
+
+                        main/tests/test_wifi.c
+                        (MAIA_TEST_WIFI_MODE_CONNECT under Auto or
+                        Station mode) applies it separately to
+                        authentication failures (wrong password) and
+                        to transient disconnects — a disconnect
+                        because the router is out of range does not
+                        count against this at all, the policy backs
+                        off immediately instead of retrying, since
+                        that is the normal state of a device that just
+                        walked out the front door.
+
+                        components/services/wifi_prov_service/ passes
+                        it straight through as wifi_conn_attempts to
+                        the ESP-IDF provisioning manager, bounding how
+                        many times it retries a newly submitted
+                        credential before reporting
+                        WIFI_PROV_CRED_FAIL.
+
+                config MAIA_WIFI_STA_RETRY_BACKOFF_MS
+                    int "Initial retry backoff (ms, doubles up to 30s)"
+                    default 1000
+                    range 100 10000
+
+                config MAIA_WIFI_STA_POWER_SAVE
+                    bool "Enable modem power save while connected"
+                    default y
+                    help
+                        WIFI_PS_MIN_MODEM while associated. Significant
+                        on a battery-powered harness.
 
                 config MAIA_WIFI_SYNC_INTERVAL_MIN
                     int "Data sync interval (minutes)"
                     default 10
                     range 1 1440
                     help
-                        How often to connect and sync data with server.
+                        How often to connect and sync data with the
+                        server. Consumed by the (not yet implemented)
+                        data sync client, not by the radio driver
+                        itself.
+            endmenu
 
-                config MAIA_LED_BLINK_FREQ_STA_HZ
-                    int "LED blink frequency in Station mode (Hz)"
+            menu "Access Point (diagnostic)"
+                depends on MAIA_WIFI_ENABLE
+                # Not depends on !MAIA_WIFI_MODE_STA — see the same
+                # note on the Station menu above.
+                # maia_wifi_ap.c always compiles regardless of mode
+                # (any mode's fallback path may call
+                # maia_wifi_ap_start() at runtime), so these Kconfig
+                # symbols must always be defined too.
+
+                config MAIA_WIFI_AP_SSID_PREFIX
+                    string "AP SSID prefix"
+                    default "MAIA"
+                    help
+                        This is a bench/diagnostic AP, not the tutor
+                        setup portal — nothing serves a page over it
+                        yet. Its main use today is validating the radio
+                        and antenna without a router nearby. Note the
+                        module is a WROOM-1U: it needs an external
+                        U.FL/IPEX antenna. Without one fitted, range is
+                        a few centimetres and every symptom looks like a
+                        firmware bug.
+
+                config MAIA_WIFI_AP_SSID_APPEND_MAC
+                    bool "Append MAC suffix to the AP SSID"
+                    default y
+                    help
+                        Produces "MAIA-A4F3" from the last two bytes of
+                        the base MAC. Avoids collisions when more than
+                        one MAIA unit is nearby.
+
+                config MAIA_WIFI_AP_PASSWORD
+                    string "AP password (min 8 chars, empty = open network)"
+                    default "maiamute2026"
+
+                config MAIA_WIFI_AP_CHANNEL
+                    int "AP channel"
+                    default 1
+                    range 1 13
+
+                config MAIA_WIFI_AP_MAX_CONN
+                    int "Max simultaneous AP clients"
+                    default 4
+                    range 1 8
+            endmenu
+
+            menu "Interactive Provisioning"
+                depends on MAIA_WIFI_ENABLE
+
+                config MAIA_WIFI_PROV_SSID_PREFIX
+                    string "Provisioning AP SSID prefix"
+                    default "PROV_MAIA"
+                    help
+                        The stock "ESP SoftAP Prov" app filters its
+                        scan results by prefix, defaulting to "PROV_".
+                        Keep the PROV_ prefix while that app is the
+                        client; MaiaProvApp will not need to.
+
+                config MAIA_WIFI_PROV_SSID_APPEND_MAC
+                    bool "Append MAC suffix to the provisioning AP SSID"
+                    default y
+                    help
+                        Produces "PROV_MAIA_A4F3" from the last two
+                        bytes of the base MAC. Avoids collisions when
+                        more than one MAIA unit may be in provisioning
+                        mode within radio range.
+
+                choice MAIA_WIFI_PROV_AP_SECURITY
+                    prompt "Provisioning AP link security"
+                    default MAIA_WIFI_PROV_AP_WPA2_MAC
+
+                    config MAIA_WIFI_PROV_AP_WPA2_MAC
+                        bool "WPA2, password derived from device MAC"
+                        help
+                            Per-unit password, so publishing this
+                            firmware does not publish every device's
+                            setup password. Recommended.
+
+                    config MAIA_WIFI_PROV_AP_WPA2_STATIC
+                        bool "WPA2, static password from Kconfig"
+                        help
+                            Same password on every unit built from
+                            this tree. Bench use only — do not ship.
+
+                    config MAIA_WIFI_PROV_AP_OPEN
+                        bool "Open network (protocomm encryption only)"
+                        help
+                            What Espressif's own examples do. Session
+                            security (below) still encrypts the
+                            credential exchange end to end regardless
+                            of the link, but anyone can associate.
+                endchoice
+
+                config MAIA_WIFI_PROV_AP_PASSWORD
+                    string "Static provisioning AP password (min 8 chars)"
+                    default "maiamute2026"
+                    depends on MAIA_WIFI_PROV_AP_WPA2_STATIC
+
+                choice MAIA_WIFI_PROV_SECURITY
+                    prompt "Provisioning session security"
+                    default MAIA_WIFI_PROV_SEC1
+
+                    config MAIA_WIFI_PROV_SEC1
+                        bool "Security 1 (X25519 + AES-CTR, PoP)"
+                        select ESP_PROTOCOMM_SUPPORT_SECURITY_VERSION_1
+                        help
+                            The proof-of-possession (PoP) string is
+                            mixed into the session key, so a wrong
+                            code fails the handshake cryptographically
+                            rather than being rejected by an
+                            application-level check. Supported by the
+                            stock app. Recommended.
+
+                    config MAIA_WIFI_PROV_SEC0
+                        bool "Security 0 (none)"
+                        select ESP_PROTOCOMM_SUPPORT_SECURITY_VERSION_0
+                        help
+                            No encryption, no PoP. Bench debugging
+                            only — do not ship.
+                endchoice
+
+                config MAIA_WIFI_PROV_POP_DIGITS
+                    int "Proof-of-possession code length (digits)"
+                    default 6
+                    range 4 8
+                    depends on MAIA_WIFI_PROV_SEC1
+                    help
+                        Drawn from the hardware RNG at the start of
+                        each provisioning session and printed to the
+                        serial log (no OLED wiring yet — see
+                        MAIA_WIFI_PROV_SHOW_ON_OLED note in
+                        spec/wifi_subsystem.md section 12). Ignored if
+                        MAIA_WIFI_PROV_POP_STATIC is non-empty.
+
+                config MAIA_WIFI_PROV_POP_STATIC
+                    string "Static PoP code (empty = random per session)"
+                    default ""
+                    depends on MAIA_WIFI_PROV_SEC1
+                    help
+                        Set this to script provisioning with
+                        idf.py's tools/esp_prov/esp_prov.py without
+                        reading a fresh code off the serial log every
+                        run. Leave empty for real use — see the
+                        security note in spec/wifi_subsystem.md
+                        section 11.3 on why a random per-session code
+                        matters.
+
+                config MAIA_WIFI_PROV_TIMEOUT_MIN
+                    int "Provisioning timeout (minutes, 0 = never)"
                     default 10
+                    range 0 60
+                    help
+                        Provisioning stops and the radio shuts down
+                        after this long without success, so a device
+                        left unprovisioned does not sit there
+                        indefinitely with a setup AP up.
+            endmenu
+
+            menu "Status indication"
+                depends on MAIA_WIFI_ENABLE
+
+                config MAIA_LED_BLINK_FREQ_AP_HZ
+                    int "LED blink frequency in AP mode (Hz)"
+                    default 5
                     range 1 100
                     help
-                        LED blink frequency when device is in Station mode.
+                        LED blink frequency when device is in AP mode.
+                        Kept distinct from the Station frequency below
+                        so the two states are visually distinguishable
+                        once LED integration lands with the
+                        provisioning service.
+
+                config MAIA_LED_BLINK_FREQ_STA_HZ
+                    int "LED blink frequency while connecting (Hz)"
+                    default 1
+                    range 1 100
+                    help
+                        LED blink frequency while the station is
+                        connecting.
             endmenu
         endmenu
     endmenu
@@ -1050,6 +1326,16 @@ menu "MAIA Board Configuration"
                     Test VL53L5CX ToF sensor driver. See
                     MAIA_TEST_TOF_MODE below for which
                     sub-test runs.
+
+            config MAIA_TEST_WIFI
+                bool "WiFi Radio Driver"
+                depends on MAIA_WIFI_ENABLE
+                help
+                    Test the WiFi radio driver (L1-L4: core, station,
+                    diagnostic AP, scan). See MAIA_TEST_WIFI_MODE below
+                    for which sub-test runs. Does not exercise the
+                    provisioning setup flow — that service does not
+                    exist yet (spec/wifi_subsystem.md).
         endchoice
 
         choice MAIA_TEST_TOF_MODE
@@ -1108,6 +1394,73 @@ menu "MAIA Board Configuration"
                     threshold, etc.) can reliably report.
                     Runs until reset.
         endchoice
+
+        menu "WiFi Test Configuration"
+            depends on MAIA_TEST_WIFI
+
+            choice MAIA_TEST_WIFI_MODE
+                prompt "WiFi test mode"
+                default MAIA_TEST_WIFI_MODE_SUITE
+                help
+                    Which WiFi driver test to run when the WiFi Radio
+                    Driver test is selected above.
+
+                config MAIA_TEST_WIFI_MODE_SUITE
+                    bool "Basic test suite"
+                    help
+                        - init/deinit
+                        - MAC suffix formatting
+                        - is_provisioned() against esp_wifi's stored config
+                        - State transitions with no radio activity
+
+                config MAIA_TEST_WIFI_MODE_SCAN
+                    bool "Network scan"
+                    help
+                        Scan and print visible networks with SSID, RSSI,
+                        channel and auth mode. Also the fastest way to
+                        sanity-check the antenna is connected — see the
+                        WROOM-1U note under MAIA_WIFI_AP_SSID_PREFIX.
+
+                config MAIA_TEST_WIFI_MODE_CONNECT
+                    bool "Exercise connectivity (per WiFi operating mode)"
+                    help
+                        Runs whatever MAIA_WIFI_MODE above selects, entirely
+                        from code outside the driver — this is where the
+                        reconnect policy (retry count, exponential backoff,
+                        giving up) and the boot decision live today, since
+                        the driver itself only exposes primitives and raw
+                        events (see the SCOPE note in maia_wifi.h). An
+                        app/service will take over this same role later
+                        without the driver changing.
+
+                        Auto    - is_provisioned() -> connect; else Kconfig
+                                  seed -> connect; else raise the diagnostic
+                                  AP. Applies the reconnect policy once
+                                  connecting.
+                        Station - connect using MAIA_WIFI_STA_SSID/PASSWORD
+                                  only, same reconnect policy, never falls
+                                  back to the AP.
+                        AP      - raise the diagnostic AP only, log
+                                  client join/leave events, run until reset.
+            endchoice
+
+            config MAIA_TEST_WIFI_LED_FEEDBACK
+                bool "Blink status LED to reflect WiFi state"
+                default y
+                depends on MAIA_TEST_WIFI_MODE_CONNECT
+                help
+                    Runs led_feedback_task() alongside the connectivity
+                    test, driving the status LED per
+                    MAIA_LED_BLINK_FREQ_AP_HZ / _STA_HZ (see "Status
+                    indication" under WiFi Configuration): blinking while
+                    raising the AP or connecting, solid once connected,
+                    off otherwise.
+
+                    Disable to isolate whether an LED-related symptom
+                    comes from the blink task itself, or if the status
+                    LED is not the GPIO you expect on this board revision
+                    (see MAIA_LED_STATUS_GPIO under LEDs Configuration).
+        endmenu
 
     endmenu
 
