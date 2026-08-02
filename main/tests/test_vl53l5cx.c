@@ -738,6 +738,13 @@ static void test_live_distance_stream(void)
     }
 }
 
+/* The matrix view renders on the OLED, so everything below
+ * is only built for that mode. Without this the whole test
+ * would pull in ssd1306 even when the display is disabled.
+ */
+
+#ifdef CONFIG_MAIA_TEST_TOF_MODE_MATRIX
+
 /**********************************************************
  * Name: distance_to_level
  *
@@ -968,6 +975,8 @@ static void test_live_matrix_display(void)
     }
 }
 
+#endif /* CONFIG_MAIA_TEST_TOF_MODE_MATRIX */
+
 /**********************************************************
  * Name: vl53l5cx_test_task
  *
@@ -1151,6 +1160,122 @@ static void vl53l5cx_live_task(void *pvParameters)
 }
 
 /**********************************************************
+ * Name: test_object_presence_led
+ *
+ * Description:
+ *   Drive the status LED (same pin as the blink test)
+ *   high while any zone reports a valid target, low
+ *   otherwise. No extra distance cutoff is applied — a
+ *   zone already had to survive the status-5/6 and
+ *   min-signal-per-SPAD filters in filter_data() to count,
+ *   so "detected" means the farthest target the current
+ *   Kconfig tuning can reliably report.
+ *
+ **********************************************************/
+
+static void test_object_presence_led(void)
+{
+  maia_tof_data_t data;
+  esp_err_t       ret;
+  int             i;
+  bool            detected;
+  bool            led_on = false;
+
+  print_header("Phase 2: Object presence LED indicator");
+  ESP_LOGI(TAG,
+           "LED on GPIO%d follows detection: any valid "
+           "zone turns it on, none turns it off. "
+           "Reset the board to stop.",
+           MAIA_GPIO_LED_STATUS);
+
+  ret = maia_tof_start_ranging();
+  if (ret != ESP_OK)
+    {
+      ESP_LOGE(TAG,
+               "Presence test: start_ranging failed");
+      return;
+    }
+
+  while (1)
+    {
+      if (!wait_data_ready(MAIA_TOF_SENSOR_LEFT,
+                           DATA_READY_TIMEOUT_MS))
+        {
+          continue;
+        }
+
+      ret = maia_tof_get_data(MAIA_TOF_SENSOR_LEFT,
+                              &data);
+      if (ret != ESP_OK)
+        {
+          continue;
+        }
+
+      detected = false;
+
+      for (i = 0; i < data.nb_zones; i++)
+        {
+          if (data.nb_target_detected[i] > 0 &&
+              data.distance_mm[i] > 0)
+            {
+              detected = true;
+              break;
+            }
+        }
+
+      if (detected != led_on)
+        {
+          gpio_set_level(MAIA_GPIO_LED_STATUS,
+                        detected ? 1 : 0);
+          led_on = detected;
+          ESP_LOGI(TAG, "Object %s",
+                   detected ? "DETECTED -- LED on"
+                            : "gone -- LED off");
+        }
+    }
+}
+
+/**********************************************************
+ * Name: vl53l5cx_presence_task
+ *
+ * Description:
+ *   Dedicated FreeRTOS task for the object presence LED
+ *   test mode: init only, then drive the LED until reset.
+ *   See test_object_presence_led().
+ *
+ **********************************************************/
+
+static void vl53l5cx_presence_task(void *pvParameters)
+{
+  bool ok;
+
+  (void)pvParameters;
+
+  print_header("VL53L5CX OBJECT PRESENCE TEST");
+  ESP_LOGI(TAG, "Test file built: %s %s",
+           __DATE__, __TIME__);
+
+  ok = test_init();
+  print_result("Init (single sensor)", ok);
+
+  if (ok)
+    {
+      test_object_presence_led();
+    }
+  else
+    {
+      ESP_LOGE(TAG,
+               "Init failed -- cannot run presence test");
+    }
+
+  print_header("END");
+  maia_tof_deinit();
+  vTaskDelete(NULL);
+}
+
+#ifdef CONFIG_MAIA_TEST_TOF_MODE_MATRIX
+
+/**********************************************************
  * Name: vl53l5cx_matrix_task
  *
  * Description:
@@ -1188,6 +1313,8 @@ static void vl53l5cx_matrix_task(void *pvParameters)
   vTaskDelete(NULL);
 }
 
+#endif /* CONFIG_MAIA_TEST_TOF_MODE_MATRIX */
+
 /**********************************************************
  * Name: test_vl53l5cx_run
  *
@@ -1208,6 +1335,8 @@ void test_vl53l5cx_run(void)
 {
 #if defined(CONFIG_MAIA_TEST_TOF_MODE_MATRIX)
   TaskFunction_t task_fn = vl53l5cx_matrix_task;
+#elif defined(CONFIG_MAIA_TEST_TOF_MODE_PRESENCE)
+  TaskFunction_t task_fn = vl53l5cx_presence_task;
 #elif defined(CONFIG_MAIA_TEST_TOF_MODE_LIVE)
   TaskFunction_t task_fn = vl53l5cx_live_task;
 #else

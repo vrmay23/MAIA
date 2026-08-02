@@ -254,18 +254,24 @@ menu "MAIA Board Configuration"
                 config MAIA_LED_GPIO_21
                     bool "GPIO21 (Onboard RGB LED)"
                     help
-                        Use onboard RGB LED (not accessible externally).
+                        Use onboard RGB LED (prototype board only).
 
                 config MAIA_LED_GPIO_39
-                    bool "GPIO39 (MTCK - External)"
+                    bool "GPIO39 (MTCK)"
                     help
-                        Use GPIO39 for external LED (requires soldering).
+                        Use GPIO39 for external LED (blue led).
+
+                config MAIA_LED_GPIO_44
+                    bool "GPIO44 (RXO) from camera flash led"
+                    help
+                        Use GPIO44 for external LED (camera flash led).
             endchoice
 
             config MAIA_LED_STATUS_PIN
                 int
                 default 21 if MAIA_LED_GPIO_21
                 default 39 if MAIA_LED_GPIO_39
+                default 44 if MAIA_LED_GPIO_44
         endmenu
     endmenu
 
@@ -553,6 +559,14 @@ menu "MAIA Board Configuration"
                         help
                             3-axis accelerometer only. No gyroscope,
                             no DMP. Use when gyro is not required.
+
+                    config MAIA_IMU_LSM6DSOX
+                        bool "LSM6DSOX (ST, accel+gyro+MLC/FSM)"
+                        help
+                            6-axis iNEMO module with Machine Learning
+                            Core, Finite State Machine, pedometer and
+                            a 9 kB tagged FIFO. No DMP-style
+                            quaternion output.
                 endchoice
  
                 menu "MPU-6050 Configuration"
@@ -649,9 +663,94 @@ menu "MAIA Board Configuration"
                         config MAIA_ADXL345_ACCEL_16G
                             bool "±16g"
                     endchoice
- 
+
                 endmenu
- 
+
+                menu "LSM6DSOX Configuration"
+                    depends on MAIA_IMU_ENABLE && MAIA_IMU_LSM6DSOX
+
+                    config MAIA_LSM6DSOX_I2C_ADDR
+                        hex "I2C address"
+                        default 0x6A
+                        help
+                            0x6A when SDO/SA0 pin is low (default).
+                            0x6B when SDO/SA0 pin is high.
+
+                    choice MAIA_LSM6DSOX_ACCEL_RANGE
+                        prompt "Accelerometer range"
+                        default MAIA_LSM6DSOX_ACCEL_2G
+                        help
+                            Full-scale range for accelerometer.
+                            Lower range = higher resolution.
+
+                        config MAIA_LSM6DSOX_ACCEL_2G
+                            bool "±2g  (0.061 mg/LSB)"
+                        config MAIA_LSM6DSOX_ACCEL_4G
+                            bool "±4g  (0.122 mg/LSB)"
+                        config MAIA_LSM6DSOX_ACCEL_8G
+                            bool "±8g  (0.244 mg/LSB)"
+                        config MAIA_LSM6DSOX_ACCEL_16G
+                            bool "±16g (0.488 mg/LSB)"
+                    endchoice
+
+                    choice MAIA_LSM6DSOX_GYRO_RANGE
+                        prompt "Gyroscope range"
+                        default MAIA_LSM6DSOX_GYRO_250
+
+                        config MAIA_LSM6DSOX_GYRO_125
+                            bool "±125  °/s ( 4.375 mdps/LSB)"
+                        config MAIA_LSM6DSOX_GYRO_250
+                            bool "±250  °/s ( 8.750 mdps/LSB)"
+                        config MAIA_LSM6DSOX_GYRO_500
+                            bool "±500  °/s (17.500 mdps/LSB)"
+                        config MAIA_LSM6DSOX_GYRO_1000
+                            bool "±1000 °/s (35.000 mdps/LSB)"
+                        config MAIA_LSM6DSOX_GYRO_2000
+                            bool "±2000 °/s (70.000 mdps/LSB)"
+                    endchoice
+
+                    choice MAIA_LSM6DSOX_ODR
+                        prompt "Output data rate"
+                        default MAIA_LSM6DSOX_ODR_104HZ
+                        help
+                            Applied to both accelerometer and
+                            gyroscope. The pedometer requires 26 Hz
+                            or above.
+
+                        config MAIA_LSM6DSOX_ODR_12_5HZ
+                            bool "12.5 Hz"
+                        config MAIA_LSM6DSOX_ODR_26HZ
+                            bool "26 Hz"
+                        config MAIA_LSM6DSOX_ODR_52HZ
+                            bool "52 Hz"
+                        config MAIA_LSM6DSOX_ODR_104HZ
+                            bool "104 Hz"
+                        config MAIA_LSM6DSOX_ODR_208HZ
+                            bool "208 Hz"
+                        config MAIA_LSM6DSOX_ODR_416HZ
+                            bool "416 Hz"
+                        config MAIA_LSM6DSOX_ODR_833HZ
+                            bool "833 Hz"
+                    endchoice
+
+                    config MAIA_LSM6DSOX_BDU_ENABLE
+                        bool "Enable block data update"
+                        default y
+                        help
+                            Hold output registers until both bytes of
+                            a word have been read, so a burst read can
+                            never mix samples. Recommended.
+
+                    config MAIA_LSM6DSOX_INT_ENABLE
+                        bool "Enable data-ready interrupt (GPIO4)"
+                        default y
+                        help
+                            Assert INT1 on MAIA_GPIO_IMU_INT (GPIO4)
+                            when new accel/gyro data is ready.
+                            Required for interrupt-driven operation.
+
+                endmenu
+
             endmenu
 
             menu "LiDAR (VL53L5CX)"
@@ -899,6 +998,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_TEMPERATURE_SENSOR
                 bool "Temperature Sensor (DS18B20)"
+                depends on MAIA_DS18B20_ENABLE
                 help
                     Test DS18B20 OneWire temperature sensor:
                     - Blocking read mode
@@ -908,6 +1008,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_HAPTIC_MOTOR
                 bool "Haptic Motor (DRV2605L)"
+                depends on MAIA_DRV2605L_ENABLE
                 help
                     Test DRV2605L haptic motor driver:
                     - Library effects playback (1-123)
@@ -918,6 +1019,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_DISPLAY
                 bool "OLED Display (SSD1306)"
+                depends on MAIA_SSD1306_ENABLE
                 help
                     Test SSD1306 OLED display driver:
                     - Display initialization
@@ -929,6 +1031,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_IMU
                 bool "IMU (MPU6050)"
+                depends on MAIA_IMU_MPU6050
                 help
                     Test MPU-6050 IMU driver:
                     - WHO_AM_I identification
@@ -942,6 +1045,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_TOF
                 bool "ToF Sensor (VL53L5CX)"
+                depends on MAIA_VL53L5CX_ENABLE
                 help
                     Test VL53L5CX ToF sensor driver. See
                     MAIA_TEST_TOF_MODE below for which
@@ -979,6 +1083,7 @@ menu "MAIA Board Configuration"
 
             config MAIA_TEST_TOF_MODE_MATRIX
                 bool "Live matrix view on OLED"
+                depends on MAIA_SSD1306_ENABLE
                 help
                     Render the full zone grid live on the
                     SSD1306 as a proximity heat map: the
@@ -986,6 +1091,21 @@ menu "MAIA Board Configuration"
                     in that zone. Shows what the sensor
                     sees spatially rather than a single
                     number. Requires the OLED display.
+                    Runs until reset.
+
+            config MAIA_TEST_TOF_MODE_PRESENCE
+                bool "Object presence LED indicator"
+                help
+                    Init the sensor, start ranging, and
+                    drive the status LED (the same one
+                    used by the blink test) high while
+                    any zone reports a valid target,
+                    low otherwise. Any zone that survives
+                    the existing status/signal filters
+                    counts as "detected" — i.e. the
+                    farthest target the current Kconfig
+                    (integration time, resolution, signal
+                    threshold, etc.) can reliably report.
                     Runs until reset.
         endchoice
 
