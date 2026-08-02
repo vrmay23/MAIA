@@ -52,6 +52,14 @@ if(CONFIG_MAIA_VL53L5CX_ENABLE)
         "vl53l5cx/src/vl53l5cx_platform.c")
 endif()
 
+if(CONFIG_MAIA_WIFI_ENABLE)
+    list(APPEND DRV_SRCS
+        "wifi/src/maia_wifi.c"
+        "wifi/src/maia_wifi_sta.c"
+        "wifi/src/maia_wifi_ap.c"
+        "wifi/src/maia_wifi_scan.c")
+endif()
+
 # MAIA_IMU_DEVICE is a Kconfig choice: only the selected IMU is built.
 
 if(CONFIG_MAIA_IMU_MPU6050)
@@ -74,6 +82,7 @@ idf_component_register(
         "mpu6050/include"
         "ssd1306/include"
         "vl53l5cx/include"
+        "wifi/include"
         ${ULD_INCLUDE_DIRS}
     PRIV_INCLUDE_DIRS
         "."
@@ -81,4 +90,8 @@ idf_component_register(
         driver
         maia_board
         esp_timer
+        esp_wifi
+        esp_netif
+        esp_event
+        nvs_flash
 )

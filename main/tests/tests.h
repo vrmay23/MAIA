@@ -63,4 +63,8 @@ void test_vl53l5cx_run(void);
 void test_mpu6050_run(void);
 #endif
 
+#ifdef CONFIG_MAIA_WIFI_ENABLE
+void test_wifi_run(void);
+#endif
+
 #endif /* __MAIN_TESTS_TESTS_H */

@@ -38,10 +38,13 @@ if(CONFIG_MAIA_TEST_ENABLE)
         list(APPEND MAIN_SRCS "tests/test_mpu6050.c")
     endif()
 
+    if(CONFIG_MAIA_WIFI_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_wifi.c")
+    endif()
+
     # Add more test files here as needed:
     # list(APPEND MAIN_SRCS "tests/test_i2c.c")
     # list(APPEND MAIN_SRCS "tests/test_sensors.c")
-    # list(APPEND MAIN_SRCS "tests/test_wifi.c")
 endif()
 
 # Register the main component with ESP-IDF build system
@@ -57,10 +60,26 @@ idf_component_register(
     
     # Component dependencies
     # These components must be built before main
+    #
+    # wifi_prov_service is REQUIRES unconditionally (not gated on
+    # CONFIG_MAIA_WIFI_ENABLE) on purpose — ESP-IDF resolves each
+    # component's REQUIRES/PRIV_REQUIRES in an early pass, before
+    # Kconfig values from the actual sdkconfig are reliably available,
+    # so conditioning REQUIRES on a CONFIG_* value silently produces
+    # the Kconfig *default* rather than what is actually configured
+    # (confirmed by hitting this directly: the component vanished from
+    # main's REQUIRES even with MAIA_WIFI_ENABLE=y set). SRCS
+    # conditionals below do not have this problem — they are evaluated
+    # later, with the real sdkconfig in hand — which is why disabling
+    # the *content* of wifi_prov_service.c is instead handled inside
+    # that file itself, via a whole-file "#if CONFIG_MAIA_WIFI_ENABLE"
+    # guard: the component always builds, but compiles to an empty,
+    # harmless translation unit when WiFi is disabled.
     REQUIRES
-        app          # Application logic component
-        maia_board   # Board support package (BSP)
-        drivers      # Hardware drivers (button, sensors, etc)
+        app                # Application logic component
+        maia_board         # Board support package (BSP)
+        drivers            # Hardware drivers (button, sensors, etc)
+        wifi_prov_service  # WiFi provisioning policy (services/wifi_prov_service)
         console
         # Add more component dependencies here as needed:
         # services   # High-level services (if created)

@@ -15,78 +15,43 @@
  */
 
 /****************************************************************************
- * main/main.c
+ * components/drivers/wifi/src/maia_wifi_priv.h
  *
- * MAIA - Motion Assistance for Impaired Animals
- * Application entry point
+ * MAIA WiFi Driver — internal shared interface between the L1/L2/L3/L4
+ * translation units. Not installed, not part of the public API.
  *
  ****************************************************************************/
+
+#ifndef __COMPONENTS_DRIVERS_WIFI_SRC_MAIA_WIFI_PRIV_H
+#define __COMPONENTS_DRIVERS_WIFI_SRC_MAIA_WIFI_PRIV_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
-#include <esp_log.h>
-#include "maia_board.h"
-
-#ifdef CONFIG_MAIA_TEST_ENABLE
-#  include "tests/tests.h"
-#else
-#  include "app.h"
-#endif
+#include "maia_wifi.h"
+#include <esp_err.h>
+#include <esp_netif.h>
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Internal Function Prototypes — maia_wifi.c
  ****************************************************************************/
 
-#define TAG "[MAIN]"
+void maia_wifi_notify(maia_wifi_event_t event, void *data);
+void maia_wifi_set_state(maia_wifi_state_t state);
+esp_netif_t *maia_wifi_sta_netif(void);
+esp_netif_t *maia_wifi_ap_netif(void);
 
 /****************************************************************************
- * Public Functions
+ * Internal Function Prototypes — maia_wifi_sta.c
  ****************************************************************************/
+
+esp_err_t maia_wifi_sta_events_register(void);
 
 /****************************************************************************
- * Name: app_main
- *
- * Description:
- *   Application entry point.
- *
+ * Internal Function Prototypes — maia_wifi_ap.c
  ****************************************************************************/
 
-void app_main(void)
-{
-#ifdef CONFIG_MAIA_TEST_ENABLE
+esp_err_t maia_wifi_ap_events_register(void);
 
-  /* Test mode enabled */
-
-  ESP_LOGI(TAG, "=== MAIA MODE: TEST MODE ===");
-  maia_board_init();
-
-#ifdef CONFIG_MAIA_TEST_BLINK
-  test_blink_run();
-#elif defined(CONFIG_MAIA_TEST_BUTTON)
-  test_button_run();
-#elif defined(CONFIG_MAIA_TEST_TEMPERATURE_SENSOR)
-  test_ds18b20_run();
-#elif defined(CONFIG_MAIA_TEST_HAPTIC_MOTOR)
-  test_drv2605l_run();
-#elif defined(CONFIG_MAIA_TEST_DISPLAY)
-  test_ssd1306_run();
-#elif defined(CONFIG_MAIA_TEST_IMU)
-  test_mpu6050_run();
-#elif defined(CONFIG_MAIA_TEST_TOF)
-  test_vl53l5cx_run();
-#elif defined(CONFIG_MAIA_TEST_WIFI)
-  test_wifi_run();
-#endif
-
-#else
-
-  /* Normal application mode */
-
-  ESP_LOGI(TAG, "=== MAIA MODE: REAL APPLICATION ===");
-  maia_board_init();
-  app_init();
-
-#endif
-}
+#endif /* __COMPONENTS_DRIVERS_WIFI_SRC_MAIA_WIFI_PRIV_H */
