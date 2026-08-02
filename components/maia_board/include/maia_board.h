@@ -18,7 +18,6 @@
      * components/maia_board/include/maia_board.h
      *
      * MAIA - Motion Assistance for Impaired Animals
-     * Board Support Package for XIAO ESP32S3 Plus
      *
      ****************************************************************************/
 
@@ -38,31 +37,67 @@
      * Pre-processor Definitions
      ****************************************************************************/
 
-    /* GPIO Pin Definitions (XIAO ESP32S3 Plus)
+    /* GPIO Pin Definitions (MAIA rev0 - ESP32-S3-WROOM-1U-N16R8)
     *
-    *  -------------------------------------------
-    * | XIAO Pin |   GPIO   | PERIPHERAL FUNCTION |
-    *  ----------|----------|---------------------
-    *      D0    |  GPIO01  |   VL53L5CX #1 LPn
-    *      D1    |  GPIO02  |   VL53L5CX #2 LPn
-    *      D2    |  GPIO03  |   DS18B20 DATA
-    *      D3    |  GPIO04  |   MPU6050 INT
-    *      D4    |  GPIO05  |   I2C SDA
-    *      D5    |  GPIO06  |   I2C SCL
-    *      D6    |  GPIO43  |   VL53L5CX #1 INT
-    *      D7    |  GPIO44  |   VL53L5CX #2 INT
-    *      D8    |  GPIO07  |   Motor Left PWM
-    *      D9    |  GPIO08  |   Motor Right PWM
-    *      D10   |  GPIO09  |   Button
-    *  |------------------------------------------|
+    *  ------------------------------------------------------------------
+    * | Mod pin |  GPIO  | Net                | Function                 |
+    *  ---------|--------|--------------------|--------------------------|
+    *      1    |   -    | GND                |
+    *      2    |   -    | 3v3_esp            | 3V3 supply
+    *      3    |   -    | enable_esp         | EN / reset
+    *      4    | GPIO04 | MPU_int            | IMU interrupt
+    *      5    | GPIO05 | I2C_SDA            | I2C bus SDA
+    *      6    | GPIO06 | I2C_SCL            | I2C bus SCL
+    *      7    | GPIO07 | Motor_Left_PWM     | Left ERM motor PWM
+    *      8    | GPIO15 | CAM_Y2             | Camera data
+    *      9    | GPIO16 | CAM_Y5             | Camera data
+    *     10    | GPIO17 | CAM_Y3             | Camera data
+    *     11    | GPIO18 | CAM_Y4             | Camera data
+    *     12    | GPIO08 | Motor_Right_PWM    | Right ERM motor PWM
+    *     13    | GPIO19 | usb_N              | Native USB D-
+    *     14    | GPIO20 | usb_P              | Native USB D+
+    *     15    | GPIO03 | DS18B20_DATA       | OneWire data
+    *     16    | GPIO46 | -                  | Not connected (DNU)
+    *     17    | GPIO09 | BTN_01             | Button 1
+    *     18    | GPIO10 | CAM_XCLK           | Camera clock in
+    *     19    | GPIO11 | CAM_Y8             | Camera data
+    *     20    | GPIO12 | CAM_Y7             | Camera data
+    *     21    | GPIO13 | CAM_PCLK           | Camera pixel clock
+    *     22    | GPIO14 | CAM_PWDN           | Camera power down
+    *     23    | GPIO21 | CAM_Y9             | Camera data
+    *     24    | GPIO47 | CAM_HREF           | Camera HREF
+    *     25    | GPIO48 | USER_LED           | User / status LED
+    *     26    | GPIO45 | CAM_Y6             | Camera data
+    *     27    | GPIO00 | boot_esp           | Boot strapping pin
+    *     28    | GPIO35 | -                  | Not connected (DNU)
+    *     29    | GPIO36 | -                  | Not connected (DNU)
+    *     30    | GPIO37 | -                  | Not connected (DNU)
+    *     31    | GPIO38 | CAM_VSYNC          | Camera VSYNC
+    *     32    | GPIO39 | SCCB_SCL           | Camera SCCB clock
+    *     33    | GPIO40 | SCCB_SDA           | Camera SCCB data
+    *     34    | GPIO41 | VL53L5CX_INT_RIGHT | ToF right INT
+    *     35    | GPIO42 | VL53L5CX_INT_LEFT  | ToF left INT
+    *     36    | GPIO44 | LED_FLASH          | Camera flash LED  (U0RXD)
+    *     37    | GPIO43 | BTN_02             | Button 2          (U0TXD)
+    *     38    | GPIO02 | VL53L5CX_LP_RIGHT  | ToF right LPn
+    *     39    | GPIO01 | VL53L5CX_LP_LEFT   | ToF left LPn
+    *     40    |   -    | GND                |
+    *     41    |   -    | GND                |
+    *  ------------------------------------------------------------------
+    *
+    * NOTE: GPIO43/GPIO44 are the ROM/UART0 console pins (U0TXD/U0RXD).
+    *       They are only free for general purpose use while the IDF
+    *       console is routed to the USB Serial/JTAG controller
+    *       (CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG). The first stage ROM
+    *       bootloader still drives U0TXD briefly on every reset.
     */
 
-    /* ToF Sensor Pins */
+    /* ToF Sensor Pins (VL53L5CX) - TOF1 = LEFT, TOF2 = RIGHT */
 
-    #define MAIA_GPIO_TOF1_LPN          1      /* low_power_enable - lidar 1*/
-    #define MAIA_GPIO_TOF1_INT          43     /* interrupt_pin    - lidar 1*/
-    #define MAIA_GPIO_TOF2_LPN          2      /* low_power_enable - lidar 2*/
-    #define MAIA_GPIO_TOF2_INT          44     /* interrupt_pin    - lidar 2*/
+    #define MAIA_GPIO_TOF1_LPN          1      /* low_power_enable - left  */
+    #define MAIA_GPIO_TOF1_INT          42     /* interrupt_pin    - left  */
+    #define MAIA_GPIO_TOF2_LPN          2      /* low_power_enable - right */
+    #define MAIA_GPIO_TOF2_INT          41     /* interrupt_pin    - right */
 
     /* Temperature Sensor (1-Wire) */
 
@@ -71,13 +106,6 @@
     /* IMU Interrupt */
 
     #define MAIA_GPIO_IMU_INT           4
-
-    /* I2C Bus */
-
-    #define MAIA_I2C_FREQ_HZ            CONFIG_MAIA_I2C_FREQ_HZ
-    #define MAIA_GPIO_I2C_SDA           5
-    #define MAIA_GPIO_I2C_SCL           6
-    #define MAIA_I2C_PORT               I2C_NUM_0
 
     /* PWM Motors (ERM Left and Right) */
 
@@ -92,13 +120,41 @@
     #define MAIA_PWM_TIMER_LEFT         LEDC_TIMER_0
     #define MAIA_PWM_TIMER_RIGHT        LEDC_TIMER_1
 
-    /* Button */
+    /* Buttons */
 
-    #define MAIA_GPIO_BUTTON            9
+    #define MAIA_GPIO_BUTTON            9      /* BTN_01                   */
+    #define MAIA_GPIO_BUTTON_2          43     /* BTN_02 (U0TXD)           */
 
-    /* Status LED */
+    /* LEDs */
 
+    #define MAIA_GPIO_LED_USER          48     /* USER_LED                 */
+    #define MAIA_GPIO_LED_FLASH         44     /* LED_FLASH (U0RXD)        */
     #define MAIA_GPIO_LED_STATUS        CONFIG_MAIA_LED_STATUS_PIN
+
+    /* Camera (OV2640) - no driver yet, pinout for reference */
+
+    #define MAIA_GPIO_CAM_XCLK          10
+    #define MAIA_GPIO_CAM_PCLK          13
+    #define MAIA_GPIO_CAM_VSYNC         38
+    #define MAIA_GPIO_CAM_HREF          47
+    #define MAIA_GPIO_CAM_PWDN          14
+    #define MAIA_GPIO_CAM_SCCB_SDA      40
+    #define MAIA_GPIO_CAM_SCCB_SCL      39
+    #define MAIA_GPIO_CAM_Y2            15
+    #define MAIA_GPIO_CAM_Y3            17
+    #define MAIA_GPIO_CAM_Y4            18
+    #define MAIA_GPIO_CAM_Y5            16
+    #define MAIA_GPIO_CAM_Y6            45
+    #define MAIA_GPIO_CAM_Y7            12
+    #define MAIA_GPIO_CAM_Y8            11
+    #define MAIA_GPIO_CAM_Y9            21
+
+    /* I2C Bus */
+
+    #define MAIA_I2C_FREQ_HZ            CONFIG_MAIA_I2C_FREQ_HZ
+    #define MAIA_GPIO_I2C_SDA           5
+    #define MAIA_GPIO_I2C_SCL           6
+    #define MAIA_I2C_PORT               I2C_NUM_0
 
     /* I2C Device Addresses */
 
@@ -106,7 +162,26 @@
     #define MAIA_I2C_ADDR_TOF1          CONFIG_MAIA_VL53L5CX_LEFT_I2C_ADDR
     #define MAIA_I2C_ADDR_TOF2          CONFIG_MAIA_VL53L5CX_RIGHT_I2C_ADDR
     #define MAIA_I2C_ADDR_DRV2605L      CONFIG_MAIA_DRV2605L_I2C_ADDR
-    #define MAIA_I2C_ADDR_MPU6050       CONFIG_MAIA_MPU6050_I2C_ADDR
+
+    /* IMU address - MAIA_IMU_DEVICE is a Kconfig choice, so exactly one
+     * of these is defined at a time. MAIA_I2C_ADDR_IMU is the device
+     * agnostic alias for code that does not care which IMU is fitted.
+     */
+
+    #ifdef CONFIG_MAIA_IMU_MPU6050
+    #  define MAIA_I2C_ADDR_MPU6050     CONFIG_MAIA_MPU6050_I2C_ADDR
+    #  define MAIA_I2C_ADDR_IMU         MAIA_I2C_ADDR_MPU6050
+    #endif
+
+    #ifdef CONFIG_MAIA_IMU_ADXL345
+    #  define MAIA_I2C_ADDR_ADXL345     CONFIG_MAIA_ADXL345_I2C_ADDR
+    #  define MAIA_I2C_ADDR_IMU         MAIA_I2C_ADDR_ADXL345
+    #endif
+
+    #ifdef CONFIG_MAIA_IMU_LSM6DSOX
+    #  define MAIA_I2C_ADDR_LSM6DSOX    CONFIG_MAIA_LSM6DSOX_I2C_ADDR
+    #  define MAIA_I2C_ADDR_IMU         MAIA_I2C_ADDR_LSM6DSOX
+    #endif
 
     /****************************************************************************
      * Public Function Prototypes

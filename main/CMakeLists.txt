@@ -12,11 +12,32 @@ set(MAIN_SRCS "main.c")
 if(CONFIG_MAIA_TEST_ENABLE)
     list(APPEND MAIN_SRCS "tests/test_blink.c")
     list(APPEND MAIN_SRCS "tests/test_button.c")
-    list(APPEND MAIN_SRCS "tests/test_ds18b20.c")
-    list(APPEND MAIN_SRCS "tests/test_drv2605l.c")
-    list(APPEND MAIN_SRCS "tests/test_ssd1306.c")
-    list(APPEND MAIN_SRCS "tests/test_mpu6050.c")
-    list(APPEND MAIN_SRCS "tests/test_vl53l5cx.c")
+
+    # A test can only be built while its device is enabled, for the same
+    # reason as the drivers: the device's Kconfig symbols disappear with
+    # the menu. The matching "depends on" on each MAIA_TEST_* keeps the
+    # menu from offering a test whose sources are not compiled.
+
+    if(CONFIG_MAIA_DS18B20_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_ds18b20.c")
+    endif()
+
+    if(CONFIG_MAIA_DRV2605L_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_drv2605l.c")
+    endif()
+
+    if(CONFIG_MAIA_SSD1306_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_ssd1306.c")
+    endif()
+
+    if(CONFIG_MAIA_VL53L5CX_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_vl53l5cx.c")
+    endif()
+
+    if(CONFIG_MAIA_IMU_MPU6050)
+        list(APPEND MAIN_SRCS "tests/test_mpu6050.c")
+    endif()
+
     # Add more test files here as needed:
     # list(APPEND MAIN_SRCS "tests/test_i2c.c")
     # list(APPEND MAIN_SRCS "tests/test_sensors.c")

@@ -104,8 +104,14 @@ esp_err_t maia_gpio_init(void)
       return ret;
     }
 
-  gpio_set_level(MAIA_GPIO_TOF1_LPN, 1);       /* Start with Lidar 1 disabled */
-  gpio_set_level(MAIA_GPIO_TOF2_LPN, 1);       /* Start with Lidar 2 disabled */
+  /* LPn is active high enable: HIGH = sensor on, LOW = standby.
+   * Both sensors power up at the same default address (0x52), so they
+   * must stay in standby until vl53l5cx_init() enables them one at a
+   * time to reassign the addresses.
+   */
+
+  gpio_set_level(MAIA_GPIO_TOF1_LPN, 0);      /* Lidar 1 (left)  in standby */
+  gpio_set_level(MAIA_GPIO_TOF2_LPN, 0);      /* Lidar 2 (right) in standby */
 
   /*
    * LIDAR: INTERRUPT_PIN
@@ -136,7 +142,12 @@ esp_err_t maia_gpio_init(void)
    * Accelerometer: Interrupt_PIN
    * * * * * * * * * * * * * * * */
 
-#ifdef CONFIG_MAIA_MPU6050_ENABLE
+  /* Shared by all supported IMUs (see Kconfig choice MAIA_IMU_DEVICE),
+   * they all route their INT line to MAIA_GPIO_IMU_INT. The interrupt
+   * itself stays disabled here; the driver enables it when ready.
+   */
+
+#ifdef CONFIG_MAIA_IMU_ENABLE
   io_conf.pin_bit_mask = (1ULL << MAIA_GPIO_IMU_INT);
   io_conf.intr_type    = GPIO_INTR_DISABLE;  /* driver habilita quando pronto */
   io_conf.mode         = GPIO_MODE_INPUT;
