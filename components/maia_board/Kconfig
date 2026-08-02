@@ -1336,6 +1336,28 @@ menu "MAIA Board Configuration"
                     for which sub-test runs. Does not exercise the
                     provisioning setup flow — that service does not
                     exist yet (spec/wifi_subsystem.md).
+
+            config MAIA_TEST_LIDAR_VIEWER
+                bool "LiDAR 3D Web Viewer (Pin Art)"
+                depends on MAIA_VL53L5CX_ENABLE && MAIA_WIFI_ENABLE
+                help
+                    Starts ranging on the enabled VL53L5CX sensor(s)
+                    and serves a local web page rendering each frame
+                    as a "Pin Art" grid: one pin per zone, pushed out
+                    proportionally to how close its target is. Open
+                    the IP printed on the serial log in any browser on
+                    the same network. Runs until reset.
+
+                    Getting WiFi up follows the WiFi operating mode
+                    selected above (MAIA_WIFI_MODE, under WiFi
+                    Configuration): AP mode raises the plain
+                    diagnostic AP — join it directly from a browser,
+                    no pairing app, unaffected by any WiFi credentials
+                    already stored in NVS — the simplest choice for a
+                    quick bench test. Every other mode goes through
+                    wifi_prov_service_run(), which needs the ESP
+                    SoftAP Prov app the first time (or stored
+                    credentials for a network actually in range).
         endchoice
 
         choice MAIA_TEST_TOF_MODE
@@ -1460,6 +1482,34 @@ menu "MAIA Board Configuration"
                     comes from the blink task itself, or if the status
                     LED is not the GPIO you expect on this board revision
                     (see MAIA_LED_STATUS_GPIO under LEDs Configuration).
+        endmenu
+
+        menu "LiDAR Web Viewer Configuration"
+            depends on MAIA_TEST_LIDAR_VIEWER
+
+            config MAIA_LIDAR_VIEWER_HTTP_PORT
+                int "HTTP server port"
+                default 80
+                range 1 65535
+                help
+                    Port the Pin Art viewer's built-in HTTP server
+                    listens on.
+
+            config MAIA_LIDAR_VIEWER_DEFAULT_MAX_MM
+                int "Default max range shown (mm)"
+                default 2000
+                range 100 4000
+                help
+                    Initial distance that maps to a fully-retracted
+                    pin (height 0) in the web page. This is only the
+                    starting value — the page has a live slider to
+                    change it without reflashing, since the right
+                    range depends on what you're pointing the sensor
+                    at. Zones beyond this range, and zones filtered
+                    out by the driver (no valid target), are both
+                    rendered as flat grey pins so neither is mistaken
+                    for "close" — see the tooltip on each pin for the
+                    exact raw mm reading and status.
         endmenu
 
     endmenu

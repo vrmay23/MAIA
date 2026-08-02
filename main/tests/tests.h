@@ -67,4 +67,14 @@ void test_mpu6050_run(void);
 void test_wifi_run(void);
 #endif
 
+/* Narrower than the device-enable guards above: this test only
+ * compiles a defined test_lidar_viewer_run() under
+ * CONFIG_MAIA_TEST_LIDAR_VIEWER itself (see the guard comment in
+ * test_lidar_viewer.c), not just its two underlying device flags.
+ */
+
+#ifdef CONFIG_MAIA_TEST_LIDAR_VIEWER
+void test_lidar_viewer_run(void);
+#endif
+
 #endif /* __MAIN_TESTS_TESTS_H */

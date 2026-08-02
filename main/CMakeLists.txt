@@ -42,6 +42,14 @@ if(CONFIG_MAIA_TEST_ENABLE)
         list(APPEND MAIN_SRCS "tests/test_wifi.c")
     endif()
 
+    # LiDAR web viewer needs both devices; the file itself is a no-op
+    # translation unit unless MAIA_TEST_LIDAR_VIEWER is the selected
+    # test (see the guard comment at the top of test_lidar_viewer.c).
+
+    if(CONFIG_MAIA_VL53L5CX_ENABLE AND CONFIG_MAIA_WIFI_ENABLE)
+        list(APPEND MAIN_SRCS "tests/test_lidar_viewer.c")
+    endif()
+
     # Add more test files here as needed:
     # list(APPEND MAIN_SRCS "tests/test_i2c.c")
     # list(APPEND MAIN_SRCS "tests/test_sensors.c")
@@ -80,6 +88,10 @@ idf_component_register(
         maia_board         # Board support package (BSP)
         drivers            # Hardware drivers (button, sensors, etc)
         wifi_prov_service  # WiFi provisioning policy (services/wifi_prov_service)
+        lidar_web_viewer   # LiDAR Pin Art viewer (services/lidar_web_viewer) —
+                           # unconditional REQUIRES for the same reason as
+                           # wifi_prov_service above; see that component's
+                           # CMakeLists.txt and the whole-file guard in its .c
         console
         # Add more component dependencies here as needed:
         # services   # High-level services (if created)

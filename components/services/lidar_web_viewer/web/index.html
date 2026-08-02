@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>MAIA LiDAR — Pin Art</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background: #0b0e12; color: #e8ecf1;
+    font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+  }
+  canvas {
+    display: block; width: 100%; height: 100%;
+    touch-action: none; cursor: grab;
+  }
+  canvas.dragging { cursor: grabbing; }
+
+  .panel {
+    position: fixed; background: rgba(18, 22, 28, 0.88);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 10px 12px;
+    backdrop-filter: blur(6px);
+  }
+  #hud { top: 12px; left: 12px; max-width: 300px; }
+  #hud h1 { font-size: 14px; margin: 0 0 4px; font-weight: 600; }
+  #hud .sub { color: #93a0b0; font-size: 11px; margin-bottom: 10px; }
+
+  .row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .row label { flex: 0 0 auto; color: #b7c0cc; font-size: 12px; }
+  .row input[type=range] { flex: 1 1 auto; accent-color: #4da3ff; }
+  .row .val { flex: 0 0 44px; text-align: right; font-variant-numeric: tabular-nums; color: #cfe0f5; }
+
+  #status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; color: #93a0b0; }
+  #status .dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
+  #status.ok .dot { background: #45d483; }
+  #status.bad .dot { background: #e4584a; }
+
+  #legend { bottom: 12px; left: 12px; }
+  #legend .bar {
+    width: 220px; height: 10px; border-radius: 5px; margin: 4px 0 2px;
+    background: linear-gradient(to right, hsl(6 85% 58%), hsl(70 80% 50%), hsl(220 85% 42%));
+  }
+  #legend .ticks { display: flex; justify-content: space-between; font-size: 10px; color: #93a0b0; }
+  #legend .swatch-row { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; color: #93a0b0; }
+  #legend .swatch { width: 12px; height: 12px; border-radius: 3px; background: hsl(0 0% 32%); opacity: .7; }
+
+  #hint { bottom: 12px; right: 12px; font-size: 11px; color: #93a0b0; }
+
+  #tooltip {
+    position: fixed; pointer-events: none; z-index: 10;
+    background: rgba(10, 12, 16, 0.95); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px; padding: 6px 8px; font-size: 11px; white-space: nowrap;
+    display: none; transform: translate(-50%, -130%);
+  }
+  #tooltip b { color: #fff; }
+
+  #loading {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #93a0b0; font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div id="loading">Conectando ao MAIA…</div>
+<div id="tooltip"></div>
+
+<div class="panel" id="hud">
+  <h1>MAIA LiDAR — Pin Art</h1>
+  <div class="sub" id="gridInfo">—</div>
+
+  <div class="row">
+    <label for="rangeSlider">Alcance máx</label>
+    <input type="range" id="rangeSlider" min="100" max="4000" step="50" value="2000">
+    <span class="val"><span id="rangeVal">2000</span>&nbsp;mm</span>
+  </div>
+
+  <div id="status" class="bad"><span class="dot"></span><span id="statusText">sem resposta</span></div>
+</div>
+
+<div class="panel" id="legend">
+  <div class="bar"></div>
+  <div class="ticks"><span>0&nbsp;mm (perto)</span><span id="legendMax">2000&nbsp;mm (longe)</span></div>
+  <div class="swatch-row"><span class="swatch"></span><span>sem leitura (filtrado)</span></div>
+</div>
+
+<div class="panel" id="hint">arraste = girar &nbsp;·&nbsp; scroll = zoom</div>
+
+<script>
+"use strict";
+
+/* ---------------------------------------------------------------------
+ * Vec3 helpers
+ * ------------------------------------------------------------------ */
+
+const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
+const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
+const cross = (a, b) => ({
+  x: a.y * b.z - a.z * b.y,
+  y: a.z * b.x - a.x * b.z,
+  z: a.x * b.y - a.y * b.x,
+});
+const len = (a) => Math.sqrt(dot(a, a));
+const norm = (a) => { const l = len(a) || 1; return { x: a.x / l, y: a.y / l, z: a.z / l }; };
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+/* ---------------------------------------------------------------------
+ * Layout constants
+ * ------------------------------------------------------------------ */
+
+const CELL = 1.0;
+const PIN_FOOT = 0.72 * CELL;   // pin footprint (leaves a gap like real pin art)
+const MAX_PIN_H = 3.0;
+const MIN_PIN_H = 0.10;         // floor so far/near-max pins are still visible
+const STUB_H = 0.06;            // height for "no reading" pins
+const SENSOR_GAP = 2.5 * CELL;
+
+/* ---------------------------------------------------------------------
+ * Camera (spherical orbit around a target point)
+ * ------------------------------------------------------------------ */
+
+const cam = { yaw: Math.PI * 0.22, pitch: 0.72, dist: 14 };
+let camTarget = { x: 0, y: 0, z: 0.6 };
+
+function cameraBasis() {
+  const cx = camTarget.x + cam.dist * Math.cos(cam.pitch) * Math.sin(cam.yaw);
+  const cy = camTarget.y + cam.dist * Math.cos(cam.pitch) * Math.cos(cam.yaw);
+  const cz = camTarget.z + cam.dist * Math.sin(cam.pitch);
+  const pos = { x: cx, y: cy, z: cz };
+  const forward = norm(sub(camTarget, pos));
+  const right = norm(cross(forward, { x: 0, y: 0, z: 1 }));
+  const up = cross(right, forward);
+  return { pos, forward, right, up };
+}
+
+/* ---------------------------------------------------------------------
+ * Canvas / projection
+ * ------------------------------------------------------------------ */
+
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+let W = 0, H = 0, focalPx = 0;
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  W = canvas.clientWidth; H = canvas.clientHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const fovY = 42 * Math.PI / 180;
+  focalPx = (H / 2) / Math.tan(fovY / 2);
+}
+window.addEventListener("resize", resize);
+resize();
+
+function project(p, basis) {
+  const rel = sub(p, basis.pos);
+  const camZ = dot(rel, basis.forward);
+  if (camZ <= 0.05) return null;
+  const f = focalPx / camZ;
+  return { x: W / 2 + dot(rel, basis.right) * f, y: H / 2 - dot(rel, basis.up) * f, depth: camZ };
+}
+
+/* ---------------------------------------------------------------------
+ * Data model
+ * ------------------------------------------------------------------ */
+
+let gridN = 8;
+let sensors = [];        // [{id, ox}] world-space X origin per sensor grid
+let pins = [];           // flat list, rebuilt whenever gridN/sensor count changes
+let sliderMax = 2000;
+let sliderTouched = false;
+let lastFrame = null;
+
+function rebuildLayout(grid, sensorIds) {
+  gridN = grid;
+  const n = sensorIds.length;
+  const totalW = n * gridN * CELL + (n - 1) * SENSOR_GAP;
+  sensors = sensorIds.map((id, i) => ({
+    id,
+    ox: -totalW / 2 + i * (gridN * CELL + SENSOR_GAP) + (gridN * CELL) / 2,
+  }));
+
+  pins = [];
+  for (const s of sensors) {
+    for (let row = 0; row < gridN; row++) {
+      for (let col = 0; col < gridN; col++) {
+        pins.push({
+          sensorId: s.id,
+          row, col,
+          /* zone index -> (row,col): row-major, matching
+           * maia_tof_get_data()'s fill order. ST's default zone map
+           * has index 0 at a corner; if left/right or up/down looks
+           * mirrored on real hardware, flip the sign here — it's a
+           * display-only convention, not a data problem. */
+          idx: row * gridN + col,
+          cx: s.ox + (col - (gridN - 1) / 2) * CELL,
+          cy: (row - (gridN - 1) / 2) * CELL,
+          mm: -1, status: 255,
+        });
+      }
+    }
+  }
+
+  camTarget = { x: 0, y: 0, z: MAX_PIN_H * 0.35 };
+  cam.dist = gridN * 1.7 * Math.max(1, sensors.length * 0.65) + 5;
+
+  document.getElementById("gridInfo").textContent =
+    `${gridN}×${gridN} · ${sensors.map(s => s.id).join(" + ")}`;
+}
+
+function applyFrame(data) {
+  lastFrame = data;
+
+  const ids = data.sensors.map(s => s.id);
+  if (data.grid !== gridN || ids.length !== sensors.length ||
+      ids.some((id, i) => sensors[i] && sensors[i].id !== id)) {
+    rebuildLayout(data.grid, ids);
+  }
+
+  if (!sliderTouched) {
+    sliderMax = data.max_mm_default;
+    const el = document.getElementById("rangeSlider");
+    el.value = sliderMax;
+    document.getElementById("rangeVal").textContent = sliderMax;
+    document.getElementById("legendMax").textContent = sliderMax + " mm (longe)";
+  }
+
+  const bySensor = {};
+  data.sensors.forEach(s => { bySensor[s.id] = s.zones; });
+
+  for (const p of pins) {
+    const zones = bySensor[p.sensorId];
+    if (!zones || !zones[p.idx]) continue;
+    p.mm = zones[p.idx][0];
+    p.status = zones[p.idx][1];
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Color / height mapping — all client-side, all live-adjustable.
+ * Filtered/no-target zones (mm < 0) never enter the near/far color
+ * scale at all: they are always the same neutral grey stub, so a
+ * "confirmed far" reading is never confused with "no reading".
+ * ------------------------------------------------------------------ */
+
+function pinVisual(mm, sliderMaxMm) {
+  if (mm < 0) {
+    return { h: STUB_H, hue: 0, sat: 0, light: 32, invalid: true };
+  }
+  const t = clamp(mm / sliderMaxMm, 0, 1); // 0 = near, 1 = far/at-or-beyond range
+  const hue = lerp(6, 220, t);
+  const light = lerp(58, 42, t);
+  const h = MIN_PIN_H + (MAX_PIN_H - MIN_PIN_H) * (1 - t);
+  return { h, hue, sat: 85, light, invalid: false };
+}
+
+/* ---------------------------------------------------------------------
+ * Render
+ * ------------------------------------------------------------------ */
+
+const pickList = []; // rebuilt each frame: [{x,y,pin}]
+
+function drawFrame() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "#0b0e12";
+  ctx.fillRect(0, 0, W, H);
+
+  const basis = cameraBasis();
+  const quads = [];
+  pickList.length = 0;
+
+  for (const p of pins) {
+    const v = pinVisual(p.mm, sliderMax);
+    const hs = PIN_FOOT / 2;
+    const P = (x, y, z) => ({ x, y, z });
+    const px = p.cx, py = p.cy, h = v.h;
+
+    const xSign = basis.pos.x > px ? 1 : -1;
+    const ySign = basis.pos.y > py ? 1 : -1;
+    const fx = px + xSign * hs;
+    const fy = py + ySign * hs;
+
+    const faces = [
+      { pts: [P(px - hs, py - hs, h), P(px + hs, py - hs, h), P(px + hs, py + hs, h), P(px - hs, py + hs, h)], shade: 1.0 },
+      { pts: [P(fx, py - hs, 0), P(fx, py + hs, 0), P(fx, py + hs, h), P(fx, py - hs, h)], shade: 0.72 },
+      { pts: [P(px - hs, fy, 0), P(px + hs, fy, 0), P(px + hs, fy, h), P(px - hs, fy, h)], shade: 0.5 },
+    ];
+
+    let top2d = null;
+    const facesOut = [];
+    for (const f of faces) {
+      const proj = f.pts.map(pt => project(pt, basis));
+      if (proj.some(q => q === null)) continue;
+      let d = 0; proj.forEach(q => d += q.depth);
+      d /= proj.length;
+      facesOut.push({ proj, shade: f.shade, depth: d });
+      if (f.shade === 1.0) top2d = proj;
+    }
+    if (facesOut.length === 0) continue;
+
+    facesOut.forEach(fo => {
+      const l = clamp(v.light * fo.shade, 6, 92);
+      quads.push({
+        pts: fo.proj, depth: fo.depth,
+        style: `hsl(${v.hue} ${v.sat}% ${l}%)`,
+        alpha: v.invalid ? 0.55 : 0.95,
+      });
+    });
+
+    if (top2d) {
+      const cxp = (top2d[0].x + top2d[2].x) / 2;
+      const cyp = (top2d[0].y + top2d[2].y) / 2;
+      pickList.push({ x: cxp, y: cyp, pin: p });
+    }
+  }
+
+  quads.sort((a, b) => b.depth - a.depth);
+  for (const q of quads) {
+    ctx.globalAlpha = q.alpha;
+    ctx.fillStyle = q.style;
+    ctx.beginPath();
+    ctx.moveTo(q.pts[0].x, q.pts[0].y);
+    for (let i = 1; i < q.pts.length; i++) ctx.lineTo(q.pts[i].x, q.pts[i].y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,0.35)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+}
+
+function loop() {
+  if (pins.length > 0) drawFrame();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* ---------------------------------------------------------------------
+ * Orbit / zoom input (mouse + touch via Pointer Events)
+ * ------------------------------------------------------------------ */
+
+let dragging = false, lastX = 0, lastY = 0;
+
+canvas.addEventListener("pointerdown", (e) => {
+  dragging = true; lastX = e.clientX; lastY = e.clientY;
+  canvas.classList.add("dragging");
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener("pointerup", (e) => {
+  dragging = false; canvas.classList.remove("dragging");
+});
+canvas.addEventListener("pointermove", (e) => {
+  if (dragging) {
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    cam.yaw -= dx * 0.006;
+    cam.pitch = clamp(cam.pitch + dy * 0.006, 0.08, 1.45);
+    hideTooltip();
+    return;
+  }
+  handleHover(e.clientX, e.clientY);
+});
+canvas.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  cam.dist = clamp(cam.dist * (1 + e.deltaY * 0.001), 3, 60);
+}, { passive: false });
+
+const tooltip = document.getElementById("tooltip");
+function hideTooltip() { tooltip.style.display = "none"; }
+
+function handleHover(clientX, clientY) {
+  const rect = canvas.getBoundingClientRect();
+  const x = clientX - rect.left, y = clientY - rect.top;
+  let best = null, bestD = 22 * 22;
+  for (const it of pickList) {
+    const d = (it.x - x) ** 2 + (it.y - y) ** 2;
+    if (d < bestD) { bestD = d; best = it; }
+  }
+  if (!best) { hideTooltip(); return; }
+  const p = best.pin;
+  const label = p.mm < 0
+    ? `<b>sem leitura</b> (status ${p.status})`
+    : `<b>${p.mm} mm</b> (status ${p.status})`;
+  tooltip.innerHTML =
+    `${p.sensorId} · zona [${p.row},${p.col}]<br>${label}`;
+  tooltip.style.left = clientX + "px";
+  tooltip.style.top = clientY + "px";
+  tooltip.style.display = "block";
+}
+
+/* ---------------------------------------------------------------------
+ * Range slider
+ * ------------------------------------------------------------------ */
+
+const rangeSlider = document.getElementById("rangeSlider");
+rangeSlider.addEventListener("input", () => {
+  sliderTouched = true;
+  sliderMax = Number(rangeSlider.value);
+  document.getElementById("rangeVal").textContent = sliderMax;
+  document.getElementById("legendMax").textContent = sliderMax + " mm (longe)";
+});
+
+/* ---------------------------------------------------------------------
+ * Data polling
+ * ------------------------------------------------------------------ */
+
+const statusEl = document.getElementById("status");
+const statusText = document.getElementById("statusText");
+let gotFirstFrame = false;
+
+function setStatus(ok) {
+  statusEl.classList.toggle("ok", ok);
+  statusEl.classList.toggle("bad", !ok);
+  statusText.textContent = ok ? "MAIA conectado" : "sem resposta do MAIA";
+}
+
+async function pollOnce() {
+  try {
+    const res = await fetch("/frame.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    applyFrame(data);
+    setStatus(true);
+    if (!gotFirstFrame) {
+      gotFirstFrame = true;
+      document.getElementById("loading").style.display = "none";
+    }
+  } catch (e) {
+    setStatus(false);
+  } finally {
+    setTimeout(pollOnce, 150);
+  }
+}
+pollOnce();
+</script>
+</body>
+</html>

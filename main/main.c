@@ -78,6 +78,8 @@ void app_main(void)
   test_vl53l5cx_run();
 #elif defined(CONFIG_MAIA_TEST_WIFI)
   test_wifi_run();
+#elif defined(CONFIG_MAIA_TEST_LIDAR_VIEWER)
+  test_lidar_viewer_run();
 #endif
 
 #else
