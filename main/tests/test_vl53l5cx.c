@@ -43,6 +43,7 @@
 #include "maia_board.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <esp_log.h>
 #include <driver/gpio.h>
 #include <driver/i2c_master.h>
@@ -1215,8 +1216,7 @@ static void test_object_presence_led(void)
 
       for (i = 0; i < data.nb_zones; i++)
         {
-          if (data.nb_target_detected[i] > 0 &&
-              data.distance_mm[i] > 0)
+          if (data.distance_mm[i] != -1)
             {
               detected = true;
               break;
@@ -1266,6 +1266,149 @@ static void vl53l5cx_presence_task(void *pvParameters)
     {
       ESP_LOGE(TAG,
                "Init failed -- cannot run presence test");
+    }
+
+  print_header("END");
+  maia_tof_deinit();
+  vTaskDelete(NULL);
+}
+
+/**********************************************************
+ * Name: test_status_histogram
+ *
+ * Description:
+ *   Diagnostic mode for validating the target_status
+ *   accept-list fix in filter_data() (vl53l5cx.c).
+ *   Accumulates a histogram of RAW target_status values
+ *   across all zones and frames, and prints it every
+ *   STATUS_HISTOGRAM_PERIOD_MS.
+ *
+ *   Reads maia_tof_get_data()'s target_status array
+ *   directly. filter_data() never rewrites target_status
+ *   — it only ever clears distance_mm — so these counts
+ *   are the sensor's raw, unfiltered status codes,
+ *   independent of the current accept-list Kconfig.
+ *
+ *   After the fix, status 5 (Range valid) is expected to
+ *   dominate the histogram. If it does not, the accept/
+ *   reject polarity was not the (only) problem, and the
+ *   next step is to look at this data, not re-guess the
+ *   status table.
+ *
+ **********************************************************/
+
+#define STATUS_HISTOGRAM_SIZE       256
+#define STATUS_HISTOGRAM_PERIOD_MS  2000
+
+static void test_status_histogram(void)
+{
+  maia_tof_data_t data;
+  esp_err_t       ret;
+  uint32_t        histogram[STATUS_HISTOGRAM_SIZE];
+  uint32_t        frames;
+  uint32_t        last_print;
+  uint32_t        now;
+  int             i;
+  int             s;
+
+  print_header("Phase 2: Raw target_status histogram");
+  ESP_LOGI(TAG,
+           "Accumulating raw target_status counts across "
+           "all zones/frames, printed every %d ms. Status "
+           "5 should dominate once the accept-list fix is "
+           "correct. Reset to stop.",
+           STATUS_HISTOGRAM_PERIOD_MS);
+
+  memset(histogram, 0, sizeof(histogram));
+  frames     = 0;
+  last_print = 0;
+
+  ret = maia_tof_start_ranging();
+  if (ret != ESP_OK)
+    {
+      ESP_LOGE(TAG,
+               "Status histogram: start_ranging failed");
+      return;
+    }
+
+  while (1)
+    {
+      if (!wait_data_ready(MAIA_TOF_SENSOR_LEFT,
+                           DATA_READY_TIMEOUT_MS))
+        {
+          continue;
+        }
+
+      ret = maia_tof_get_data(MAIA_TOF_SENSOR_LEFT,
+                              &data);
+      if (ret != ESP_OK)
+        {
+          continue;
+        }
+
+      for (i = 0; i < data.nb_zones; i++)
+        {
+          histogram[data.target_status[i]]++;
+        }
+
+      frames++;
+
+      now = (uint32_t)(xTaskGetTickCount() *
+                       portTICK_PERIOD_MS);
+      if ((now - last_print) >=
+          STATUS_HISTOGRAM_PERIOD_MS)
+        {
+          ESP_LOGI(TAG, "--- %lu frames ---",
+                   (unsigned long)frames);
+
+          for (s = 0; s < STATUS_HISTOGRAM_SIZE; s++)
+            {
+              if (histogram[s] > 0)
+                {
+                  ESP_LOGI(TAG, "  status %3d: %lu",
+                           s, (unsigned long)
+                               histogram[s]);
+                }
+            }
+
+          last_print = now;
+        }
+    }
+}
+
+/**********************************************************
+ * Name: vl53l5cx_status_histogram_task
+ *
+ * Description:
+ *   Dedicated FreeRTOS task for the raw target_status
+ *   histogram diagnostic: init only, then accumulate and
+ *   print the histogram until reset. See
+ *   test_status_histogram().
+ *
+ **********************************************************/
+
+static void vl53l5cx_status_histogram_task(
+    void *pvParameters)
+{
+  bool ok;
+
+  (void)pvParameters;
+
+  print_header("VL53L5CX RAW STATUS HISTOGRAM");
+  ESP_LOGI(TAG, "Test file built: %s %s",
+           __DATE__, __TIME__);
+
+  ok = test_init();
+  print_result("Init (single sensor)", ok);
+
+  if (ok)
+    {
+      test_status_histogram();
+    }
+  else
+    {
+      ESP_LOGE(TAG,
+               "Init failed -- cannot run histogram");
     }
 
   print_header("END");
@@ -1339,6 +1482,8 @@ void test_vl53l5cx_run(void)
   TaskFunction_t task_fn = vl53l5cx_presence_task;
 #elif defined(CONFIG_MAIA_TEST_TOF_MODE_LIVE)
   TaskFunction_t task_fn = vl53l5cx_live_task;
+#elif defined(CONFIG_MAIA_TEST_TOF_MODE_STATUS_HISTOGRAM)
+  TaskFunction_t task_fn = vl53l5cx_status_histogram_task;
 #else
   TaskFunction_t task_fn = vl53l5cx_test_task;
 #endif

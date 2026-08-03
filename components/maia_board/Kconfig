@@ -1046,19 +1046,33 @@ menu "MAIA Board Configuration"
                     default 0x52
                     depends on MAIA_VL53L5CX_ENABLE
 
-                config MAIA_VL53L5CX_FILTER_STATUS_5
-                    bool "Filter target status 5 (Threshold fail)"
+                config MAIA_VL53L5CX_ACCEPT_STATUS_9
+                    bool "Accept target status 9 (large pulse)"
                     default y
                     depends on MAIA_VL53L5CX_ENABLE
                     help
-                        Filter false positives in bright sunlight.
+                        Status 9: range valid, large pulse. A
+                        real target is present with something
+                        else right behind it in the same zone
+                        (e.g. a person's shoulder and the wall
+                        behind it). Per UM2884 rev 3, ch. 5.5,
+                        table 4, this is usable ranging data.
+                        Disabling this treats those zones as
+                        invalid instead.
 
-                config MAIA_VL53L5CX_FILTER_STATUS_6
-                    bool "Filter target status 6 (Signal fail)"
+                config MAIA_VL53L5CX_ACCEPT_STATUS_6
+                    bool "Accept target status 6 (wrap-around skipped)"
                     default y
                     depends on MAIA_VL53L5CX_ENABLE
                     help
-                        Filter invalid readings with no return signal.
+                        Status 6: wrap-around (anti-alias) check
+                        not performed. This happens on the very
+                        first ranging after boot, since that
+                        check needs the following measurement of
+                        the pair. Per UM2884 rev 3, ch. 5.5,
+                        table 4, acceptable when no target beyond
+                        4 m is expected. Disabling this rejects
+                        that first frame.
 
                 choice MAIA_VL53L5CX_MODE
                     prompt "Sensor mode"
@@ -1414,6 +1428,19 @@ menu "MAIA Board Configuration"
                     farthest target the current Kconfig
                     (integration time, resolution, signal
                     threshold, etc.) can reliably report.
+                    Runs until reset.
+
+            config MAIA_TEST_TOF_MODE_STATUS_HISTOGRAM
+                bool "Raw target_status histogram (diagnostic)"
+                help
+                    Init the sensor, start ranging, and
+                    accumulate a histogram of RAW
+                    target_status values across all zones
+                    and frames, printed periodically. Used
+                    to validate the accept-list fix in
+                    filter_data() (vl53l5cx.c) on real
+                    hardware: once fixed, status 5 (Range
+                    valid) should dominate the histogram.
                     Runs until reset.
         endchoice
 
