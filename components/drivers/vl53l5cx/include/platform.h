@@ -49,11 +49,28 @@
 #  define VL53L5CX_NB_TARGET_PER_ZONE  (1U)
 #endif
 
-/* Disable unused result fields to reduce RAM usage */
+/* Each VL53L5CX_DISABLE_* below drops one field from the
+ * per-frame result block the ULD reads over I2C in a
+ * single transfer. The compile-time size for whichever
+ * fields stay enabled is VL53L5CX_MAX_RESULTS_SIZE
+ * (vl53l5cx_api.h); at 400 kHz that transfer time, not
+ * the RAM the result struct occupies, is what this trims.
+ *
+ * Fields MAIA still reads, and why they stay enabled:
+ * distance_mm and target_status feed filter_data()'s
+ * accept-list check; signal_per_spad feeds its
+ * min-signal-per-SPAD check; ambient_per_spad is reserved
+ * as the SNR denominator for a planned sunlight
+ * false-positive check and is not yet divided anywhere.
+ * Everything disabled below has no MAIA consumer.
+ */
 
 #define VL53L5CX_DISABLE_NB_SPADS_ENABLED
 #define VL53L5CX_DISABLE_AMBIENT_DMAX
 #define VL53L5CX_DISABLE_RANGE_SIGMA_MM
+#define VL53L5CX_DISABLE_REFLECTANCE_PERCENT
+#define VL53L5CX_DISABLE_MOTION_INDICATOR
+#define VL53L5CX_DISABLE_NB_TARGET_DETECTED
 
 /* ESP32-S3 is little-endian */
 

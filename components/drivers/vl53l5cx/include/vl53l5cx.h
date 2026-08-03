@@ -69,9 +69,17 @@
  *   distance, status, signal, and ambient measurements
  *   for up to 64 zones (8x8 grid).
  *
- *   Zones with target_status 5 (Threshold fail) or
- *   6 (Signal fail) are filtered per Kconfig settings.
+ *   A zone is kept only if its target_status is 5
+ *   (always) or, when enabled per Kconfig, 9 or 6 (see
+ *   filter_data() in vl53l5cx.c). Every other status,
+ *   including 255 (no target detected), is filtered.
  *   Filtered zones have distance_mm set to -1.
+ *   target_status itself is never rewritten, so it
+ *   always holds the sensor's raw, unfiltered value.
+ *
+ *   Zone validity has a single test: distance_mm != -1
+ *   (DISTANCE_FILTERED). There is no separate per-zone
+ *   "target detected" flag.
  *
  **********************************************************/
 
@@ -81,7 +89,6 @@ typedef struct
   uint8_t  target_status[MAIA_TOF_MAX_ZONES];
   uint32_t signal_per_spad[MAIA_TOF_MAX_ZONES];
   uint32_t ambient_per_spad[MAIA_TOF_MAX_ZONES];
-  uint8_t  nb_target_detected[MAIA_TOF_MAX_ZONES];
   uint8_t  nb_zones;
 } maia_tof_data_t;
 

@@ -34,8 +34,13 @@ set(MAIA_TOF_SRCS
 set(VL53L5CX_SRCS ${MAIA_TOF_SRCS} ${ULD_SRCS})
 
 # Include directories
+#
+# ST's porting/ is deliberately excluded: our own
+# include/platform.h must be the only platform.h the ULD
+# can find (see its header comment). Adding porting/ back
+# would make macro precedence between the two
+# VL53L5CX_DISABLE_* sets include-order-dependent.
 set(VL53L5CX_INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${ULD_MODULES_DIR}"
-    "${ULD_DIR}/porting"
 )

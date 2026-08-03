@@ -110,9 +110,27 @@
      VL53L5CX_TARGET_ORDER_CLOSEST
 #endif
 
-#define STATUS_THRESHOLD_FAIL  5
-#define STATUS_SIGNAL_FAIL     6
-#define DISTANCE_FILTERED      (-1)
+/* VL53L5CX target_status values referenced below. Per
+ * UM2884 rev 3, ch. 5.5 "Results interpretation", table
+ * 4 (also confirmed by ST's own comment in
+ * managed_components/stm32-vl53l5cx/modules/
+ * vl53l5cx_api.h: "5 & 9 means ranging OK"):
+ *
+ *   5   Range valid (100% confidence). Always kept.
+ *   9   Range valid, large pulse: a real target with
+ *       something else behind it in the same zone.
+ *   6   Wrap-around check not performed: only happens
+ *       on the first ranging after boot, since that
+ *       check needs the following measurement.
+ *
+ * Every other value, including 255 (no target
+ * detected), is rejected outright.
+ */
+
+#define STATUS_RANGE_VALID              5
+#define STATUS_RANGE_VALID_LARGE_PULSE  9
+#define STATUS_WRAPAROUND_SKIPPED       6
+#define DISTANCE_FILTERED               (-1)
 
 #define MIN_SIGNAL_PER_SPAD \
     CONFIG_MAIA_VL53L5CX_MIN_SIGNAL_PER_SPAD
@@ -445,6 +463,14 @@ static esp_err_t init_single_sensor(
            target_addr, GRID_SIZE, GRID_SIZE,
            RANGING_FREQ_HZ, INTEGRATION_TIME_MS);
 
+  /* Per-frame I2C result transfer size for the currently
+   * enabled output set (see include/platform.h). Logged
+   * here so it stays a visible, runtime-checkable number
+   * whenever that set changes. */
+
+  ESP_LOGI(TAG, "I2C result block: %u bytes",
+           (unsigned int)VL53L5CX_MAX_RESULTS_SIZE);
+
   return ESP_OK;
 }
 
@@ -458,25 +484,30 @@ static esp_err_t init_single_sensor(
 
 static void filter_data(maia_tof_data_t *data)
 {
-  int i;
+  int     i;
+  uint8_t st;
+  bool    accept;
 
   for (i = 0; i < data->nb_zones; i++)
     {
-#ifdef CONFIG_MAIA_VL53L5CX_FILTER_STATUS_5
-      if (data->target_status[i] ==
-          STATUS_THRESHOLD_FAIL)
-        {
-          data->distance_mm[i] = DISTANCE_FILTERED;
-        }
+      st     = data->target_status[i];
+      accept = (st == STATUS_RANGE_VALID);
+
+#ifdef CONFIG_MAIA_VL53L5CX_ACCEPT_STATUS_9
+      accept = accept ||
+               (st == STATUS_RANGE_VALID_LARGE_PULSE);
 #endif
 
-#ifdef CONFIG_MAIA_VL53L5CX_FILTER_STATUS_6
-      if (data->target_status[i] ==
-          STATUS_SIGNAL_FAIL)
+#ifdef CONFIG_MAIA_VL53L5CX_ACCEPT_STATUS_6
+      accept = accept ||
+               (st == STATUS_WRAPAROUND_SKIPPED);
+#endif
+
+      if (!accept)
         {
           data->distance_mm[i] = DISTANCE_FILTERED;
+          continue;
         }
-#endif
 
 #if MIN_SIGNAL_PER_SPAD > 0
 
@@ -783,8 +814,6 @@ esp_err_t maia_tof_get_data(uint8_t sensor_id,
               VL53L5CX_NB_TARGET_PER_ZONE * i];
       data->ambient_per_spad[i] =
           results.ambient_per_spad[i];
-      data->nb_target_detected[i] =
-          results.nb_target_detected[i];
     }
 
   filter_data(data);
