@@ -12,3 +12,4 @@
 dependencies:
   stm32-vl53l5cx:
     git: https://github.com/STMicroelectronics/stm32-vl53l5cx.git
+    rev: 1e6b8b35b25d59f2f256d9b6b1280b026132ab85
